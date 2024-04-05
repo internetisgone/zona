@@ -1,0 +1,15 @@
+.vs
+Library
+Logs
+obj
+Temp
+UIElementsSchema
+UserSettings
+.vsconfig
+Assembly-CSharp.csproj
+Assembly-CSharp.csproj.user
+zona.sln
+Assets/Rotary Heart/
+Assets/Rotary Heart.meta
+RotaryHeart.csproj
+RotaryHeart.PhysicsDebugExtension.Editor.csproj

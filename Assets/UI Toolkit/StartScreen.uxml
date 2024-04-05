@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/StartScreen.uss?fileID=7433441132597879392&amp;guid=cd7eb0adfbcb8f146842bc515163489e&amp;type=3#StartScreen" />
+    <ui:VisualElement name="MenuWrapper" style="flex-grow: 1; position: relative; left: auto;">
+        <ui:VisualElement name="Background" class="menubackground" style="flex-grow: 1; opacity: 1; -unity-background-scale-mode: scale-and-crop;" />
+        <ui:VisualElement name="TitleWrapper" style="flex-grow: 1;" />
+        <ui:VisualElement name="ButtonWrapper" class="button-wrapper" style="flex-grow: 1;">
+            <ui:Button text="Start" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartBtn" tabindex="0" class="button" style="text-overflow: ellipsis;" />
+            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsBtn" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
