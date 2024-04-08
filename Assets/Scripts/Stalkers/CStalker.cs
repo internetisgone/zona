@@ -21,8 +21,8 @@ public class CStalker : MonoBehaviour
         Inventory = new List<Artifact>();
     }
 
-    public void MoveStalker(Vector3 movement)
+    public void MoveStalker(Vector3 movementNormalized)
     {
-        transform.Translate(movement * Speed * Time.deltaTime);
+        transform.position += movementNormalized * Speed * Time.deltaTime;
     }
 }

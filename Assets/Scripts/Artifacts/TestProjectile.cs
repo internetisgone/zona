@@ -14,6 +14,7 @@ public class TestProjectile : MonoBehaviour
 
     private float gravity = -9.8f;
     private float gravityAcceleration;
+    
 
     void Start()
     {
