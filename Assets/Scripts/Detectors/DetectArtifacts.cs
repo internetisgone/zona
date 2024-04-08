@@ -9,7 +9,7 @@ public class DetectArtifacts : MonoBehaviour
     private List<Artifact> collectible;
 
     // temp
-    float armWingspan = 1.8f;
+    float collectionRange = 1.8f;
     float armOrigin = 1.5f;
 
     void Awake()
@@ -31,15 +31,6 @@ public class DetectArtifacts : MonoBehaviour
         if (isDetected)
         {
             CheckIfWithinCollectionRange();
-
-            //// for visual debugging
-            // using RotaryHeart.Lib.PhysicsExtension;
-            //using Physics = RotaryHeart.Lib.PhysicsExtension.Physics;
-            //Vector3 origin = transform.position + armOrigin * transform.up;
-            //if (Physics.SphereCast(origin, armWingspan / 2, transform.forward, armWingspan / 2, PreviewCondition.Both, 0, Color.red))
-            //{
-            //    Debug.Log("in collection rangeeeeeeeeeee");
-            //}
         }
         else
         {
@@ -78,21 +69,18 @@ public class DetectArtifacts : MonoBehaviour
 
         Vector3 origin = transform.position + armOrigin * transform.up;
 
-        if (Physics.SphereCast(origin, armWingspan / 2, transform.forward, out hit, armWingspan / 2))
+        if (Physics.Raycast(origin, transform.forward, out hit, collectionRange, artifactLayerMask))
         {
-            if (hit.collider.gameObject.CompareTag("Artifact"))
-            {
-                // todo display smol hud
+            Debug.LogFormat("Artifact can be collected " + hit.collider.gameObject);
+            Artifact artifact = hit.collider.gameObject.GetComponent<Artifact>();
+            artifact.SetHighlight();
+            collectible.Add(artifact);
 
-                Debug.LogFormat("Artifact can be collected " + hit.collider.gameObject);
-                Artifact artifact = hit.collider.gameObject.GetComponent<Artifact>();
-                artifact.SetHighlight();
-                collectible.Add(artifact);
-
-                // todo destroy gameobj
-                // todo add to inventory
-            }
+            // todo display smol hud
+            // todo destroy gameobj
+            // todo add to inventory
         }
+        //if (Physics.SphereCast(origin, armWingspan / 2, transform.forward, out hit, armWingspan / 2))
     }
 
     void OnDrawGizmos()

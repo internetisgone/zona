@@ -36,9 +36,4 @@ public class CameraManager : MonoBehaviour
             camera3.enabled = true; 
         }
     }
-
-    public Camera GetMainCamera()
-    {
-        return camera1;
-    }
 }

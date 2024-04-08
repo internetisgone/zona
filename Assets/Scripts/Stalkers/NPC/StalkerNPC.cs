@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class StalkerNPC : CStalker
 {
-
-    private GameObject campfire; // temp
+    private GameObject campfire; // temp object that act as a goal
     private float rotSpeed = 3f;
     private Rigidbody rb;
 
@@ -31,7 +30,8 @@ public class StalkerNPC : CStalker
         }
         else
         {
-            if (movement.magnitude > 3) MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
+            if (movement.magnitude > 3) 
+                MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
         }
     }
 
