@@ -31,7 +31,7 @@ public class StalkerNPC : CStalker
         }
         else
         {
-            if (movement.magnitude > 3) MoveStalker(movement.normalized);
+            if (movement.magnitude > 3) MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
         }
     }
 
