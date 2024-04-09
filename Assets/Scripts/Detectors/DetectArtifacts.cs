@@ -58,12 +58,14 @@ public class DetectArtifacts : MonoBehaviour
         {
             Debug.LogFormat("{0} detected {1} artifacts using {2}", owner.Name, artifactColliders.Length, detector.DetectorType.ToString());
             isDetected = true;
+            float minDistance = detector.Range;
             foreach (Collider collider in artifactColliders)
             {
                 float distance = (transform.position - collider.transform.position).magnitude;
+                if (distance < minDistance) minDistance = distance;
                 // Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
-                ArtifactProximityUpdated.RaiseEvent(distance);
             }
+            ArtifactProximityUpdated.RaiseEvent(minDistance);
         }
         else
         {
