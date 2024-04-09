@@ -1,23 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 public class DetectArtifacts : MonoBehaviour
 {
     [HideInInspector]
     public Detector detector;
-    private bool isDetected;
     private int artifactLayerMask;
-    private List<Artifact> collectible;
+
+    private bool isDetected;
+
+    public EventVoid ArtifactIsCollectible;
+    public EventVoid ArtifactNoLongerCollectible;
+
+    private CStalker owner;
 
     // temp
-    float collectionRange = 1.8f;
+    float collectionRange = 2f;
     float armOrigin = 1.5f;
 
     void Awake()
     {
         detector = ScriptableObject.CreateInstance<Detector>();
+        owner = GetComponent<CStalker>();
         isDetected = false;
-        collectible = new List<Artifact>();
-
         int artifactLayer = LayerMask.NameToLayer("Artifact");
         artifactLayerMask = 1 << artifactLayer;
     }
@@ -34,11 +39,11 @@ public class DetectArtifacts : MonoBehaviour
         }
         else
         {
-            foreach (var artifact in collectible)
-            {
-                artifact.UnsetHighlight();
-            }
-            collectible.Clear();
+            //foreach (var artifact in collectible)
+            //{
+            //    if (artifact) artifact.UnsetHighlight();
+            //}
+            //collectible.Clear();
         }
     }
 
@@ -48,7 +53,7 @@ public class DetectArtifacts : MonoBehaviour
         Collider[] artifactColliders = Physics.OverlapSphere(transform.position, detector.Range, artifactLayerMask);
         if (artifactColliders.Length > 0)
         {
-            Debug.LogFormat("{0} detected {1} artifacts using {2}", transform.gameObject.name, artifactColliders.Length, detector.DetectorType.ToString());
+            Debug.LogFormat("{0} detected {1} artifacts using {2}", owner.Name, artifactColliders.Length, detector.DetectorType.ToString());
             isDetected = true;
             foreach (Collider collider in artifactColliders)
             {
@@ -71,16 +76,26 @@ public class DetectArtifacts : MonoBehaviour
 
         if (Physics.Raycast(origin, transform.forward, out hit, collectionRange, artifactLayerMask))
         {
-            Debug.LogFormat("Artifact can be collected " + hit.collider.gameObject);
-            Artifact artifact = hit.collider.gameObject.GetComponent<Artifact>();
-            artifact.SetHighlight();
-            collectible.Add(artifact);
-
-            // todo display smol hud
-            // todo destroy gameobj
-            // todo add to inventory
+            ArtifactIsCollectible.RaiseEvent();
+            if (Input.GetKey(KeyCode.F))
+            {
+                CollectArtifact(hit.collider.gameObject);
+            }
         }
-        //if (Physics.SphereCast(origin, armWingspan / 2, transform.forward, out hit, armWingspan / 2))
+        else
+        {
+            ArtifactNoLongerCollectible.RaiseEvent();
+        }
+    }
+
+    private void CollectArtifact(GameObject artifactObj)
+    {
+        // Artifact artifact = artifactObj.GetComponent<Artifact>();
+        // artifact.SetHighlight();
+        // todo display smol hud 
+        owner.ChangeArtifactCount(1); // temp way to add to inventory 
+        Destroy(artifactObj);
+        ArtifactNoLongerCollectible.RaiseEvent();
     }
 
     void OnDrawGizmos()

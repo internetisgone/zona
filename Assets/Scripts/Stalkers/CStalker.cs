@@ -7,7 +7,8 @@ public class CStalker : MonoBehaviour
     public string Name { get; set; }
     public float Speed { get; set; }
     public DetectorType DetectorType { get; set; }
-    public List<Artifact> Inventory { get; set; }
+    // public List<Artifact> Inventory { get; set; }
+    public int ArtifactCount { get; private set; }
 
     public CStalker() : this("Marked One")
     {
@@ -18,7 +19,13 @@ public class CStalker : MonoBehaviour
     {
         Name = name;
         Speed = 5f;
-        Inventory = new List<Artifact>();
+        //Inventory = new List<Artifact>();
+        ArtifactCount = 0;
+    }
+
+    public virtual void ChangeArtifactCount(int delta)
+    {
+        ArtifactCount += delta;
     }
 
     public void MoveStalker(Vector3 movementNormalized)

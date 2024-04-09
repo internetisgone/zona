@@ -2,22 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : CStalker
 {
-    // private List<Artifact> Inventory;
-    private int artifactsCollected;
+    public EventInt ArtifactCountUpdated;
 
-    void Awake()
+    public override void ChangeArtifactCount(int delta)
     {
-        artifactsCollected = 0;
+        base.ChangeArtifactCount(delta);
+        ArtifactCountUpdated.RaiseEvent(ArtifactCount);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    // press f to sphere cast and collect artifact in front of u
- 
 }
