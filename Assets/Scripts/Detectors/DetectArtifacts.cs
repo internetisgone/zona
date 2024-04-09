@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 public class DetectArtifacts : MonoBehaviour
@@ -11,6 +12,8 @@ public class DetectArtifacts : MonoBehaviour
 
     public EventVoid ArtifactIsCollectible;
     public EventVoid ArtifactNoLongerCollectible;
+
+    public EventFloat ArtifactProximityUpdated;
 
     private CStalker owner;
 
@@ -37,14 +40,14 @@ public class DetectArtifacts : MonoBehaviour
         {
             CheckIfWithinCollectionRange();
         }
-        else
-        {
+        //else
+        //{
             //foreach (var artifact in collectible)
             //{
             //    if (artifact) artifact.UnsetHighlight();
             //}
             //collectible.Clear();
-        }
+        //}
     }
 
     // search for artifacts within the detector's range
@@ -58,7 +61,8 @@ public class DetectArtifacts : MonoBehaviour
             foreach (Collider collider in artifactColliders)
             {
                 float distance = (transform.position - collider.transform.position).magnitude;
-                Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
+                // Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
+                ArtifactProximityUpdated.RaiseEvent(distance);
             }
         }
         else
@@ -80,6 +84,7 @@ public class DetectArtifacts : MonoBehaviour
             if (Input.GetKey(KeyCode.F))
             {
                 CollectArtifact(hit.collider.gameObject);
+                ArtifactProximityUpdated.RaiseEvent(0);
             }
         }
         else
@@ -92,7 +97,6 @@ public class DetectArtifacts : MonoBehaviour
     {
         // Artifact artifact = artifactObj.GetComponent<Artifact>();
         // artifact.SetHighlight();
-        // todo display smol hud 
         owner.ChangeArtifactCount(1); // temp way to add to inventory 
         Destroy(artifactObj);
         ArtifactNoLongerCollectible.RaiseEvent();

@@ -70,14 +70,14 @@ public class PlayerController : MonoBehaviour
         mouseY = Input.GetAxis("Mouse Y");
 
         // temp
-        if (Input.GetMouseButtonDown(0))
-        {
-            lmbPressed = true;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            lmbPressed = false;
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    lmbPressed = true;
+        //}
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    lmbPressed = false;
+        //}
     }
 
     private void UpdateMouseLook()
@@ -118,10 +118,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (lmbPressed)
-        {
-            Instantiate(projectile, transform.position + transform.forward, transform.rotation);
-        }
+        //if (lmbPressed)
+        //{
+        //    Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+        //}
+
         //// movement based on rigidbody //
 
         //// keyboard input

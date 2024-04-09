@@ -9,17 +9,20 @@ public class HUDEvents : MonoBehaviour
     private UIDocument document;
     private Label collectTextTip;
     private Label counter;
+    private Label proximityIndicator;
 
     public EventVoid ArtifactIsCollectible;
     public EventVoid ArtifactNoLongerCollectible;
 
-    public EventInt SetArtifactCount;
+    public EventInt ArtifactCountUpdated;
+    public EventFloat ArtifactProximityUpdated;
 
     void Awake()
     {
         document = GetComponent<UIDocument>();
         collectTextTip = document.rootVisualElement.Q("CollectText") as Label;
         counter = document.rootVisualElement.Q("Quantity") as Label;
+        proximityIndicator = document.rootVisualElement.Q("ProximityValue") as Label;
     }
 
     private void OnEnable()
@@ -27,7 +30,8 @@ public class HUDEvents : MonoBehaviour
         ArtifactIsCollectible.OnEventRaised += ShowCollectText;
         ArtifactNoLongerCollectible.OnEventRaised += HideCollectText;
 
-        SetArtifactCount.OnEventRaised += UpdateArtifactCounter;
+        ArtifactCountUpdated.OnEventRaised += UpdateArtifactCounter;
+        ArtifactProximityUpdated.OnEventRaised += UpdateProximity;
     }
 
     private void OnDisable()
@@ -35,21 +39,34 @@ public class HUDEvents : MonoBehaviour
         ArtifactIsCollectible.OnEventRaised -= ShowCollectText;
         ArtifactNoLongerCollectible.OnEventRaised -= HideCollectText;
 
-        SetArtifactCount.OnEventRaised -= UpdateArtifactCounter;
+        ArtifactCountUpdated.OnEventRaised -= UpdateArtifactCounter;
+        ArtifactProximityUpdated.OnEventRaised -= UpdateProximity;
     }
 
-    public void ShowCollectText()
+    private void ShowCollectText()
     {
         collectTextTip.visible = true;
     }
 
-    public void HideCollectText()
+    private void HideCollectText()
     {
         collectTextTip.visible = false;
     }
 
-    public void UpdateArtifactCounter(int count) 
+    private void UpdateArtifactCounter(int count) 
     {
         counter.text = count.ToString();
+    }
+
+    private void UpdateProximity(float p)
+    {
+        if (p == 0f)
+        {
+            proximityIndicator.text = "";
+        }
+        else
+        {
+            proximityIndicator.text = p.ToString();
+        }
     }
 }

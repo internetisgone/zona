@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "EventsSO / Int")]
 public class EventInt : ScriptableObject
 {
     public UnityAction<int> OnEventRaised;

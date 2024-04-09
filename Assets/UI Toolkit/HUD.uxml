@@ -4,9 +4,15 @@
         <ui:VisualElement name="CollectWrapper" style="flex-grow: 1; justify-content: space-around; align-items: center; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
             <ui:Label tabindex="-1" text="collect" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CollectText" class="center text" style="-unity-text-align: upper-left; visibility: hidden;" />
         </ui:VisualElement>
-        <ui:VisualElement name="BottomWrapper" style="flex-grow: 1; position: absolute; right: 10px; left: 10px; bottom: 10px; align-items: stretch; justify-content: flex-start; flex-direction: row;">
-            <ui:Label tabindex="-1" text="Artifacts on my belt:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Inventory" class="text" style="bottom: auto; position: relative; right: auto; left: auto;" />
-            <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Quantity" class="text" />
+        <ui:VisualElement name="BottomWrapper" style="flex-grow: 1; position: absolute; right: 15px; left: 15px; bottom: 15px; flex-direction: row;">
+            <ui:VisualElement name="InventoryWrapper" style="flex-grow: 1; white-space: normal; text-overflow: clip; flex-direction: row; position: relative; left: auto; bottom: auto;">
+                <ui:Label tabindex="-1" text="Artifacts on my belt:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Inventory" class="text" style="bottom: auto; position: relative; right: auto; left: auto;" />
+                <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Quantity" class="text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ProximityWrapper" style="flex-grow: 1; flex-direction: row; -unity-text-align: upper-left; position: relative; right: auto; bottom: auto;">
+                <ui:Label tabindex="-1" text="Proximity: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="Proximity" class="text" />
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProximityValue" class="text" style="-unity-text-align: upper-right;" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

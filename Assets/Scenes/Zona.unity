@@ -533,6 +533,7 @@ MonoBehaviour:
   detector: {fileID: 0}
   ArtifactIsCollectible: {fileID: 11400000, guid: d9c14ea9559a8634c93068cfa360fa83, type: 2}
   ArtifactNoLongerCollectible: {fileID: 11400000, guid: fea6335aae1afb249bb60565ff750644, type: 2}
+  ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
 --- !u!4 &867723720
 Transform:
   m_ObjectHideFlags: 0
@@ -1803,7 +1804,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ArtifactIsCollectible: {fileID: 11400000, guid: d9c14ea9559a8634c93068cfa360fa83, type: 2}
   ArtifactNoLongerCollectible: {fileID: 11400000, guid: fea6335aae1afb249bb60565ff750644, type: 2}
-  SetArtifactCount: {fileID: 11400000, guid: 42eebd0f5d98d4044937a9d44994409a, type: 2}
+  ArtifactCountUpdated: {fileID: 11400000, guid: 42eebd0f5d98d4044937a9d44994409a, type: 2}
+  ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
 --- !u!1001 &6162665482198345590
 PrefabInstance:
   m_ObjectHideFlags: 0
