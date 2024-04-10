@@ -20,7 +20,7 @@ public class DetectArtifacts : MonoBehaviour
 
     // temp
     float collectionRange = 1.8f;
-    float armOrigin = 1.75f;
+    float armOrigin = 1.65f;
 
     void Awake()
     {

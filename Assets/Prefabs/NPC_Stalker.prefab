@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9043829894659263917}
   - component: {fileID: 7167260700310277401}
   - component: {fileID: 4750429806808667977}
+  - component: {fileID: 8826653105798869520}
   m_Layer: 0
   m_Name: NPC_Stalker
   m_TagString: NPC
@@ -69,6 +70,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: -0.5, z: 0}
+--- !u!95 &8826653105798869520
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2361777987260465710}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9ef4ba32496b12347bad8c45cace6116, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &6365100710680273020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,7 +105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.42
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -91,7 +113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalRotation.x
@@ -99,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalRotation.z
@@ -111,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -121,7 +143,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: loner_exo
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5866666021909216657, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9ef4ba32496b12347bad8c45cace6116, type: 2}
+    - target: {fileID: 5866666021909216657, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

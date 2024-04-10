@@ -18,7 +18,7 @@ public class CStalker : MonoBehaviour
     public CStalker(string name)
     {
         Name = name;
-        Speed = 5f;
+        Speed = 1.8f;
         //Inventory = new List<Artifact>();
         ArtifactCount = 0;
     }
