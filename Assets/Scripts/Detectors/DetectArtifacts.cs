@@ -16,18 +16,27 @@ public class DetectArtifacts : MonoBehaviour
     public EventFloat ArtifactProximityUpdated;
 
     private CStalker owner;
+    private bool isPlayer;
 
     // temp
-    float collectionRange = 2f;
-    float armOrigin = 1.5f;
+    float collectionRange = 1.8f;
+    float armOrigin = 1.75f;
 
     void Awake()
     {
         detector = ScriptableObject.CreateInstance<Detector>();
-        owner = GetComponent<CStalker>();
         isDetected = false;
+
         int artifactLayer = LayerMask.NameToLayer("Artifact");
         artifactLayerMask = 1 << artifactLayer;
+
+        owner = GetComponent<CStalker>();
+        isPlayer = owner is Player;
+        if (isPlayer )
+        {
+            // todo
+            // set raycast origin & offset according to first person camera 
+        }
     }
     void Start()
     {
@@ -38,16 +47,20 @@ public class DetectArtifacts : MonoBehaviour
     {
         if (isDetected)
         {
-            CheckIfWithinCollectionRange();
+            CheckIfCollectible();
         }
-        //else
-        //{
+        else
+        {
+            // clear proximity indicator
+            ArtifactProximityUpdated.RaiseEvent(0);
+
             //foreach (var artifact in collectible)
             //{
             //    if (artifact) artifact.UnsetHighlight();
             //}
             //collectible.Clear();
-        //}
+            //}
+        }
     }
 
     // search for artifacts within the detector's range
@@ -74,7 +87,7 @@ public class DetectArtifacts : MonoBehaviour
     }
 
     // check if any of the detected artifacts is within arm's reach
-    private void CheckIfWithinCollectionRange()
+    private void CheckIfCollectible()
     {
         RaycastHit hit;
 

@@ -6,7 +6,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="BottomWrapper" style="flex-grow: 1; position: absolute; right: 15px; left: 15px; bottom: 15px; flex-direction: row;">
             <ui:VisualElement name="InventoryWrapper" style="flex-grow: 1; white-space: normal; text-overflow: clip; flex-direction: row; position: relative; left: auto; bottom: auto;">
-                <ui:Label tabindex="-1" text="Artifacts on my belt:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Inventory" class="text" style="bottom: auto; position: relative; right: auto; left: auto;" />
+                <ui:Label tabindex="-1" text="Artifacts:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Inventory" class="text" style="bottom: auto; position: relative; right: auto; left: auto;" />
                 <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Quantity" class="text" />
             </ui:VisualElement>
             <ui:VisualElement name="ProximityWrapper" style="flex-grow: 1; flex-direction: row; -unity-text-align: upper-left; position: relative; right: auto; bottom: auto;">

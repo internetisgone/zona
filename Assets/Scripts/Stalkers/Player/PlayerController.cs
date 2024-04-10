@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController controller; // temp 
 
-    private bool lmbPressed = false; // temp
-    public GameObject projectile; // temp
+    //private bool lmbPressed = false; // temp
+    //public GameObject projectile; // temp
 
     void Start()
     {

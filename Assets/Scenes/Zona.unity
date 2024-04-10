@@ -236,7 +236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -272,7 +272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (9)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -408,7 +408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -444,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (2)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -517,7 +517,6 @@ MonoBehaviour:
   speed: 20
   jumpForce: 50
   gravityModifier: 2
-  projectile: {fileID: 4643039809162311595, guid: 2b976d8d99ddfb548bc90450cca1861e, type: 3}
 --- !u!114 &867723719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,7 +542,7 @@ Transform:
   m_GameObject: {fileID: 867723715}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 128, y: 0.3, z: 108}
+  m_LocalPosition: {x: 128, y: 0.163, z: 108}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -631,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -667,7 +666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (5)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -693,7 +692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -729,7 +728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (3)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -852,7 +851,7 @@ Transform:
   m_GameObject: {fileID: 1290405612}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.787, z: 0}
+  m_LocalPosition: {x: 0, y: 1.75, z: 0.219}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -923,7 +922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -959,7 +958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (4)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -990,7 +989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1026,7 +1025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (7)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1100,7 +1099,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0df63a77259bfb545a0c075ed75bd033, type: 2}
+  - {fileID: 2100000, guid: 3c4fbd86cf0350245b9bdd6e54a406eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1139,7 +1138,7 @@ Transform:
   m_GameObject: {fileID: 1534350466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 128, y: 2.14, z: 140.3}
+  m_LocalPosition: {x: 128, y: 1, z: 140.3}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1159,7 +1158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1195,7 +1194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (1)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1261,7 +1260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04f8c190cf89d714baff2730df3e2b78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stalkerNPC: {fileID: 1515112916650607844, guid: 9b62273a0c57fc34da1ba8cdb8b14ccd, type: 3}
+  stalkerNPC: {fileID: 2361777987260465710, guid: 82b84f1b3475e9c43a110101f3b3dfa1, type: 3}
 --- !u!1 &1645953872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,7 +1372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1409,7 +1408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (6)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1520,9 +1519,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91de3d2623415a469fac08102c91053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera1: {fileID: 1995402587}
-  camera2: {fileID: 1645953874}
-  camera3: {fileID: 1290405615}
+  FirstPerson: {fileID: 1290405615}
+  ThirdPerson: {fileID: 1645953874}
+  TopDown: {fileID: 1995402587}
 --- !u!4 &1933032926
 Transform:
   m_ObjectHideFlags: 0
@@ -1660,7 +1659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1696,7 +1695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point (8)
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1820,7 +1819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1856,7 +1855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774386365243306173, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
       propertyPath: m_Name
-      value: NPC_Spawn_Point
+      value: SpawnPoint_NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
