@@ -21,16 +21,19 @@ public class PlayerController : MonoBehaviour
 
     // movement
     Rigidbody rb;
-    public float speed = 20f;
-    public float jumpForce = 50f;
+    //private float curSpeed = 0;
+    public float speed = 10f;
+    //public float acceleration = 5f;
+    public float jumpForce = 10f;
     public float gravityModifier = 2f;
 
     private bool isJumping;
     private bool isGrounded;
     private float ySpeed;
 
-    private CharacterController controller; // temp 
+    // private CharacterController controller; // temp 
     private Animator animator;
+    private GameObject firstPersonCamera; 
 
     //private bool lmbPressed = false; // temp
     //public GameObject projectile; // temp
@@ -39,8 +42,9 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        firstPersonCamera = transform.GetChild(1).gameObject; // todo
+
         Physics.gravity *= gravityModifier;
-        controller = GetComponent<CharacterController>();
 
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -53,9 +57,9 @@ public class PlayerController : MonoBehaviour
     {
         GetInput();
 
-        UpdateMouseLook();
+        UpdateRotation();
 
-        Move();
+        //Move();
     }
 
     private void GetInput()
@@ -82,7 +86,7 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
-    private void UpdateMouseLook()
+    private void UpdateRotation()
     {
         // rotation along Y axis (yaw)
         rotationY -= mouseX;
@@ -93,80 +97,58 @@ public class PlayerController : MonoBehaviour
         rotationX -= mouseY;
         rotationX = Math.Clamp(rotationX, -45, 45);
 
-        // apply rotation
-        transform.rotation = Quaternion.Euler(rotationX * mouseSensitivity, -rotationY * mouseSensitivity, 0f);
+        // turn 
+        transform.rotation = Quaternion.Euler(0f, -rotationY * mouseSensitivity, 0f);
+
+        // change camera pitch
+        firstPersonCamera.transform.localRotation = Quaternion.Euler(rotationX * mouseSensitivity, 0f, 0f);
     }
 
     private void Move()
     {
-        // movement based on character controller //
-
         Vector3 movementKeyboard = transform.right * horizontalInput + transform.forward * verticalInput;
         movementKeyboard.y = 0;
 
-        // apply gravity
-        ySpeed = - Physics.gravity.magnitude;
-
         if (isGrounded && isJumping)
         {
-            ySpeed += jumpForce;
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
 
-        Vector3 movement = movementKeyboard + ySpeed * Vector3.up;
+        Vector3 movement = movementKeyboard * speed;
 
-        controller.Move(movement * speed * Time.deltaTime);
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
 
         animator.SetFloat("Speed", new Vector2(movement.x, movement.z).magnitude * speed);
     }
 
     void FixedUpdate()
     {
+        Move();
+
         //if (lmbPressed)
         //{
         //    Instantiate(projectile, transform.position + transform.forward, transform.rotation);
         //}
-
-        //// movement based on rigidbody //
-
-        //// keyboard input
-        //Vector3 movementKeyboard = new Vector3(horizontalInput, 0f, verticalInput);
-
-        //// move in the direction of mouse look
-        //if (movementKeyboard.magnitude > 0)
-        //{
-        //    Vector3 movement = transform.right * horizontalInput + transform.forward * verticalInput;
-        //    rb.AddForce(movement * speed);
-        //}
-
-        //// jump
-        //if (isGrounded && isJumping)
-        //{
-        //    //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        //    rb.velocity = Vector3.up * jumpForce;
-        //    isGrounded = false;
-        //}
     }
 
-    //// check for collision with ground
-    //// does not work with char controller which has a built in capsule collider 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("Collision with " + collision.gameObject);
-    //    if (collision.gameObject.CompareTag("Ground"))
-    //    {
-    //        isGrounded = true;
-    //    }
-    //}
-
     // check for collision with ground
-    // works with char controller
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("Collision with " + hit.gameObject);
-        if (hit.gameObject.CompareTag("Ground"))
+        // Debug.Log("Collision with " + collision.gameObject);
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
         }
     }
+
+    // check for collision with ground (for char controller)
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    //Debug.Log("Collision with " + hit.gameObject);
+    //    if (hit.gameObject.CompareTag("Ground"))
+    //    {
+    //        isGrounded = true;
+    //    }
+    //}
 }

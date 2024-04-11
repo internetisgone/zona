@@ -86,10 +86,4 @@ public class SpawnNPC : MonoBehaviour
         }
         return randomIndices;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

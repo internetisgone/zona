@@ -408,7 +408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e74c3bc6c8e82b2408b81b7377dad36d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.138
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e74c3bc6c8e82b2408b81b7377dad36d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -442,6 +442,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 389562879515575446, guid: e74c3bc6c8e82b2408b81b7377dad36d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.576
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e74c3bc6c8e82b2408b81b7377dad36d, type: 3}
       propertyPath: m_Name
       value: sin_gp5
@@ -452,13 +456,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 9ef4ba32496b12347bad8c45cace6116, type: 2}
     - target: {fileID: 5866666021909216657, guid: e74c3bc6c8e82b2408b81b7377dad36d, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'bip01_r_clavicle'\n\tTransform 'bip01_l_clavicle'\n\tTransform
-        'bip01_pelvis'\n\tTransform 'bip01_spine'\n\tTransform 'bip01_r_clavicle'\n\tTransform
-        'bip01_r_upperarm'\n\tTransform 'bip01_l_clavicle'\n\tTransform 'bip01_l_upperarm'\n\tTransform
-        'bip01_head'\n\tTransform 'bip01_spine2'\n\tand more ...\n\tFrom animation
-        clip 'norm_run_fwd_1'"
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -541,7 +539,6 @@ GameObject:
   - component: {fileID: 867723723}
   - component: {fileID: 867723716}
   - component: {fileID: 867723721}
-  - component: {fileID: 867723722}
   - component: {fileID: 867723724}
   m_Layer: 0
   m_Name: Player
@@ -570,9 +567,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2.24
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.96, z: 0.08}
+  m_Center: {x: 0, y: 0.87, z: 0.08}
 --- !u!114 &867723718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,8 +583,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 1
-  speed: 20
-  jumpForce: 50
+  speed: 50
+  jumpForce: 7
   gravityModifier: 2
 --- !u!114 &867723719
 MonoBehaviour:
@@ -614,11 +611,11 @@ Transform:
   m_GameObject: {fileID: 867723715}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 128, y: 0.163, z: 118.9}
+  m_LocalPosition: {x: 128, y: 0.236, z: 118.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1143160271}
+  - {fileID: 543450652950856630}
   - {fileID: 1290405613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -641,7 +638,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -649,32 +646,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!143 &867723722
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 867723715}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &867723723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,13 +675,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'bip01_r_clavicle'\n\tTransform 'bip01_l_clavicle'\n\tTransform
-    'bip01_pelvis'\n\tTransform 'bip01_spine'\n\tTransform 'bip01_r_clavicle'\n\tTransform
-    'bip01_r_upperarm'\n\tTransform 'bip01_l_clavicle'\n\tTransform 'bip01_l_upperarm'\n\tTransform
-    'bip01_head'\n\tTransform 'bip01_spine2'\n\tand more ...\n\tFrom animation clip
-    'norm_run_fwd_1'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -838,11 +803,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
   m_PrefabInstance: {fileID: 960123655}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1143160271 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e74c3bc6c8e82b2408b81b7377dad36d, type: 3}
-  m_PrefabInstance: {fileID: 749364317}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1290405612
 GameObject:
@@ -1824,6 +1784,11 @@ MonoBehaviour:
   ArtifactNoLongerCollectible: {fileID: 11400000, guid: fea6335aae1afb249bb60565ff750644, type: 2}
   ArtifactCountUpdated: {fileID: 11400000, guid: 42eebd0f5d98d4044937a9d44994409a, type: 2}
   ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
+--- !u!4 &543450652950856630 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e74c3bc6c8e82b2408b81b7377dad36d, type: 3}
+  m_PrefabInstance: {fileID: 749364317}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6162665482198345590
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class DetectArtifacts : MonoBehaviour
 
     // temp
     float collectionRange = 1.8f;
-    float armOrigin = 1.65f;
+    GameObject firstPersonCamera;
 
     void Awake()
     {
@@ -35,7 +35,7 @@ public class DetectArtifacts : MonoBehaviour
         if (isPlayer )
         {
             // todo
-            // set raycast origin & offset according to first person camera 
+            firstPersonCamera = transform.GetChild(1).gameObject;
         }
     }
     void Start()
@@ -91,9 +91,10 @@ public class DetectArtifacts : MonoBehaviour
     {
         RaycastHit hit;
 
-        Vector3 origin = transform.position + armOrigin * transform.up;
+        //Vector3 origin = transform.position + armOrigin * transform.up;
+        Vector3 origin = firstPersonCamera.transform.position;
 
-        if (Physics.Raycast(origin, transform.forward, out hit, collectionRange, artifactLayerMask))
+        if (Physics.Raycast(origin, firstPersonCamera.transform.forward, out hit, collectionRange, artifactLayerMask))
         {
             ArtifactIsCollectible.RaiseEvent();
             if (Input.GetKey(KeyCode.F))
