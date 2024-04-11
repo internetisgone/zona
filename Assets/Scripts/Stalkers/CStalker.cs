@@ -10,6 +10,12 @@ public class CStalker : MonoBehaviour
     // public List<Artifact> Inventory { get; set; }
     public int ArtifactCount { get; private set; }
 
+    //// animation states
+    //public readonly static int IDLE = Animator.StringToHash("Base Layer.idle");
+    //public readonly static int WALK = Animator.StringToHash("Base Layer.walk");
+    //public readonly static int WALK_DRUNK = Animator.StringToHash("Base Layer.walk_drunk");
+    //public readonly static int RUN = Animator.StringToHash("Base Layer.run");
+
     public CStalker() : this("Marked One")
     {
         
@@ -21,6 +27,10 @@ public class CStalker : MonoBehaviour
         Speed = 1.8f;
         //Inventory = new List<Artifact>();
         ArtifactCount = 0;
+    }
+
+    void Awake()
+    {
     }
 
     public virtual void ChangeArtifactCount(int delta)

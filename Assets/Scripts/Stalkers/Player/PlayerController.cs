@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private float ySpeed;
 
     private CharacterController controller; // temp 
+    private Animator animator;
 
     //private bool lmbPressed = false; // temp
     //public GameObject projectile; // temp
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         Physics.gravity *= gravityModifier;
         controller = GetComponent<CharacterController>();
 
@@ -114,6 +116,8 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = movementKeyboard + ySpeed * Vector3.up;
 
         controller.Move(movement * speed * Time.deltaTime);
+
+        animator.SetFloat("Speed", new Vector2(movement.x, movement.z).magnitude * speed);
     }
 
     void FixedUpdate()

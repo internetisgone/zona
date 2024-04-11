@@ -8,20 +8,12 @@ public class StalkerNPC : CStalker
     private GameObject campfire; // temp object that act as a goal
     private float rotSpeed = 3f;
     private Rigidbody rb;
-
-    // todo use same animator for npc and player?
     private Animator animator;
 
-    readonly static int IDLE = Animator.StringToHash("Base Layer.idle");
-    readonly static int WALK = Animator.StringToHash("Base Layer.walk");
-    readonly static int WALK_DRUNK = Animator.StringToHash("Base Layer.walk_drunk");
-
-    private int curAnimation = IDLE;
     void Awake()
     {
         campfire = GameObject.FindWithTag("Campfire");
         rb = GetComponent<Rigidbody>();
-
         animator = GetComponent<Animator>();
     }
 
@@ -42,12 +34,12 @@ public class StalkerNPC : CStalker
         {
             if (movement.magnitude > 3)
             {
-                ChangeAnimation(WALK);
                 MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
+                animator.SetFloat("Speed", Speed);
             }
             else
             {
-                ChangeAnimation(IDLE);
+                animator.SetFloat("Speed", 0);
             }
         }
 
@@ -59,15 +51,6 @@ public class StalkerNPC : CStalker
         //{
         //    ChangeAnimation(IDLE);
         //}
-    }
-
-    private void ChangeAnimation(int newAnimation, float crossfadeDuration = 0.2f)
-    {
-        if (curAnimation != newAnimation)
-        {
-            curAnimation = newAnimation;
-            animator.CrossFade(curAnimation, crossfadeDuration);
-        }
     }
 
     // todo prob move these functions to a util class
