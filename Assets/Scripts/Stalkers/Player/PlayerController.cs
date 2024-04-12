@@ -55,18 +55,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetInput();
-
         UpdateRotation();
     }
 
     void FixedUpdate()
     {
         Move();
-
-        //if (lmbPressed)
-        //{
-        //    Instantiate(projectile, transform.position + transform.forward, transform.rotation);
-        //}
+        UpdateAnimation();
     }
 
     private void LateUpdate()
@@ -83,7 +78,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space)) isJumping = false;
         if (Input.GetKeyDown(KeyCode.Space)) isJumping = true;
         isSprinting = Input.GetKey(KeyCode.LeftShift);
-        animator.SetBool("IsSprinting", isSprinting);
 
         // mouse 
         mouseX = Input.GetAxis("Mouse X");
@@ -123,15 +117,20 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
+        //if (isJumping) rb.AddForce(Vector3.down * gravity);
 
         Vector3 curMovement = rb.velocity;
         Vector3 newMovement = Vector3.Lerp(curMovement, movementInput * targetSpeed, acceleration);
 
         rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
 
-        // Debug.LogFormat("movementInput {0}, curMovement {1}, newMovement {2}, rb.velocity {3}", movementInput, curMovement, newMovement, rb.velocity);
+        // Debug.LogFormat("movementInput {0}, curMovement {1}, newMovement {2}, rb.velocity {3}", movementInput, curMovement, newMovement, rb.velocity);     
+    }
 
+    private void UpdateAnimation()
+    {
         animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
+        animator.SetBool("IsSprinting", isSprinting && rb.velocity.magnitude > speed);
     }
 
     private void UpdateCamera()
@@ -145,13 +144,35 @@ public class PlayerController : MonoBehaviour
         thirdPersonCamera.transform.localRotation = Quaternion.Euler(rotationX2 * mouseSensitivity, 0f, 0f);
     }
 
-    // check for collision with ground
+    // check for collision with ground and calculate slope angle
     private void OnCollisionEnter(Collision collision)
     {
-        // Debug.Log("Collision with " + collision.gameObject);
+        //Debug.LogFormat("Collision with {0}, normal {1}" + collision.gameObject, collision.);
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+
+            //Vector3 normal = collision.contacts[0].normal;
+            //Debug.DrawRay(transform.position, normal, Color.white, 1f);
+
+            //if (normal.normalized != transform.up)
+            //{
+            //    isSliding = true;
+            //}
+            //else
+            //{
+            //    isSliding = false;
+            //}
+
+            //foreach (ContactPoint contact in collision.contacts)
+            //{
+                //Debug.DrawRay(transform.position, contact.normal, Color.white, 1f);
+                //Vector3 temp = Vector3.Cross(contact.normal, Vector3.down);
+                //Vector3 groundSlopeDir = Vector3.Cross(temp, contact.normal);
+                //slopeAngle = Vector3.Angle(contact.normal, Vector3.up);
+                //Debug.LogFormat("contact point {0}, normal {1}, groundSlopeDir {2}, slopeAngle {3}", contact.point, contact.normal, groundSlopeDir, slopeAngle);
+            //}
+
         }
     }
 

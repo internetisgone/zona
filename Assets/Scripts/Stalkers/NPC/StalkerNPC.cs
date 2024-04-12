@@ -6,7 +6,7 @@ using UnityEngine;
 public class StalkerNPC : CStalker
 {
     private GameObject campfire; // temp object that act as a goal
-    private float rotSpeed = 3f;
+    private float rotSpeed = 10f;
     private Rigidbody rb;
     private Animator animator;
 
@@ -17,7 +17,7 @@ public class StalkerNPC : CStalker
         animator = GetComponent<Animator>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 movement = campfire.transform.position - transform.position;
 
@@ -32,14 +32,15 @@ public class StalkerNPC : CStalker
         }
         else
         {
-            if (movement.magnitude > 3)
+            if (movement.magnitude > 4)
             {
                 MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
-                animator.SetFloat("Speed", Speed);
+                animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
             }
             else
             {
                 animator.SetFloat("Speed", 0);
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
             }
         }
 
@@ -55,7 +56,12 @@ public class StalkerNPC : CStalker
 
     private void MoveStalker(Vector3 movementNormalized)
     {
-        transform.position += movementNormalized * Speed * Time.deltaTime;
+        //transform.position += movementNormalized * Speed * Time.deltaTime;
+
+        Vector3 curMovement = rb.velocity;
+        Vector3 newMovement = Vector3.Lerp(curMovement, movementNormalized * Speed, 10f);
+
+        rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
     }
 
     // todo prob move these functions to a util class
@@ -73,11 +79,6 @@ public class StalkerNPC : CStalker
     {
         Quaternion lookRotation = Quaternion.LookRotation(movement, Vector3.up);
         transform.localRotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpeed);
-    }
-
-    void FixedUpdate()
-    {
-        
     }
 
     void OnCollisionEnter(Collision collision)

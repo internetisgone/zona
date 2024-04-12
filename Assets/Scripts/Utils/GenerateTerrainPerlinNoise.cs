@@ -39,7 +39,6 @@ public class TerrainNoise : MonoBehaviour
                 heights[x, y] = calcHeight(x, y);
             }
         }
-        print(heights);
         return heights;
     }
 

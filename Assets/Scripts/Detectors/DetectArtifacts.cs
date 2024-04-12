@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 public class DetectArtifacts : MonoBehaviour
 {
-    [HideInInspector]
-    public Detector detector;
+    private Detector detector;
     private int artifactLayerMask;
 
     private bool isDetected;
@@ -24,7 +23,7 @@ public class DetectArtifacts : MonoBehaviour
 
     void Awake()
     {
-        detector = ScriptableObject.CreateInstance<Detector>();
+        detector = new Detector();
         isDetected = false;
 
         int artifactLayer = LayerMask.NameToLayer("Artifact");
@@ -89,12 +88,21 @@ public class DetectArtifacts : MonoBehaviour
     // check if any of the detected artifacts is within arm's reach
     private void CheckIfCollectible()
     {
+        Vector3 origin, direction;
         RaycastHit hit;
 
-        //Vector3 origin = transform.position + armOrigin * transform.up;
-        Vector3 origin = firstPersonCamera.transform.position;
+        if (isPlayer)
+        {
+            origin = firstPersonCamera.transform.position;
+            direction = firstPersonCamera.transform.forward;
+        }
+        else
+        {
+            origin = transform.position; // + armOrigin * transform.up;
+            direction = transform.forward;
+        }
 
-        if (Physics.Raycast(origin, firstPersonCamera.transform.forward, out hit, collectionRange, artifactLayerMask))
+        if (Physics.Raycast(origin, direction, out hit, collectionRange, artifactLayerMask))
         {
             ArtifactIsCollectible.RaiseEvent();
             if (Input.GetKey(KeyCode.F))

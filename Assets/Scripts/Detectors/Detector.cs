@@ -9,7 +9,8 @@ public enum DetectorType
     Veles = 2,
     Svarog = 3
 }
-public class Detector : ScriptableObject
+
+public class Detector
 {
     public DetectorType DetectorType { get; set; }
     public float Interval { get; }
