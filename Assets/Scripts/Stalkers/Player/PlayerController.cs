@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
 
     // movement
     Rigidbody rb;
-    //private float curSpeed = 0;
-    public float speed = 20f;
-    //public float acceleration = 5f;
+    public float speed = 15f;
+    [Range(0,1)]
+    public float acceleration = 0.3f;
     public float jumpForce = 7f;
     public float gravityModifier = 3f;
 
@@ -117,11 +117,14 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
 
-        Vector3 movement = movementKeyboard * speed;
+        Vector3 curMovement = rb.velocity;
+        Vector3 newMovement = Vector3.Lerp(curMovement, movementKeyboard * speed, acceleration);
 
-        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+        rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
 
-        animator.SetFloat("Speed", new Vector2(movement.x, movement.z).magnitude * speed);
+        // Debug.LogFormat("movementKeyboard {0}, curMovement {1}, newMovement {2}, rb.velocity {3}", movementKeyboard, curMovement, newMovement, rb.velocity);
+
+        animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
     }
 
     private void UpdateCamera()
