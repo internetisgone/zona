@@ -53,6 +53,11 @@ public class StalkerNPC : CStalker
         //}
     }
 
+    private void MoveStalker(Vector3 movementNormalized)
+    {
+        transform.position += movementNormalized * Speed * Time.deltaTime;
+    }
+
     // todo prob move these functions to a util class
     private bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)
     {

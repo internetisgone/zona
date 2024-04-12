@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //[SerializeField]
-    //public bool useRigidbody = true;
-
     // keyboard
     private float verticalInput;
     private float horizontalInput;
@@ -22,18 +19,17 @@ public class PlayerController : MonoBehaviour
     // movement
     Rigidbody rb;
     //private float curSpeed = 0;
-    public float speed = 10f;
+    public float speed = 20f;
     //public float acceleration = 5f;
-    public float jumpForce = 10f;
-    public float gravityModifier = 2f;
+    public float jumpForce = 7f;
+    public float gravityModifier = 3f;
 
     private bool isJumping;
     private bool isGrounded;
-    private float ySpeed;
 
-    // private CharacterController controller; // temp 
     private Animator animator;
     private GameObject firstPersonCamera; 
+    private GameObject thirdPersonCamera;
 
     //private bool lmbPressed = false; // temp
     //public GameObject projectile; // temp
@@ -43,6 +39,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         firstPersonCamera = transform.GetChild(1).gameObject; // todo
+        thirdPersonCamera = transform.GetChild(2).gameObject; // todo
 
         Physics.gravity *= gravityModifier;
 
@@ -50,7 +47,6 @@ public class PlayerController : MonoBehaviour
 
         isJumping = false;
         isGrounded = true;
-        ySpeed = 0;
     }
 
     void Update()
@@ -58,8 +54,21 @@ public class PlayerController : MonoBehaviour
         GetInput();
 
         UpdateRotation();
+    }
 
-        //Move();
+    void FixedUpdate()
+    {
+        Move();
+
+        //if (lmbPressed)
+        //{
+        //    Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+        //}
+    }
+
+    private void LateUpdate()
+    {
+        UpdateCamera();
     }
 
     private void GetInput()
@@ -93,15 +102,8 @@ public class PlayerController : MonoBehaviour
         if (rotationY < -180) rotationY = 180f;
         else if (rotationY > 180) rotationY = -180f;
 
-        // rotation along X axis (pitch)
-        rotationX -= mouseY;
-        rotationX = Math.Clamp(rotationX, -45, 45);
-
-        // turn 
+         // turn 
         transform.rotation = Quaternion.Euler(0f, -rotationY * mouseSensitivity, 0f);
-
-        // change camera pitch
-        firstPersonCamera.transform.localRotation = Quaternion.Euler(rotationX * mouseSensitivity, 0f, 0f);
     }
 
     private void Move()
@@ -122,14 +124,15 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", new Vector2(movement.x, movement.z).magnitude * speed);
     }
 
-    void FixedUpdate()
+    private void UpdateCamera()
     {
-        Move();
+        // rotation along X axis (pitch)
+        rotationX -= mouseY;
+        float rotationX1 = Math.Clamp(rotationX, -45, 45);
+        float rotationX2 = Math.Clamp(rotationX, -45, 10);
 
-        //if (lmbPressed)
-        //{
-        //    Instantiate(projectile, transform.position + transform.forward, transform.rotation);
-        //}
+        firstPersonCamera.transform.localRotation = Quaternion.Euler(rotationX1 * mouseSensitivity, 0f, 0f);
+        thirdPersonCamera.transform.localRotation = Quaternion.Euler(rotationX2 * mouseSensitivity, 0f, 0f);
     }
 
     // check for collision with ground

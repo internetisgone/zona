@@ -24,7 +24,7 @@ public class CStalker : MonoBehaviour
     public CStalker(string name)
     {
         Name = name;
-        Speed = 1.8f;
+        Speed = 1.6f;
         //Inventory = new List<Artifact>();
         ArtifactCount = 0;
     }
@@ -36,10 +36,5 @@ public class CStalker : MonoBehaviour
     public virtual void ChangeArtifactCount(int delta)
     {
         ArtifactCount += delta;
-    }
-
-    public void MoveStalker(Vector3 movementNormalized)
-    {
-        transform.position += movementNormalized * Speed * Time.deltaTime;
     }
 }
