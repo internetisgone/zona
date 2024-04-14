@@ -1,30 +1,50 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
 
 public class StalkerNPC : CStalker
 {
-    private GameObject campfire; // temp object that act as a goal
+    private GameObject campfire; // temp
+    private Vector3 goal; // temp
+
     private float rotSpeed = 10f;
     private Rigidbody rb;
     private Animator animator;
+    private StalkerState state;
 
     void Awake()
     {
         campfire = GameObject.FindWithTag("Campfire");
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+
+        // temp
+        state = StalkerState.Idle;
+        goal = campfire.transform.position;
+        InvokeRepeating("TrySetGoal", 5, 5); 
     }
 
     void FixedUpdate()
     {
-        Vector3 movement = campfire.transform.position - transform.position;
+        Vector3 movement = goal - transform.position;
+        Vector2 xzMovement = new Vector2(movement.x, movement.z);
+
+        if (xzMovement.magnitude < 1)
+        {
+            // already at goal
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            animator.SetFloat("Speed", 0);
+            state = StalkerState.Idle;
+            return;
+        }
 
         // check if stalker is facing the goal
-        Vector2 xzMovement = new Vector2(movement.x, movement.z);
-        Vector2 xzFacing = new Vector2 (transform.forward.x, transform.forward.z);
-        bool shouldTurn = ! IsParallel(xzMovement.normalized, xzFacing);
+        Vector2 xzFacing = new Vector2(transform.forward.x, transform.forward.z);
+        bool shouldTurn = !IsParallel(xzMovement.normalized, xzFacing);
+        state = StalkerState.Wandering;
 
         if (shouldTurn)
         {
@@ -32,16 +52,8 @@ public class StalkerNPC : CStalker
         }
         else
         {
-            if (movement.magnitude > 4)
-            {
-                MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
-                animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
-            }
-            else
-            {
-                animator.SetFloat("Speed", 0);
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
-            }
+            MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
+            animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
         }
 
         //if (rb.velocity.magnitude >= Speed)
@@ -52,6 +64,34 @@ public class StalkerNPC : CStalker
         //{
         //    ChangeAnimation(IDLE);
         //}
+    }
+
+    private void TrySetGoal()
+    {
+        if (state != StalkerState.Idle) return;
+
+        // 20% chance of having a new goal
+        bool hasNewGoal = UnityEngine.Random.value < 0.2f;
+        if (!hasNewGoal) return;
+
+        // new goal will be set after a random delay
+        float delay = UnityEngine.Random.Range(1, 5);
+        IEnumerator coroutine = SetRandomGoalWithDelay(delay);
+        StartCoroutine(coroutine);
+    }
+
+    private IEnumerator SetRandomGoalWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        int xRange = 50;
+        int zRange = 50;
+
+        float xCoord = UnityEngine.Random.Range(campfire.transform.position.x - xRange / 2, campfire.transform.position.x + xRange / 2);
+        float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - zRange / 2, campfire.transform.position.z + zRange / 2);
+
+        goal = new Vector3(xCoord, transform.position.y, zCoord);
+        Debug.LogFormat("New goal for {0}: {1}", Name, goal);
     }
 
     private void MoveStalker(Vector3 movementNormalized)
@@ -67,7 +107,7 @@ public class StalkerNPC : CStalker
     // todo prob move these functions to a util class
     private bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)
     {
-        float tolerance = 0.01f;
+        float tolerance = 0.02f;
         return CloseEnough(xzMovement.x, xzFacing.x, tolerance) && CloseEnough(xzMovement.y, xzFacing.y, tolerance);
     }
     private bool CloseEnough(float x, float y, float tolerance)
@@ -78,7 +118,7 @@ public class StalkerNPC : CStalker
     private void TurnTowards(Vector3 movement)
     {
         Quaternion lookRotation = Quaternion.LookRotation(movement, Vector3.up);
-        transform.localRotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpeed);
+        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpeed));
     }
 
     void OnCollisionEnter(Collision collision)

@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// temp
+public enum StalkerState
+{
+    Idle = 0,
+    Wandering = 1,
+}
 public class CStalker : MonoBehaviour
 {
     public string Name { get; set; }
@@ -24,7 +30,8 @@ public class CStalker : MonoBehaviour
     public CStalker(string name)
     {
         Name = name;
-        Speed = 1.6f;
+        //Speed = 1.6f; // normal walking speed
+        Speed = 10f; // temp
         //Inventory = new List<Artifact>();
         ArtifactCount = 0;
     }
