@@ -13,13 +13,13 @@ public class StalkerNPC : CStalker
     private float rotSpeed = 10f;
     private Rigidbody rb;
     private Animator animator;
-    private StalkerState state;
+    public StalkerState state;
 
     void Awake()
     {
         campfire = GameObject.FindWithTag("Campfire");
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
 
         // temp
         state = StalkerState.Idle;
@@ -31,27 +31,29 @@ public class StalkerNPC : CStalker
     {
         Vector3 movement = goal - transform.position;
         Vector2 xzMovement = new Vector2(movement.x, movement.z);
+        Vector3 forward = new Vector3(movement.x, 0, movement.z);
 
         if (xzMovement.magnitude < 1)
         {
             // already at goal
+            state = StalkerState.Idle;
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
             animator.SetFloat("Speed", 0);
-            state = StalkerState.Idle;
             return;
         }
 
         // check if stalker is facing the goal
         Vector2 xzFacing = new Vector2(transform.forward.x, transform.forward.z);
         bool shouldTurn = !IsParallel(xzMovement.normalized, xzFacing);
-        state = StalkerState.Wandering;
 
         if (shouldTurn)
         {
-            TurnTowards(movement);
+            state = StalkerState.Turning;
+            TurnTowards(forward);
         }
         else
         {
+            state = StalkerState.Wandering;
             MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
             animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
         }
@@ -115,9 +117,9 @@ public class StalkerNPC : CStalker
         return Math.Abs(x - y) <= tolerance;
     }
 
-    private void TurnTowards(Vector3 movement)
+    private void TurnTowards(Vector3 forward)
     {
-        Quaternion lookRotation = Quaternion.LookRotation(movement, Vector3.up);
+        Quaternion lookRotation = Quaternion.LookRotation(forward, Vector3.up);
         rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpeed));
     }
 

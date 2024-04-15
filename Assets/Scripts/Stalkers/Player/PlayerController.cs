@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
         firstPersonCamera = transform.GetChild(1).gameObject; // todo
         thirdPersonCamera = transform.GetChild(2).gameObject; // todo
 
@@ -68,12 +68,12 @@ public class PlayerController : MonoBehaviour
     {
         UpdateCamera();
     }
-
+    
     private void GetInput()
     {
         // keyboard
-        verticalInput = Input.GetAxis("Vertical");
-        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyUp(KeyCode.Space)) isJumping = false;
         if (Input.GetKeyDown(KeyCode.Space)) isJumping = true;

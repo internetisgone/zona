@@ -7,6 +7,7 @@ public enum StalkerState
 {
     Idle = 0,
     Wandering = 1,
+    Turning = 2,
 }
 public class CStalker : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class CStalker : MonoBehaviour
     {
         Name = name;
         //Speed = 1.6f; // normal walking speed
-        Speed = 10f; // temp
+        Speed = 5f; // temp
         //Inventory = new List<Artifact>();
         ArtifactCount = 0;
     }
