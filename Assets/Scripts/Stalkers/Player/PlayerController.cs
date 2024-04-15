@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-        UpdateAnimation();
+        UpdateAnimationParams();
     }
 
     private void LateUpdate()
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
         // Debug.LogFormat("movementInput {0}, curMovement {1}, newMovement {2}, rb.velocity {3}", movementInput, curMovement, newMovement, rb.velocity);     
     }
 
-    private void UpdateAnimation()
+    private void UpdateAnimationParams()
     {
         animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
         animator.SetBool("IsSprinting", isSprinting && rb.velocity.magnitude > speed);

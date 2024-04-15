@@ -7,13 +7,14 @@ using UnityEngine;
 
 public class StalkerNPC : CStalker
 {
+    public StalkerState State { get; set; }
+
     private GameObject campfire; // temp
     private Vector3 goal; // temp
 
     private float rotSpeed = 10f;
     private Rigidbody rb;
     private Animator animator;
-    public StalkerState state;
 
     void Awake()
     {
@@ -21,10 +22,10 @@ public class StalkerNPC : CStalker
         rb = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
 
-        // temp
-        state = StalkerState.Idle;
+        // temp way to move around
+        State = StalkerState.Idle;
         goal = campfire.transform.position;
-        InvokeRepeating("TrySetGoal", 5, 5); 
+        InvokeRepeating("TrySetGoal", 5, 5);
     }
 
     void FixedUpdate()
@@ -35,23 +36,23 @@ public class StalkerNPC : CStalker
         if (forward.magnitude < 1)
         {
             // already at goal
-            state = StalkerState.Idle;
+            State = StalkerState.Idle;
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
             animator.SetFloat("Speed", 0);
             return;
         }
 
+        State = StalkerState.Wandering;
         // check if stalker is facing the goal
         bool shouldTurn = !IsParallel(forward.normalized, transform.forward);
 
         if (shouldTurn)
         {
-            state = StalkerState.Turning;
+            // state = StalkerState.Turning;
             TurnTowards(forward);
         }
         else
         {
-            state = StalkerState.Wandering;
             MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
             animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
         }
@@ -68,7 +69,7 @@ public class StalkerNPC : CStalker
 
     private void TrySetGoal()
     {
-        if (state != StalkerState.Idle) return;
+        if (State != StalkerState.Idle) return;
 
         // 20% chance of having a new goal
         bool hasNewGoal = UnityEngine.Random.value < 0.2f;

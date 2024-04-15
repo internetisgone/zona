@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7167260700310277401}
   - component: {fileID: 4750429806808667977}
   - component: {fileID: -4594695867262497481}
+  - component: {fileID: -7578768731147561641}
   m_Layer: 0
   m_Name: NPC_Stalker
   m_TagString: NPC
@@ -97,6 +98,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &-7578768731147561641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2361777987260465710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6637a5560c2914486cf8a10e2b0b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5311515945891413722
 PrefabInstance:
   m_ObjectHideFlags: 0

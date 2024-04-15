@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 // temp
 public enum StalkerState
 {
     Idle = 0,
     Wandering = 1,
-    Turning = 2,
 }
 public class CStalker : MonoBehaviour
 {
@@ -44,5 +44,6 @@ public class CStalker : MonoBehaviour
     public virtual void ChangeArtifactCount(int delta)
     {
         ArtifactCount += delta;
+        Debug.LogFormat("{0} added {1} artifact(s) to inventory", Name, delta);
     }
 }

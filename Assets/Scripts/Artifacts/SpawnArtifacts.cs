@@ -11,8 +11,8 @@ public class SpawnArtifacts : MonoBehaviour
     // private ArtifactData[] artifactData;
     public GameObject artifactPrefab;
 
-    private int minCount = 10;
-    private int maxCount = 20;
+    private int minCount = 40;
+    private int maxCount = 50;
     private int xRange = 100;
     private int zRange = 100;
 

@@ -944,11 +944,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 867723720}
-  - component: {fileID: 867723719}
   - component: {fileID: 867723718}
   - component: {fileID: 867723723}
   - component: {fileID: 867723716}
   - component: {fileID: 867723721}
+  - component: {fileID: 867723724}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -997,21 +997,6 @@ MonoBehaviour:
   acceleration: 0.3
   jumpForce: 7
   gravityModifier: 3
---- !u!114 &867723719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 867723715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea2ae1615e0e2cb4f83bf51147c8df37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ArtifactIsCollectible: {fileID: 11400000, guid: d9c14ea9559a8634c93068cfa360fa83, type: 2}
-  ArtifactNoLongerCollectible: {fileID: 11400000, guid: fea6335aae1afb249bb60565ff750644, type: 2}
-  ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
 --- !u!4 &867723720
 Transform:
   m_ObjectHideFlags: 0
@@ -1070,6 +1055,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArtifactCountUpdated: {fileID: 11400000, guid: 42eebd0f5d98d4044937a9d44994409a, type: 2}
+--- !u!114 &867723724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867723715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29241aa20bb09344812f1f5c648ffb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArtifactIsCollectible: {fileID: 0}
+  ArtifactNoLongerCollectible: {fileID: 0}
+  ArtifactProximityUpdated: {fileID: 0}
 --- !u!1 &919836576
 GameObject:
   m_ObjectHideFlags: 0
