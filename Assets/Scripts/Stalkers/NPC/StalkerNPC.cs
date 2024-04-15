@@ -30,10 +30,9 @@ public class StalkerNPC : CStalker
     void FixedUpdate()
     {
         Vector3 movement = goal - transform.position;
-        Vector2 xzMovement = new Vector2(movement.x, movement.z);
         Vector3 forward = new Vector3(movement.x, 0, movement.z);
 
-        if (xzMovement.magnitude < 1)
+        if (forward.magnitude < 1)
         {
             // already at goal
             state = StalkerState.Idle;
@@ -43,8 +42,7 @@ public class StalkerNPC : CStalker
         }
 
         // check if stalker is facing the goal
-        Vector2 xzFacing = new Vector2(transform.forward.x, transform.forward.z);
-        bool shouldTurn = !IsParallel(xzMovement.normalized, xzFacing);
+        bool shouldTurn = !IsParallel(forward.normalized, transform.forward);
 
         if (shouldTurn)
         {
