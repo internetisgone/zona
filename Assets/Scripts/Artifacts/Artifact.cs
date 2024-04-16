@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 using UnityEngine;
 
 public enum ArtifactType
@@ -16,10 +17,19 @@ public enum ArtifactType
 public class Artifact : MonoBehaviour
 {
     public ArtifactType Type { get; }
-    public GameObject Prefab { get; private set; }
-    public bool isHighlighted = false;
+    //public GameObject Prefab { get; private set; }
+    //public bool isHighlighted = false;
     //private Renderer renderer;
     //private Color color;
+    public Artifact() : this(ArtifactType.Moonlight)
+    {
+
+    }
+
+    public Artifact(ArtifactType type)
+    {
+        Type = type;
+    }
 
     private void Awake()
     {
@@ -39,4 +49,9 @@ public class Artifact : MonoBehaviour
     //    isHighlighted = false;
     //    renderer.material.color = color;
     //}
+
+    public void OnCollected()
+    {
+        Destroy(gameObject);
+    }
 }

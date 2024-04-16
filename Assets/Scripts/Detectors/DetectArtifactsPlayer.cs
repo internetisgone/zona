@@ -12,6 +12,8 @@ public class DetectArtifactsPlayer : DetectArtifacts
 
     public EventFloat ArtifactProximityUpdated;
 
+    public EventBool DetectorEquipped;
+
     GameObject firstPersonCamera;
 
     void Awake()
@@ -28,6 +30,15 @@ public class DetectArtifactsPlayer : DetectArtifacts
 
     void Update()
     {
+        // equip / unequip detector
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            isEquipped = !isEquipped;
+            DetectorEquipped.RaiseEvent(isEquipped);
+        }
+
+        if (isEquipped == false) return;
+
         if (IsDetected)
         {
             CheckIfCollectible();

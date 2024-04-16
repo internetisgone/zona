@@ -5,12 +5,14 @@ using UnityEngine.Events;
 public abstract class DetectArtifacts : MonoBehaviour
 {
     public Detector Detector { get; set; }
+    public bool isEquipped {  get; set; }
     public bool IsDetected { get; set; }
     public int ArtifactLayerMask { get; }
 
     public DetectArtifacts()
     { 
         Detector = new Detector();
+        isEquipped = true;
         IsDetected = false;
 
         //int artifactLayer = LayerMask.NameToLayer("Artifact");

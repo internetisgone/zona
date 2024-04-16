@@ -9,6 +9,7 @@ public class HUDEvents : MonoBehaviour
     private UIDocument document;
     private Label collectTextTip;
     private Label counter;
+    private VisualElement proximityWrapper;
     private Label proximityIndicator;
 
     public EventVoid ArtifactIsCollectible;
@@ -17,11 +18,14 @@ public class HUDEvents : MonoBehaviour
     public EventInt ArtifactCountUpdated;
     public EventFloat ArtifactProximityUpdated;
 
+    public EventBool DetectorEquipped;
+
     void Awake()
     {
         document = GetComponent<UIDocument>();
         collectTextTip = document.rootVisualElement.Q("CollectText") as Label;
         counter = document.rootVisualElement.Q("Quantity") as Label;
+        proximityWrapper = document.rootVisualElement.Q("ProximityWrapper");
         proximityIndicator = document.rootVisualElement.Q("ProximityValue") as Label;
     }
 
@@ -32,6 +36,8 @@ public class HUDEvents : MonoBehaviour
 
         ArtifactCountUpdated.OnEventRaised += UpdateArtifactCounter;
         ArtifactProximityUpdated.OnEventRaised += UpdateProximity;
+
+        DetectorEquipped.OnEventRaised += ToggleDetector;
     }
 
     private void OnDisable()
@@ -41,6 +47,8 @@ public class HUDEvents : MonoBehaviour
 
         ArtifactCountUpdated.OnEventRaised -= UpdateArtifactCounter;
         ArtifactProximityUpdated.OnEventRaised -= UpdateProximity;
+
+        DetectorEquipped.OnEventRaised -= ToggleDetector;
     }
 
     private void ShowCollectText()
@@ -68,5 +76,10 @@ public class HUDEvents : MonoBehaviour
         {
             proximityIndicator.text = p.ToString();
         }
+    }
+
+    private void ToggleDetector(bool toggle)
+    {
+        proximityWrapper.visible = toggle;
     }
 }

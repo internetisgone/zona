@@ -41,7 +41,7 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
     public virtual void CollectArtifact(GameObject artifactObj)
     {
         ArtifactCount += 1;
-        Destroy(artifactObj);
+        artifactObj.GetComponent<Artifact>().OnCollected();
         Debug.LogFormat("{0} added 1 artifact to inventory", Name);
     }
 }

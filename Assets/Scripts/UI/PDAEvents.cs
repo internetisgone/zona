@@ -36,7 +36,7 @@ public class PDAEvents : MonoBehaviour
         container.visible = false;
     }
 
-    void OnEnable()
+    void Start()
     {
         stalkersList = spawner.stalkersList;
         stalkersList.Add(player);
