@@ -95,5 +95,8 @@ public class MenuScreenEvents : MonoBehaviour
     {
         startBtn.UnregisterCallback<PointerUpEvent>(OnStartClicked);
         settingsBtn.UnregisterCallback<PointerUpEvent>(OnSettingsClicked);
+        confirmBtn.UnregisterCallback<PointerUpEvent>(OnConfirmSettings);
+        resetBtn.UnregisterCallback<PointerUpEvent>(OnResetSettings); ;
+
     }
 }

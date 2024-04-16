@@ -11,6 +11,8 @@ public class SpawnNPC : MonoBehaviour
     public NPCData npcData;
     private SpawnPoint[] spawnPoints;
 
+    public List<CStalker> stalkersList;
+
     private int count;
     private int minCount = 3;
     private int maxCount = 7;
@@ -51,6 +53,7 @@ public class SpawnNPC : MonoBehaviour
             // init stalker data
             stalker.Name = stalkerNames[randomIndex];
             stalker.StalkerData = npcData;
+            stalkersList.Add(stalker);
             Debug.Log("Spawned new stalker " + stalker.Name);
         }
     }

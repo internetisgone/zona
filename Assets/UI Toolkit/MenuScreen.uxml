@@ -11,10 +11,10 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="SettingsWrapper" style="flex-grow: 1; position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex;">
-        <ui:VisualElement name="MouseSensitivity" class="settings-item text" style="flex-grow: 1; justify-content: center;">
+        <ui:VisualElement name="MouseSensitivity" class="text list-item" style="flex-grow: 1; justify-content: center;">
             <ui:Slider label="Mouse Sensitivity" high-value="100" name="MouseSensitivitySlider" class="slider" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
         </ui:VisualElement>
-        <ui:VisualElement name="NPCSpeed" class="settings-item text" style="flex-grow: 1;">
+        <ui:VisualElement name="NPCSpeed" class="text list-item" style="flex-grow: 1;">
             <ui:Slider label="NPC Speed" high-value="100" name="NPCSpeedSlider" class="slider" />
         </ui:VisualElement>
         <ui:VisualElement name="SettingsBtnWrapper" class="button-wrapper" style="flex-grow: 1;">

@@ -42,7 +42,7 @@
     -unity-background-scale-mode: scale-and-crop;
 }
 
-.settings-item {
+.list-item {
     width: auto;
     height: auto;
     max-height: 70px;
