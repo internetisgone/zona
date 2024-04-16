@@ -17,9 +17,12 @@ public enum ArtifactType
 public class Artifact : MonoBehaviour
 {
     public ArtifactType Type { get; }
+    private Animator animator;
+
+    private Renderer renderer;
+
     //public GameObject Prefab { get; private set; }
     //public bool isHighlighted = false;
-    //private Renderer renderer;
     //private Color color;
     public Artifact() : this(ArtifactType.Moonlight)
     {
@@ -33,25 +36,45 @@ public class Artifact : MonoBehaviour
 
     private void Awake()
     {
-        //renderer = GetComponent<Renderer>();
-        //color = renderer.material.color;
+        animator = GetComponent<Animator>();
+        renderer = GetComponent<Renderer>();
+
+        //renderer.enabled = false;
     }
 
-    //// highlight when detected & ready to be collected (temp)
-    //public void SetHighlight()
-    //{
-    //    isHighlighted = true;
-    //    renderer.material.color = Color.white;
-    //}
-
-    //public void UnsetHighlight()
-    //{
-    //    isHighlighted = false;
-    //    renderer.material.color = color;
-    //}
+    public void ToggleVisibility(bool visible)
+    {
+        if (renderer.enabled == visible) return;
+        renderer.enabled = visible;
+    }
 
     public void OnCollected()
     {
         Destroy(gameObject);
+    }
+
+    public IEnumerator PlayAnimation()
+    {
+        float delay = 3f;
+
+        // ToggleVisibility(true);
+        animator.SetBool("IsFloating", true);
+
+        yield return new WaitForSeconds(delay);
+
+        if (animator)
+        {
+            animator.SetBool("IsFloating", false);
+            // ToggleVisibility(false);
+        } 
+    }
+
+    void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, 0.5f);
+        }
     }
 }

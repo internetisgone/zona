@@ -92,9 +92,11 @@ public class DetectArtifactsPlayer : DetectArtifacts
         if (Physics.Raycast(origin, direction, out hit, collectionRange, ArtifactLayerMask))
         {
             ArtifactIsCollectible.RaiseEvent();
+            GameObject artifact = hit.collider.gameObject;
+            StartCoroutine(artifact.GetComponent<Artifact>().PlayAnimation());
             if (Input.GetKey(KeyCode.F))
             {
-                Owner.CollectArtifact(hit.collider.gameObject);
+                Owner.CollectArtifact(artifact);
                 ArtifactProximityUpdated.RaiseEvent(0);
             }
         }

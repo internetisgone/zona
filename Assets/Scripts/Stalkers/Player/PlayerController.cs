@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
     {
         // rotation along X axis (pitch)
         rotationX -= mouseY;
-        float rotationX1 = Math.Clamp(rotationX, -45, 45);
+        float rotationX1 = Math.Clamp(rotationX, -45, 60);
         float rotationX2 = Math.Clamp(rotationX, -45, 10);
 
         firstPersonCamera.transform.localRotation = Quaternion.Euler(rotationX1 * mouseSensitivity, 0f, 0f);
