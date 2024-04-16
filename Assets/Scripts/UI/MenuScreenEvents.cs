@@ -2,36 +2,98 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class MenuScreenEvents : MonoBehaviour
 {
+    public PlayerData playerData;
+    public NPCData npcData;
+
     private UIDocument document;
+
+    // menu view
+    private VisualElement menuView;
     private Button startBtn;
     private Button settingsBtn;
+
+    // settings view
+    private VisualElement settingsView;
+    private Slider mouseSensitivitySlider;
+    private Slider npcSpeedSlider;
+    private Button confirmBtn;
+    private Button resetBtn;
+
+    // default values
+    private float defaultMouseSensitivity;
+    private float defaultNPCSpeed;
 
     void Awake()
     {
         document = GetComponent<UIDocument>();
+
+        menuView = document.rootVisualElement.Q("MenuWrapper");
         startBtn = document.rootVisualElement.Q("StartBtn") as Button;
         settingsBtn = document.rootVisualElement.Q("SettingsBtn") as Button;
 
-        startBtn.RegisterCallback<PointerUpEvent>(OnClickStartBtn);
-        settingsBtn.RegisterCallback<PointerUpEvent>(OnClickSettingsBtn);
+        settingsView = document.rootVisualElement.Q("SettingsWrapper");
+        mouseSensitivitySlider = document.rootVisualElement.Q("MouseSensitivitySlider") as Slider;
+        npcSpeedSlider = document.rootVisualElement.Q("NPCSpeedSlider") as Slider;
+        confirmBtn = document.rootVisualElement.Q("ConfirmBtn") as Button;
+        resetBtn = document.rootVisualElement.Q("ResetBtn") as Button;
+
+        // show menu view by default
+        settingsView.visible = false;
+        menuView.visible = true;
+
+        // init slider constraints and default values
+        mouseSensitivitySlider.lowValue = 0.1f;
+        mouseSensitivitySlider.highValue = 2f;
+        npcSpeedSlider.lowValue = 1f;
+        npcSpeedSlider.highValue = 10f;
+        defaultMouseSensitivity = playerData.MouseSensitivity;
+        defaultNPCSpeed = npcData.Speed;
+        SetToDefault();
+
+        // register callback
+        startBtn.RegisterCallback<PointerUpEvent>(OnStartClicked);
+        settingsBtn.RegisterCallback<PointerUpEvent>(OnSettingsClicked);
+        confirmBtn.RegisterCallback<PointerUpEvent>(OnConfirmSettings);
+        resetBtn.RegisterCallback<PointerUpEvent>(OnResetSettings);
     }
 
-    private void OnClickStartBtn(PointerUpEvent e)
+    private void OnStartClicked(PointerUpEvent e)
     {
-        Debug.Log("welcome to the zone");
+        SceneManager.LoadScene("Zona");
     }
 
-    private void OnClickSettingsBtn(PointerUpEvent e)
+    private void OnSettingsClicked(PointerUpEvent e)
     {
-        Debug.Log("zone settings");
+        menuView.visible = false;
+        settingsView.visible = true;
+    }
+
+    private void OnConfirmSettings(PointerUpEvent e)
+    {
+        playerData.MouseSensitivity = mouseSensitivitySlider.value;
+        npcData.Speed = npcSpeedSlider.value;
+        settingsView.visible = false;
+        menuView.visible = true;
+    }
+
+    private void OnResetSettings(PointerUpEvent e)
+    {
+        SetToDefault();
+    }
+
+    private void SetToDefault()
+    {
+        mouseSensitivitySlider.value = defaultMouseSensitivity;
+        npcSpeedSlider.value = defaultNPCSpeed;
     }
 
     private void OnDisable()
     {
-        startBtn.UnregisterCallback<PointerUpEvent>(OnClickStartBtn);
-        settingsBtn.UnregisterCallback<PointerUpEvent>(OnClickSettingsBtn);
+        startBtn.UnregisterCallback<PointerUpEvent>(OnStartClicked);
+        settingsBtn.UnregisterCallback<PointerUpEvent>(OnSettingsClicked);
     }
 }

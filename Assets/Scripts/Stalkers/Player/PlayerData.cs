@@ -10,9 +10,9 @@ public class PlayerData : ScriptableObject
     public float SprintSpeed = 20f;
 
     // controls
+    [Range(0.1f, 2f)]
     public float MouseSensitivity = 1f;
 
     // artifact 
     public float CollectionRange = 2f;
-
 }

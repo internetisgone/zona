@@ -6,6 +6,7 @@ using UnityEngine;
 public class NPCData : ScriptableObject
 {
     // movement
+    [Range(1, 10f)]
     public float Speed = 10f;
     public float TurnSpeed = 5f;
 

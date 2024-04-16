@@ -1,11 +1,25 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/StartScreen.uss?fileID=7433441132597879392&amp;guid=cd7eb0adfbcb8f146842bc515163489e&amp;type=3#StartScreen" />
-    <ui:VisualElement name="MenuWrapper" style="flex-grow: 1; position: relative; left: auto;">
-        <ui:VisualElement name="Background" class="menubackground" style="flex-grow: 1; opacity: 1; -unity-background-scale-mode: scale-and-crop;" />
+    <Style src="project://database/Assets/UI%20Toolkit/Stylesheet.uss?fileID=7433441132597879392&amp;guid=cd7eb0adfbcb8f146842bc515163489e&amp;type=3#Stylesheet" />
+    <ui:VisualElement name="Background" class="menubackground" style="flex-grow: 1; opacity: 1; -unity-background-scale-mode: scale-and-crop;">
+        <ui:VisualElement name="BlackMask" style="flex-grow: 1; background-color: rgb(0, 0, 0); opacity: 0.5;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="MenuWrapper" style="flex-grow: 1; position: absolute; left: 0; display: flex; top: 0; right: 0; bottom: 0;">
         <ui:VisualElement name="TitleWrapper" style="flex-grow: 1;" />
-        <ui:VisualElement name="ButtonWrapper" class="button-wrapper" style="flex-grow: 1;">
+        <ui:VisualElement name="MenuButtonWrapper" class="button-wrapper" style="flex-grow: 1;">
             <ui:Button text="Start" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartBtn" tabindex="0" class="button" style="text-overflow: ellipsis;" />
             <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsBtn" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="SettingsWrapper" style="flex-grow: 1; position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex;">
+        <ui:VisualElement name="MouseSensitivity" class="settings-item text" style="flex-grow: 1; justify-content: center;">
+            <ui:Slider label="Mouse Sensitivity" high-value="100" name="MouseSensitivitySlider" class="slider" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="NPCSpeed" class="settings-item text" style="flex-grow: 1;">
+            <ui:Slider label="NPC Speed" high-value="100" name="NPCSpeedSlider" class="slider" />
+        </ui:VisualElement>
+        <ui:VisualElement name="SettingsBtnWrapper" class="button-wrapper" style="flex-grow: 1;">
+            <ui:Button text="Confirm" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfirmBtn" class="button" />
+            <ui:Button text="Reset" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ResetBtn" class="button" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

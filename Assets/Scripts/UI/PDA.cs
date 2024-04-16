@@ -13,4 +13,7 @@ public class PDA : MonoBehaviour
         document = GetComponent<UIDocument>();
         StalkerList = document.rootVisualElement.Q("StalkerList") as VisualElement;
     }
+
+    // todo
+    // display num of artifacts for each stalker 
 }
