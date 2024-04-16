@@ -6,11 +6,12 @@ using UnityEngine.Events;
 
 public class Player : CStalker
 {
+    public PlayerData StalkerData;
     public EventInt ArtifactCountUpdated;
 
-    public override void ChangeArtifactCount(int delta)
+    public override void CollectArtifact(GameObject artifactObj)
     {
-        base.ChangeArtifactCount(delta);
+        base.CollectArtifact(artifactObj);
         ArtifactCountUpdated.RaiseEvent(ArtifactCount);
     }
 }

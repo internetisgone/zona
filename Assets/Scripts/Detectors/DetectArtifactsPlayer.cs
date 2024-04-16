@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 public class DetectArtifactsPlayer : DetectArtifacts
 {
+    private Player Owner;
+    private float collectionRange;
+
     public EventVoid ArtifactIsCollectible;
     public EventVoid ArtifactNoLongerCollectible;
 
@@ -14,9 +17,13 @@ public class DetectArtifactsPlayer : DetectArtifacts
     void Awake()
     {
         Owner = GetComponent<Player>();
+    }
+
+    void Start()
+    {
+        collectionRange = Owner.StalkerData.CollectionRange;
         firstPersonCamera = transform.GetChild(1).gameObject;
         InvokeRepeating("Detect", 1f, Detector.Interval);
-
     }
 
     void Update()
@@ -71,13 +78,12 @@ public class DetectArtifactsPlayer : DetectArtifacts
         origin = firstPersonCamera.transform.position;
         direction = firstPersonCamera.transform.forward;
 
-
-        if (Physics.Raycast(origin, direction, out hit, CollectionRange, ArtifactLayerMask))
+        if (Physics.Raycast(origin, direction, out hit, collectionRange, ArtifactLayerMask))
         {
             ArtifactIsCollectible.RaiseEvent();
             if (Input.GetKey(KeyCode.F))
             {
-                CollectArtifact(hit.collider.gameObject);
+                Owner.CollectArtifact(hit.collider.gameObject);
                 ArtifactProximityUpdated.RaiseEvent(0);
             }
         }

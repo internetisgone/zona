@@ -25,7 +25,7 @@ public class SpawnNPC : MonoBehaviour
         "Charon",
         };
 
-    void Start()
+    void Awake()
     {
         // get a list of spawn points
         spawnPoints = GetSpawnPoints();
@@ -47,8 +47,9 @@ public class SpawnNPC : MonoBehaviour
             GameObject stalkerObj = Instantiate(stalkerNPC, spawnPoints[randomIndex].transform.position, transform.rotation, spawnPoints[randomIndex].transform);
             StalkerNPC stalker = stalkerObj.GetComponent<StalkerNPC>();
 
-            // set names
+            // init stalker data
             stalker.Name = stalkerNames[randomIndex];
+            stalker.StalkerData = ScriptableObject.CreateInstance<NPCData>();
             Debug.Log("Spawned new stalker " + stalker.Name);
         }
     }

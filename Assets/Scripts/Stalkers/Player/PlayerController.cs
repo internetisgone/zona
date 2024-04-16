@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private float verticalInput;
     private float horizontalInput;
     // mouse
-    public float mouseSensitivity = 1f;
+    private float mouseSensitivity;
     private float mouseX;
     private float mouseY;
     private float rotationX = 0;
@@ -18,12 +18,14 @@ public class PlayerController : MonoBehaviour
 
     // movement
     Rigidbody rb;
-    public float speed = 10f;
-    public float sprintSpeed = 20f;
+    private float speed;
+    private float sprintSpeed;
     [Range(0,1)]
     public float acceleration = 0.3f;
     public float jumpForce = 7f;
     public float gravityModifier = 3f;
+
+    private PlayerData playerData;
 
     private bool isJumping;
     private bool isGrounded;
@@ -36,10 +38,17 @@ public class PlayerController : MonoBehaviour
     //private bool lmbPressed = false; // temp
     //public GameObject projectile; // temp
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
+
+        // get player data
+        playerData = GetComponent<Player>().StalkerData;
+        speed = playerData.Speed;
+        sprintSpeed = playerData.SprintSpeed;
+        mouseSensitivity = playerData.MouseSensitivity;
+
         firstPersonCamera = transform.GetChild(1).gameObject; // todo
         thirdPersonCamera = transform.GetChild(2).gameObject; // todo
 

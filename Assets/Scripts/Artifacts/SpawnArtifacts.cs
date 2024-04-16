@@ -12,7 +12,7 @@ public class SpawnArtifacts : MonoBehaviour
     public GameObject artifactPrefab;
 
     private int minCount = 40;
-    private int maxCount = 50;
+    private int maxCount = 100;
     private int xRange = 100;
     private int zRange = 100;
 

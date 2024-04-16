@@ -7,12 +7,12 @@ using UnityEngine;
 
 public class StalkerNPC : CStalker
 {
+    public NPCData StalkerData { get; set; }
     public StalkerState State { get; set; }
 
     private GameObject campfire; // temp
     private Vector3 goal; // temp
 
-    private float rotSpeed = 10f;
     private Rigidbody rb;
     private Animator animator;
 
@@ -100,7 +100,7 @@ public class StalkerNPC : CStalker
         //transform.position += movementNormalized * Speed * Time.deltaTime;
 
         Vector3 curMovement = rb.velocity;
-        Vector3 newMovement = Vector3.Lerp(curMovement, movementNormalized * Speed, 10f);
+        Vector3 newMovement = Vector3.Lerp(curMovement, movementNormalized * StalkerData.Speed, 10f);
 
         rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
     }
@@ -119,7 +119,7 @@ public class StalkerNPC : CStalker
     private void TurnTowards(Vector3 forward)
     {
         Quaternion lookRotation = Quaternion.LookRotation(forward, Vector3.up);
-        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpeed));
+        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * StalkerData.TurnSpeed));
     }
 
     void OnCollisionEnter(Collision collision)
