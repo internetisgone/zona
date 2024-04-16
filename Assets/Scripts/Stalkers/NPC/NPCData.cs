@@ -6,7 +6,7 @@ using UnityEngine;
 public class NPCData : ScriptableObject
 {
     // movement
-    public float Speed = 5f;
+    public float Speed = 10f;
     public float TurnSpeed = 5f;
 
     // artifact 

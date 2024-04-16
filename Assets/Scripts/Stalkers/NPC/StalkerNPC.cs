@@ -108,7 +108,7 @@ public class StalkerNPC : CStalker
     // todo prob move these functions to a util class
     private bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)
     {
-        float tolerance = 0.02f;
+        float tolerance = 0.01f;
         return CloseEnough(xzMovement.x, xzFacing.x, tolerance) && CloseEnough(xzMovement.y, xzFacing.y, tolerance);
     }
     private bool CloseEnough(float x, float y, float tolerance)

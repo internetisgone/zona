@@ -8,6 +8,7 @@ using UnityEngine;
 public class SpawnNPC : MonoBehaviour
 {
     public GameObject stalkerNPC;
+    public NPCData npcData;
     private SpawnPoint[] spawnPoints;
 
     private int count;
@@ -49,7 +50,7 @@ public class SpawnNPC : MonoBehaviour
 
             // init stalker data
             stalker.Name = stalkerNames[randomIndex];
-            stalker.StalkerData = ScriptableObject.CreateInstance<NPCData>();
+            stalker.StalkerData = npcData;
             Debug.Log("Spawned new stalker " + stalker.Name);
         }
     }

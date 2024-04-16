@@ -388,7 +388,7 @@ Transform:
   m_GameObject: {fileID: 555115896}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 125, y: 1.5, z: 154.57}
+  m_LocalPosition: {x: 132.4, y: 1.5, z: 144.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -994,7 +994,6 @@ MonoBehaviour:
   acceleration: 0.3
   jumpForce: 7
   gravityModifier: 3
-  playerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
 --- !u!4 &867723720
 Transform:
   m_ObjectHideFlags: 0
@@ -1052,7 +1051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac84c6d7ffc84a44a52d5a929c2c796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerData: {fileID: 0}
+  StalkerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
   ArtifactCountUpdated: {fileID: 11400000, guid: 42eebd0f5d98d4044937a9d44994409a, type: 2}
 --- !u!114 &867723724
 MonoBehaviour:
@@ -1772,6 +1771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stalkerNPC: {fileID: 2361777987260465710, guid: 82b84f1b3475e9c43a110101f3b3dfa1, type: 3}
+  npcData: {fileID: 11400000, guid: 213cd3c6cc52b954991b6e45ba3d4db5, type: 2}
 --- !u!1 &1645953872
 GameObject:
   m_ObjectHideFlags: 0
