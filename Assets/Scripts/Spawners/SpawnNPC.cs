@@ -9,7 +9,7 @@ public class SpawnNPC : MonoBehaviour
 {
     public GameObject stalkerNPC;
     public NPCData npcData;
-    private SpawnPoint[] spawnPoints;
+    private SpawnPointNPC[] spawnPoints;
 
     public List<CStalker> stalkersList;
 
@@ -58,9 +58,9 @@ public class SpawnNPC : MonoBehaviour
         }
     }
 
-    private SpawnPoint[] GetSpawnPoints()
+    private SpawnPointNPC[] GetSpawnPoints()
     { 
-        return GetComponentsInChildren<SpawnPoint>(); ;
+        return GetComponentsInChildren<SpawnPointNPC>(); ;
     }
 
     private void SetBounds(int namesLength, int spawnPointsLength)
@@ -78,10 +78,10 @@ public class SpawnNPC : MonoBehaviour
         int[] randomIndices = new int[length];
         for (int i = 0; i < length; i++)
         {
-            int randomIndex;
+            int randomIndex = UnityEngine.Random.Range(0, max + 1);
             do
             {
-                randomIndex = UnityEngine.Random.Range(0, max);
+                randomIndex = UnityEngine.Random.Range(0, max + 1);
                 // todo Contains(0) always return true?
                 // Debug.LogFormat("random num {0}, contained in array {1}", randomIndex, randomIndices.Contains(randomIndex));
             }

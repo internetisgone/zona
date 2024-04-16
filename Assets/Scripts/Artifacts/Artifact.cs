@@ -73,8 +73,8 @@ public class Artifact : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(transform.position, 0.5f);
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(transform.position, 0.3f);
         }
     }
 }
