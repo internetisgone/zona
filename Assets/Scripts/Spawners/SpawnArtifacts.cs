@@ -17,7 +17,7 @@ public class SpawnArtifacts : MonoBehaviour
     private int minCount = 2;
     private int maxCount = 7;
 
-    private float spawnRadius = 6f;
+    private float spawnRadius = 7f;
     private float minSpacing = 0.7f; // temp. min spacing = artifact diameter with some extra room
 
     private void Awake()

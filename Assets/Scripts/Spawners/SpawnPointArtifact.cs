@@ -7,6 +7,6 @@ public class SpawnPointArtifact : SpawnPoint
     void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, 6);
+        Gizmos.DrawWireSphere(transform.position, 7);
     }
 }

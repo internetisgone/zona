@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f0ae4a132c848a47bd03b62591362a9, type: 3}
-  m_Name: NPCData
+  m_Script: {fileID: 11500000, guid: 6d04e8811af81e745a9adbbafd061540, type: 3}
+  m_Name: 1-Bear
   m_EditorClassIdentifier: 
-  Speed: 5.4
-  TurnSpeed: 5
-  CollectionRange: 2
+  DetectorType: 0
+  Interval: 1
+  DetectionRange: 8
+  VisibilityRange: 3

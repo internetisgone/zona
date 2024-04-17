@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public class DetectArtifactsPlayer : DetectArtifacts
 {
     private Player Owner;
+    public DetectorData DetectorData; // temp
+
     private float collectionRange;
 
     public EventVoid ArtifactIsCollectible;
@@ -25,7 +27,7 @@ public class DetectArtifactsPlayer : DetectArtifacts
     {
         collectionRange = Owner.StalkerData.CollectionRange;
         firstPersonCamera = transform.GetChild(1).gameObject;
-        InvokeRepeating("Detect", 1f, Detector.Interval);
+        InvokeRepeating("Detect", 1f, DetectorData.Interval);
     }
 
     void Update()
@@ -60,16 +62,26 @@ public class DetectArtifactsPlayer : DetectArtifacts
     // search for artifacts within the detector's range
     public override void Detect()
     {
-        Collider[] artifactColliders = Physics.OverlapSphere(transform.position, Detector.Range, ArtifactLayerMask);
+        Collider[] artifactColliders = Physics.OverlapSphere(transform.position, DetectorData.DetectionRange, ArtifactLayerMask);
         if (artifactColliders.Length > 0)
         {
-            Debug.LogFormat("{0} detected {1} artifacts using {2}", Owner.Name, artifactColliders.Length, Detector.DetectorType.ToString());
+            Debug.LogFormat("{0} detected {1} artifacts using {2}", Owner.Name, artifactColliders.Length, DetectorData.DetectorType.ToString());
             IsDetected = true;
-            float minDistance = Detector.Range;
+            float minDistance = DetectorData.DetectionRange;
             foreach (Collider collider in artifactColliders)
             {
                 float distance = (transform.position - collider.transform.position).magnitude;
+
+                // get shortest distance
                 if (distance < minDistance) minDistance = distance;
+
+                // check if within visibility range
+                if (distance < DetectorData.VisibilityRange)
+                {
+                    Artifact artifact = collider.gameObject.GetComponent<Artifact>();
+                    artifact.ToggleVisibility(true);
+                }
+
                 // Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
             }
             ArtifactProximityUpdated.RaiseEvent(minDistance);
@@ -90,10 +102,12 @@ public class DetectArtifactsPlayer : DetectArtifacts
         direction = firstPersonCamera.transform.forward;
 
         if (Physics.Raycast(origin, direction, out hit, collectionRange, ArtifactLayerMask))
+        // todo use non alloc
         {
             ArtifactIsCollectible.RaiseEvent();
             GameObject artifact = hit.collider.gameObject;
-            StartCoroutine(artifact.GetComponent<Artifact>().PlayAnimation());
+            //StartCoroutine(artifact.GetComponent<Artifact>().PlayAnimation());
+            artifact.GetComponent<Artifact>().PlayAnimation();
             if (Input.GetKey(KeyCode.F))
             {
                 Owner.CollectArtifact(artifact);

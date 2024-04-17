@@ -2,16 +2,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+
 public abstract class DetectArtifacts : MonoBehaviour
 {
-    public Detector Detector { get; set; }
+    //protected DetectorData DetectorData;
+    public DetectorType DetectorType { get; private set; }
     public bool isEquipped {  get; set; }
     public bool IsDetected { get; set; }
     public int ArtifactLayerMask { get; }
 
     public DetectArtifacts()
-    { 
-        Detector = new Detector();
+    {
+        DetectorType = DetectorType.Echo;
         isEquipped = true;
         IsDetected = false;
 
@@ -20,6 +22,11 @@ public abstract class DetectArtifacts : MonoBehaviour
         ArtifactLayerMask = 1 << 7;
     }
 
-    // search for artifacts within the detector's range
     public abstract void Detect();
+
+    public void UpdateDetectorType(DetectorType type)
+    {
+        DetectorType = type;
+        // load new detector data
+    }
 }

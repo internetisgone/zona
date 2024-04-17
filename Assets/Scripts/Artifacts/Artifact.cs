@@ -19,11 +19,14 @@ public class Artifact : MonoBehaviour
     public ArtifactType Type { get; }
     private Animator animator;
 
-    private Renderer renderer;
+    private new Renderer renderer;
 
     //public GameObject Prefab { get; private set; }
     //public bool isHighlighted = false;
     //private Color color;
+
+    private readonly static int FLOAT = Animator.StringToHash("Base Layer.Float");
+
     public Artifact() : this(ArtifactType.Moonlight)
     {
 
@@ -39,13 +42,14 @@ public class Artifact : MonoBehaviour
         animator = GetComponent<Animator>();
         renderer = GetComponent<Renderer>();
 
-        //renderer.enabled = false;
+        renderer.enabled = false;
     }
 
     public void ToggleVisibility(bool visible)
     {
         if (renderer.enabled == visible) return;
         renderer.enabled = visible;
+        PlayAnimation();
     }
 
     public void OnCollected()
@@ -53,21 +57,26 @@ public class Artifact : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public IEnumerator PlayAnimation()
+    public void PlayAnimation()
     {
-        float delay = 3f;
-
-        // ToggleVisibility(true);
-        animator.SetBool("IsFloating", true);
-
-        yield return new WaitForSeconds(delay);
-
-        if (animator)
-        {
-            animator.SetBool("IsFloating", false);
-            // ToggleVisibility(false);
-        } 
+        animator.SetTrigger("IsFloating");
     }
+
+    //public IEnumerator PlayAnimation()
+    //{
+    //    float delay = 3f;
+
+    //    // ToggleVisibility(true);
+    //    animator.SetBool("IsFloating", true);
+
+    //    yield return new WaitForSeconds(delay);
+
+    //    if (animator)
+    //    {
+    //        animator.SetBool("IsFloating", false);
+    //        // ToggleVisibility(false);
+    //    } 
+    //}
 
     void OnDrawGizmos()
     {

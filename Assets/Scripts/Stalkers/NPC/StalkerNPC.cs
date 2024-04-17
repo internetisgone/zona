@@ -8,10 +8,10 @@ using UnityEngine;
 public class StalkerNPC : CStalker
 {
     public NPCData StalkerData { get; set; }
-    public StalkerState State { get; set; }
+    public StalkerState State { get; private set; }
+    public Vector3 Goal { get; private set; }
 
     private GameObject campfire; // temp
-    private Vector3 goal; // temp
 
     private Rigidbody rb;
     private Animator animator;
@@ -24,13 +24,13 @@ public class StalkerNPC : CStalker
 
         // temp way to move around
         State = StalkerState.Idle;
-        goal = campfire.transform.position;
+        Goal = campfire.transform.position;
         InvokeRepeating("TrySetGoal", 5, 5);
     }
 
     void FixedUpdate()
     {
-        Vector3 movement = goal - transform.position;
+        Vector3 movement = Goal - transform.position;
         Vector3 forward = new Vector3(movement.x, 0, movement.z);
 
         if (forward.magnitude < 1)
@@ -85,14 +85,13 @@ public class StalkerNPC : CStalker
     {
         yield return new WaitForSeconds(delay);
 
-        int xRange = 50;
-        int zRange = 50;
+        int xRange = 70;
+        int zRange = 70;
 
         float xCoord = UnityEngine.Random.Range(campfire.transform.position.x - xRange / 2, campfire.transform.position.x + xRange / 2);
         float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - zRange / 2, campfire.transform.position.z + zRange / 2);
 
-        goal = new Vector3(xCoord, transform.position.y, zCoord);
-        Debug.LogFormat("New goal for {0}: {1}", Name, goal);
+        SetGoal(new Vector3(xCoord, transform.position.y, zCoord));
     }
 
     private void MoveStalker(Vector3 movementNormalized)
@@ -105,13 +104,24 @@ public class StalkerNPC : CStalker
         rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
     }
 
+    public void UpdateState(StalkerState state)
+    {
+        State = state;
+    }
+
+    public void SetGoal(Vector3 newGoal)
+    {
+        Goal = new Vector3(newGoal.x, transform.position.y, newGoal.z);
+        Debug.LogFormat("New goal for {0}: {1}", Name, Goal);
+    }
+
     // todo prob move these functions to a util class
-    private bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)
+    public static bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)
     {
         float tolerance = 0.01f;
         return CloseEnough(xzMovement.x, xzFacing.x, tolerance) && CloseEnough(xzMovement.y, xzFacing.y, tolerance);
     }
-    private bool CloseEnough(float x, float y, float tolerance)
+    public static bool CloseEnough(float x, float y, float tolerance)
     {
         return Math.Abs(x - y) <= tolerance;
     }

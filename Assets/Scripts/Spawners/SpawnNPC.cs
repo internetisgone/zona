@@ -36,7 +36,7 @@ public class SpawnNPC : MonoBehaviour
         SetBounds(stalkerNames.Length, spawnPoints.Length);
 
         // set a random count 
-        count = UnityEngine.Random.Range(minCount, maxCount);
+        count = UnityEngine.Random.Range(minCount, maxCount + 1);
         
         // genrate random & unique indices for name and spawn points
         int[] randomIndices = GenerateRandomIndices(count, maxCount);

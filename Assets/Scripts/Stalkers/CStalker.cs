@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 // temp
@@ -9,6 +8,7 @@ public enum StalkerState
 {
     Idle = 0,
     Wandering = 1,
+    DetectedArtifact = 2,
 }
 public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 {
