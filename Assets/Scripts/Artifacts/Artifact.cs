@@ -48,7 +48,7 @@ public class Artifact : MonoBehaviour
     {
         if (renderer.enabled == visible) return;
         renderer.enabled = visible;
-        PlayAnimation();
+        if (visible == true) PlayAnimation();
     }
 
     public void OnCollected()

@@ -53,6 +53,7 @@ public class DetectorNPC : Detector
             {
                 if (nearestArtifact != null)
                 {
+                    nearestArtifact.GetComponent<Artifact>()?.ToggleVisibility(true);
                     Owner.TryCollectArtifact(nearestArtifact);
                 }
             }

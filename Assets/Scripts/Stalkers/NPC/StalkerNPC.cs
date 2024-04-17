@@ -74,6 +74,7 @@ public class StalkerNPC : CStalker
         }
         else
         {
+            // move to goal
             MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
             animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
             State = StalkerState.Wandering;
@@ -132,6 +133,7 @@ public class StalkerNPC : CStalker
         rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * StalkerData.TurnSpeed));
     }
 
+    // artifact spotted, try move to it
     public void TryCollectArtifact(GameObject artifactObj)
     {
         State = StalkerState.DetectedArtifact;
