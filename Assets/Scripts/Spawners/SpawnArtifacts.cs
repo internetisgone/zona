@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental;
 using UnityEngine;
@@ -14,8 +13,8 @@ public class SpawnArtifacts : MonoBehaviour
     private SpawnPointArtifact[] clusters;
 
     // min / max number of artifacts inside a cluster
-    private int minCount = 2;
-    private int maxCount = 7;
+    private int minCount = 10;
+    private int maxCount = 15;
 
     private float spawnRadius = 7f;
     private float minSpacing = 0.7f; // temp. min spacing = artifact diameter with some extra room

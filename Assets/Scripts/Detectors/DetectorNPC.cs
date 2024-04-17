@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-public class DetectArtifactsNPC : DetectArtifacts
+public class DetectorNPC : Detector
 {
     private StalkerNPC Owner;
     public DetectorData DetectorData; // temp
-
-    private float collectionRange;
 
     void Awake()
     {
@@ -16,39 +14,47 @@ public class DetectArtifactsNPC : DetectArtifacts
 
     void Start()
     {
-        collectionRange = Owner.StalkerData.CollectionRange;
         InvokeRepeating("Detect", 1f, DetectorData.Interval);
     }
 
     // search for artifacts within the detector's range
     public override void Detect()
     {
-        Collider[] artifactColliders = Physics.OverlapSphere(transform.position, DetectorData.DetectionRange, ArtifactLayerMask);
+        // temp 
+        // ignore detection range 
+        // for now, turn towards nearest artifact within visibility range 
+        // and try collect it 
+
+        // if (Owner.State == StalkerState.DetectedArtifact) return;
+
+        Collider[] artifactColliders = Physics.OverlapSphere(transform.position, DetectorData.VisibilityRange, ArtifactLayerMask);
         if (artifactColliders.Length > 0)
         {
             //Debug.LogFormat("{0} detected {1} artifacts using {2}", Owner.Name, artifactColliders.Length, Detector.DetectorType.ToString());
             IsDetected = true;
-            float minDistance = DetectorData.DetectionRange;
+
+            float minDistance = DetectorData.VisibilityRange; 
+            GameObject nearestArtifact = null;
+
             foreach (Collider collider in artifactColliders)
             {
-                // todo get the nearest artifact
-
+                // get the nearest artifact
                 float distance = (transform.position - collider.transform.position).magnitude;
                 if (distance < minDistance)
                 {
                     minDistance = distance;
+                    nearestArtifact = collider.gameObject;
                 }
                 // Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
+            }
 
-
-
-                // todo turn to the nearest artifact then collect
-
-                if (distance <= collectionRange)
+            // try collect the nearest artifact
+            if (minDistance <= Owner.StalkerData.CollectionRange)
+            {
+                if (nearestArtifact != null)
                 {
-                    Owner.CollectArtifact(collider.gameObject);
+                    Owner.TryCollectArtifact(nearestArtifact);
                 }
-
             }
         }
         else

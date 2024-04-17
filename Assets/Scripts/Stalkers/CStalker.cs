@@ -3,13 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// temp
-public enum StalkerState
-{
-    Idle = 0,
-    Wandering = 1,
-    DetectedArtifact = 2,
-}
 public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 {
     public string Name {  get; set; }
@@ -40,8 +33,12 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 
     public virtual void CollectArtifact(GameObject artifactObj)
     {
+        if (!artifactObj) return;
+        Artifact artifact = artifactObj.GetComponent<Artifact>();
+        if (!artifact) return;
+
+        artifact.OnCollected();
         ArtifactCount += 1;
-        artifactObj.GetComponent<Artifact>().OnCollected();
         Debug.LogFormat("{0} added 1 artifact to inventory", Name);
     }
 }

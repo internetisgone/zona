@@ -3,15 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
+//[Flags]
+//public enum StalkerState
+//{
+//    Idle = 0,
+//    Turning = 1 << 0,
+//    Wandering = 1 << 1,
+//    DetectedArtifact = 1 << 2,
+//}
+
+public enum StalkerState
+{
+    Idle = 0,
+    Turning = 1,
+    Wandering = 2,
+    DetectedArtifact = 3,
+}
 
 public class StalkerNPC : CStalker
 {
     public NPCData StalkerData { get; set; }
     public StalkerState State { get; private set; }
-    public Vector3 Goal { get; private set; }
+    public Vector3 GoalPosition { get; private set; }
 
-    private GameObject campfire; // temp
+    private GameObject campfire; // initial goal
+    private GameObject goalArtifact;
 
     private Rigidbody rb;
     private Animator animator;
@@ -22,49 +40,47 @@ public class StalkerNPC : CStalker
         rb = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
 
-        // temp way to move around
         State = StalkerState.Idle;
-        Goal = campfire.transform.position;
+        GoalPosition = campfire.transform.position;
         InvokeRepeating("TrySetGoal", 5, 5);
     }
 
     void FixedUpdate()
     {
-        Vector3 movement = Goal - transform.position;
+        Vector3 movement = GoalPosition - transform.position;
         Vector3 forward = new Vector3(movement.x, 0, movement.z);
 
         if (forward.magnitude < 1)
         {
             // already at goal
+
+            if (State == StalkerState.DetectedArtifact)
+                CollectArtifact(goalArtifact);
+
             State = StalkerState.Idle;
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
             animator.SetFloat("Speed", 0);
             return;
         }
 
-        State = StalkerState.Wandering;
         // check if stalker is facing the goal
         bool shouldTurn = !IsParallel(forward.normalized, transform.forward);
 
         if (shouldTurn)
         {
-            // state = StalkerState.Turning;
+            // turn towards the goal
+            //State |= StalkerState.Turning;
             TurnTowards(forward);
         }
         else
         {
             MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
             animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
-        }
+            State = StalkerState.Wandering;
 
-        //if (rb.velocity.magnitude >= Speed)
-        //{
-        //    ChangeAnimation(WALK);
-        //}
-        //else
-        //{
-        //    ChangeAnimation(IDLE);
-        //}
+            if (State == StalkerState.DetectedArtifact && movement.magnitude < StalkerData.CollectionRange)
+                CollectArtifact(goalArtifact);
+        }
     }
 
     private void TrySetGoal()
@@ -86,7 +102,7 @@ public class StalkerNPC : CStalker
         yield return new WaitForSeconds(delay);
 
         int xRange = 70;
-        int zRange = 70;
+        int zRange = 40;
 
         float xCoord = UnityEngine.Random.Range(campfire.transform.position.x - xRange / 2, campfire.transform.position.x + xRange / 2);
         float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - zRange / 2, campfire.transform.position.z + zRange / 2);
@@ -104,18 +120,43 @@ public class StalkerNPC : CStalker
         rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
     }
 
-    public void UpdateState(StalkerState state)
-    {
-        State = state;
-    }
-
     public void SetGoal(Vector3 newGoal)
     {
-        Goal = new Vector3(newGoal.x, transform.position.y, newGoal.z);
-        Debug.LogFormat("New goal for {0}: {1}", Name, Goal);
+        GoalPosition = new Vector3(newGoal.x, transform.position.y, newGoal.z);
+        Debug.LogFormat("New goal for {0}: {1}", Name, GoalPosition);
     }
 
-    // todo prob move these functions to a util class
+    public void TurnTowards(Vector3 forward)
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(forward, Vector3.up);
+        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * StalkerData.TurnSpeed));
+    }
+
+    public void TryCollectArtifact(GameObject artifactObj)
+    {
+        State = StalkerState.DetectedArtifact;
+        goalArtifact = artifactObj;
+        SetGoal(artifactObj.transform.position);
+    }
+
+    public override void CollectArtifact(GameObject artifactObj)
+    {
+        base.CollectArtifact(goalArtifact);
+        goalArtifact = null;
+        // State = StalkerState.Idle;
+        //State -= StalkerState.DetectedArtifact; 
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log(Name + ": Get out of here stalker ");
+        }
+    }
+
+
+    // static util functions
     public static bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)
     {
         float tolerance = 0.01f;
@@ -125,18 +166,8 @@ public class StalkerNPC : CStalker
     {
         return Math.Abs(x - y) <= tolerance;
     }
-
-    private void TurnTowards(Vector3 forward)
+    public static bool HasState(StalkerState a, StalkerState b)
     {
-        Quaternion lookRotation = Quaternion.LookRotation(forward, Vector3.up);
-        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * StalkerData.TurnSpeed));
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log(Name + ": Get out of here stalker ");
-        }
+        return (a & b) == b;
     }
 }

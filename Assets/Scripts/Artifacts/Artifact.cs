@@ -24,8 +24,7 @@ public class Artifact : MonoBehaviour
     //public GameObject Prefab { get; private set; }
     //public bool isHighlighted = false;
     //private Color color;
-
-    private readonly static int FLOAT = Animator.StringToHash("Base Layer.Float");
+    //private readonly static int FLOAT = Animator.StringToHash("Base Layer.Float");
 
     public Artifact() : this(ArtifactType.Moonlight)
     {

@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class DetectArtifacts : MonoBehaviour
+public abstract class Detector : MonoBehaviour
 {
     //protected DetectorData DetectorData;
     public DetectorType DetectorType { get; private set; }
@@ -11,7 +11,7 @@ public abstract class DetectArtifacts : MonoBehaviour
     public bool IsDetected { get; set; }
     public int ArtifactLayerMask { get; }
 
-    public DetectArtifacts()
+    public Detector()
     {
         DetectorType = DetectorType.Echo;
         isEquipped = true;

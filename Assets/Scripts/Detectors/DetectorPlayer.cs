@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-public class DetectArtifactsPlayer : DetectArtifacts
+public class DetectorPlayer : Detector
 {
     private Player Owner;
     public DetectorData DetectorData; // temp
@@ -15,6 +14,7 @@ public class DetectArtifactsPlayer : DetectArtifacts
     public EventFloat ArtifactProximityUpdated;
 
     public EventBool DetectorEquipped;
+
 
     GameObject firstPersonCamera;
 
