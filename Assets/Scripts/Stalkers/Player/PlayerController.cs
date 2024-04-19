@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private float speed;
     private float sprintSpeed;
     [Range(0,1)]
-    public float acceleration = 0.3f;
+    public float acceleration = 0.1f;
     public float jumpForce = 7f;
     public float gravityModifier = 3f;
 
@@ -29,6 +29,12 @@ public class PlayerController : MonoBehaviour
     private bool isJumping;
     private bool isGrounded;
     private bool isSprinting;
+
+    private bool isOnSlope;
+    private Vector3 slopeNormal;
+    [Range (1,89)]
+    private int maxSlopeAngle = 45;
+    private int groundLayerMask = 1 << 6;
 
     private Animator animator;
     private GameObject firstPersonCamera; 
@@ -58,6 +64,8 @@ public class PlayerController : MonoBehaviour
         isJumping = false;
         isGrounded = true;
         isSprinting = false;
+        isOnSlope = false;
+        slopeNormal = Vector3.up;
     }
 
     void Update()
@@ -68,6 +76,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        CheckGround();
         Move();
         UpdateAnimationParams();
     }
@@ -118,21 +127,37 @@ public class PlayerController : MonoBehaviour
         Vector3 movementInput = transform.right * horizontalInput + transform.forward * verticalInput;
         movementInput.y = 0;
 
-        float targetSpeed = isSprinting? sprintSpeed : speed;
-
         if (isGrounded && isJumping)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
-        //if (isJumping) rb.AddForce(Vector3.down * gravity);
 
-        Vector3 curMovement = rb.velocity;
-        Vector3 newMovement = Vector3.Lerp(curMovement, movementInput * targetSpeed, acceleration);
+        Vector3 targetMovement = movementInput * (isSprinting ? sprintSpeed : speed);
+
+        // todo handle slopes
+        if (isOnSlope && isGrounded)
+        {
+            float slopeAngle = Vector3.Angle(slopeNormal, Vector3.up);
+            if (slopeAngle < maxSlopeAngle)
+            {
+                targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
+
+                // todo prevent sliding 
+            }
+            else if (slopeAngle < 90)
+            {
+                Debug.Log("slope too steep");
+            }
+        }
+
+        Vector3 newMovement = Vector3.Lerp(rb.velocity, targetMovement, acceleration);
 
         rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
 
-        // Debug.LogFormat("movementInput {0}, curMovement {1}, newMovement {2}, rb.velocity {3}", movementInput, curMovement, newMovement, rb.velocity);     
+        // Debug.LogFormat("movementInput {0}, curMovement {1}, newMovement {2}, rb.velocity {3}", movementInput, curMovement, newMovement, rb.velocity);
+        // 
+
     }
 
     private void UpdateAnimationParams()
@@ -152,45 +177,52 @@ public class PlayerController : MonoBehaviour
         thirdPersonCamera.transform.localRotation = Quaternion.Euler(rotationX2 * mouseSensitivity, 0f, 0f);
     }
 
-    // check for collision with ground and calculate slope angle
-    private void OnCollisionEnter(Collision collision)
+    private void CheckGround()
     {
-        //Debug.LogFormat("Collision with {0}, normal {1}" + collision.gameObject, collision.);
-        if (collision.gameObject.CompareTag("Ground"))
+        RaycastHit hit;
+        float rayLength = 0.3f;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, groundLayerMask))
         {
             isGrounded = true;
-
-            //Vector3 normal = collision.contacts[0].normal;
-            //Debug.DrawRay(transform.position, normal, Color.white, 1f);
-
-            //if (normal.normalized != transform.up)
-            //{
-            //    isSliding = true;
-            //}
-            //else
-            //{
-            //    isSliding = false;
-            //}
-
-            //foreach (ContactPoint contact in collision.contacts)
-            //{
-                //Debug.DrawRay(transform.position, contact.normal, Color.white, 1f);
-                //Vector3 temp = Vector3.Cross(contact.normal, Vector3.down);
-                //Vector3 groundSlopeDir = Vector3.Cross(temp, contact.normal);
-                //slopeAngle = Vector3.Angle(contact.normal, Vector3.up);
-                //Debug.LogFormat("contact point {0}, normal {1}, groundSlopeDir {2}, slopeAngle {3}", contact.point, contact.normal, groundSlopeDir, slopeAngle);
-            //}
-
+            slopeNormal = hit.normal;
+            Debug.DrawRay(transform.position, slopeNormal, Color.white, rayLength);
+            if (slopeNormal != Vector3.up) isOnSlope = true;
+            else isOnSlope = false;
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
 
-    // check for collision with ground (for char controller)
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //// check for collision with ground and calculate slope angle
+    //private void OnCollisionEnter(Collision collision)
     //{
-    //    //Debug.Log("Collision with " + hit.gameObject);
-    //    if (hit.gameObject.CompareTag("Ground"))
+    //    //Debug.LogFormat("Collision with {0}, normal {1}" + collision.gameObject, collision.);
+    //    if (collision.gameObject.CompareTag("Ground"))
     //    {
     //        isGrounded = true;
+
+    //        Vector3 normal = collision.contacts[0].normal;
+    //        slopeNormal = normal.normalized;
+    //        //Debug.DrawRay(transform.position, normal, Color.white, 1f);
+    //        if (slopeNormal != Vector3.up)
+    //        {
+    //            isOnSlope = true;
+    //        }
+    //        else
+    //        {
+    //            isOnSlope = false;
+    //        }
     //    }
+
+    //    //foreach (ContactPoint contact in collision.contacts)
+    //    //{
+    //    //    Debug.DrawRay(transform.position, contact.normal, Color.white, 1f);
+    //    //    Vector3 temp = Vector3.Cross(contact.normal, Vector3.down);
+    //    //    Vector3 groundSlopeDir = Vector3.Cross(temp, contact.normal);
+    //    //    slopeAngle = Vector3.Angle(contact.normal, Vector3.up);
+    //    //    Debug.LogFormat("contact point {0}, normal {1}, groundSlopeDir {2}, slopeAngle {3}", contact.point, contact.normal, groundSlopeDir, slopeAngle);
+    //    //}
     //}
 }

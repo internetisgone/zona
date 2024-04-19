@@ -166,8 +166,4 @@ public class StalkerNPC : CStalker
     {
         return Math.Abs(x - y) <= tolerance;
     }
-    public static bool HasState(StalkerState a, StalkerState b)
-    {
-        return (a & b) == b;
-    }
 }

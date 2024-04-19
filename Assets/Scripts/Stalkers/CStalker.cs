@@ -5,10 +5,11 @@ using UnityEngine;
 
 public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 {
-    public string Name {  get; set; }
+    public string Name { get; set; }
     //public DetectorType DetectorType;
     //public bool IsDetected { get; set; }
     public int ArtifactCount { get; private set; }
+    public bool IsOnSlope { get; set; }
     public CStalker() : this("Marked One")
     {
 
@@ -17,7 +18,7 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
     public CStalker(string name)
     {
         Name = name;
-        ArtifactCount = 0; 
+        ArtifactCount = 0;
     }
 
     //public abstract T GetStalkerData<T>() where T : ScriptableObject;
@@ -27,7 +28,7 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
     {
         if (ArtifactCount.CompareTo(stalker.ArtifactCount) != 0)
             return -ArtifactCount.CompareTo(stalker.ArtifactCount);
-        else 
+        else
             return Name.CompareTo(stalker.Name);
     }
 
@@ -41,4 +42,22 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
         ArtifactCount += 1;
         Debug.LogFormat("{0} added 1 artifact to inventory", Name);
     }
+
+    //public void CheckIsOnSlope(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        Vector3 normal = collision.contacts[0].normal;
+    //        Debug.DrawRay(transform.position, normal, Color.white, 1f);
+
+    //        if (normal.normalized != Vector3.up)
+    //        {
+    //            IsOnSlope = true;
+    //        }
+    //        else
+    //        {
+    //            IsOnSlope = false;
+    //        }
+    //    }
+    //}
 }
