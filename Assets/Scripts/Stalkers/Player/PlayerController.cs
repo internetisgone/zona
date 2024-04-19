@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour
     private float speed;
     private float sprintSpeed;
     [Range(0,1)]
-    public float acceleration = 0.1f;
-    public float jumpForce = 7f;
+    public float damp = 0.2f;
+    public float jumpForce = 3f;
     public float gravityModifier = 3f;
 
     private PlayerData playerData;
@@ -124,34 +124,39 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        Vector3 movementInput = transform.right * horizontalInput + transform.forward * verticalInput;
-        movementInput.y = 0;
+        if (!isGrounded) return;
 
-        if (isGrounded && isJumping)
+        if (isJumping)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
 
+        Vector3 movementInput = transform.right * horizontalInput + transform.forward * verticalInput;
+        movementInput.y = 0;
+
         Vector3 targetMovement = movementInput * (isSprinting ? sprintSpeed : speed);
 
-        // todo handle slopes
-        if (isOnSlope && isGrounded)
+        // handle slopes
+        if (isOnSlope)
         {
             float slopeAngle = Vector3.Angle(slopeNormal, Vector3.up);
             if (slopeAngle < maxSlopeAngle)
             {
                 targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
 
-                // todo prevent sliding 
+                // prevent sliding down slopes
+                Vector3 slidingForce = Vector3.ProjectOnPlane(rb.mass * Physics.gravity, slopeNormal);
+                rb.AddForce(-slidingForce);
             }
             else if (slopeAngle < 90)
             {
                 Debug.Log("slope too steep");
+                // todo
             }
         }
 
-        Vector3 newMovement = Vector3.Lerp(rb.velocity, targetMovement, acceleration);
+        Vector3 newMovement = Vector3.Lerp(rb.velocity, targetMovement, damp);
 
         rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
 

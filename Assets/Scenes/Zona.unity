@@ -1056,8 +1056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 909808ee9805ab24aab449784e86ea70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.1
-  jumpForce: 7
+  damp: 0.2
+  jumpForce: 3
   gravityModifier: 3
 --- !u!4 &867723720
 Transform:
