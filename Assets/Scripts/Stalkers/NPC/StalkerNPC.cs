@@ -32,6 +32,8 @@ public class StalkerNPC : CStalker
     private Rigidbody rb;
     private Animator animator;
 
+    private Vector3 slopeNormal;
+
     void Awake()
     {
         campfire = GameObject.FindWithTag("Campfire");
@@ -56,7 +58,7 @@ public class StalkerNPC : CStalker
                 CollectArtifact(goalArtifact);
 
             State = StalkerState.Idle;
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            rb.velocity = Vector3.zero;
             animator.SetFloat("Speed", 0);
             return;
         }
@@ -68,12 +70,14 @@ public class StalkerNPC : CStalker
         {
             // turn towards the goal
             //State |= StalkerState.Turning;
+            State = StalkerState.Turning;
+            rb.velocity = Vector3.zero;
             TurnTowards(forward);
         }
         else
         {
             // move to goal
-            MoveStalker(new Vector3(movement.normalized.x, 0, movement.normalized.z));
+            MoveStalker(movement.normalized * StalkerData.Speed);
             animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
             State = StalkerState.Wandering;
 
@@ -109,14 +113,33 @@ public class StalkerNPC : CStalker
         SetGoal(new Vector3(xCoord, transform.position.y, zCoord));
     }
 
-    private void MoveStalker(Vector3 movementNormalized)
+    private void MoveStalker(Vector3 targetMovement)
     {
-        //transform.position += movementNormalized * Speed * Time.deltaTime;
+        // check slope angle only when moving
+        CheckGround();
+        if (slopeNormal != Vector3.up)
+        {
+            targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
 
-        Vector3 curMovement = rb.velocity;
-        Vector3 newMovement = Vector3.Lerp(curMovement, movementNormalized * StalkerData.Speed, 10f);
+            Vector3 slidingForce = Vector3.ProjectOnPlane(rb.mass * Physics.gravity, slopeNormal);
+            rb.AddForce(-slidingForce);
+        }
 
-        rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
+        Vector3 movement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
+
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+    }
+
+    // temp
+    private void CheckGround()
+    {
+        RaycastHit hit;
+        float rayLength = 2f;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, 1 << 6))
+        {
+            slopeNormal = hit.normal;
+            Debug.DrawRay(transform.position, slopeNormal, Color.white, 0.5f);
+        }
     }
 
     public void SetGoal(Vector3 newGoal)
@@ -147,14 +170,18 @@ public class StalkerNPC : CStalker
         //State -= StalkerState.DetectedArtifact; 
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log(Name + ": Get out of here stalker ");
         }
+        //else if (collision.gameObject.CompareTag("Ground"))
+        //{
+        //    slopeNormal = collision.contacts[0].normal;
+        //    Debug.DrawRay(transform.position, slopeNormal, Color.white, 1f);
+        //}
     }
-
 
     // static util functions
     public static bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)

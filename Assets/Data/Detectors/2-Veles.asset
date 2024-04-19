@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d04e8811af81e745a9adbbafd061540, type: 3}
   m_Name: 2-Veles
   m_EditorClassIdentifier: 
-  DetectorType: 0
+  DetectorType: 2
   Interval: 1
   DetectionRange: 10
   VisibilityRange: 5

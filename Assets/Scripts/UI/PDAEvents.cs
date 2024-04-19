@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -27,15 +28,17 @@ public class PDAEvents : MonoBehaviour
         uiList = document.rootVisualElement.Q("List");
 
         GameObject spawnerObj = GameObject.FindWithTag("SpawnerNPC");
-        spawner = spawnerObj.GetComponent<SpawnNPC>();
+        spawner = spawnerObj?.GetComponent<SpawnNPC>();
         GameObject playerObj = GameObject.FindWithTag("Player");
-        player = playerObj.GetComponent<CStalker>();
+        player = playerObj?.GetComponent<CStalker>();
 
         container.visible = false;
     }
 
     void Start()
     {
+        if (spawner == null || player == null) return;
+
         stalkersList = spawner.stalkersList;
         stalkersList.Add(player);
 

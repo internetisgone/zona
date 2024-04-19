@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // keyboard
+    // input
     private float verticalInput;
     private float horizontalInput;
-    // mouse
     private float mouseSensitivity;
     private float mouseX;
     private float mouseY;
@@ -24,24 +23,27 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 3f;
     public float gravityModifier = 3f;
 
-    private PlayerData playerData;
-
     private bool isJumping;
     private bool isGrounded;
     private bool isSprinting;
 
+    //camera constraints
+    private int maxPitch = -70;
+    private int minPitchFirstPerson = 60;
+    private int minPitchThirdPerson = 10;
+
+    // grounding and slope
     private bool isOnSlope;
     private Vector3 slopeNormal;
     [Range (1,89)]
     private int maxSlopeAngle = 45;
     private int groundLayerMask = 1 << 6;
 
+    private PlayerData playerData;
+
     private Animator animator;
     private GameObject firstPersonCamera; 
     private GameObject thirdPersonCamera;
-
-    //private bool lmbPressed = false; // temp
-    //public GameObject projectile; // temp
 
     void Awake()
     {
@@ -99,16 +101,6 @@ public class PlayerController : MonoBehaviour
         // mouse 
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
-
-        // temp
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    lmbPressed = true;
-        //}
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    lmbPressed = false;
-        //}
     }
 
     private void UpdateRotation()
@@ -164,8 +156,8 @@ public class PlayerController : MonoBehaviour
     {
         // rotation along X axis (pitch)
         rotationX -= mouseY;
-        float rotationX1 = Math.Clamp(rotationX, -45, 60);
-        float rotationX2 = Math.Clamp(rotationX, -45, 10);
+        float rotationX1 = Math.Clamp(rotationX, maxPitch, minPitchFirstPerson);
+        float rotationX2 = Math.Clamp(rotationX, maxPitch, minPitchThirdPerson);
 
         firstPersonCamera.transform.localRotation = Quaternion.Euler(rotationX1 * mouseSensitivity, 0f, 0f);
         thirdPersonCamera.transform.localRotation = Quaternion.Euler(rotationX2 * mouseSensitivity, 0f, 0f);
