@@ -133,36 +133,25 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 movementInput = transform.right * horizontalInput + transform.forward * verticalInput;
-        movementInput.y = 0;
-
         Vector3 targetMovement = movementInput * (isSprinting ? sprintSpeed : speed);
 
-        // handle slopes
         if (isOnSlope)
         {
             float slopeAngle = Vector3.Angle(slopeNormal, Vector3.up);
             if (slopeAngle < maxSlopeAngle)
             {
+                // movement direction should be parallel to slope
                 targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
 
-                // prevent sliding down slopes
+                // add a countering force to prevent sliding down slope
                 Vector3 slidingForce = Vector3.ProjectOnPlane(rb.mass * Physics.gravity, slopeNormal);
                 rb.AddForce(-slidingForce);
-            }
-            else if (slopeAngle < 90)
-            {
-                Debug.Log("slope too steep");
-                // todo
             }
         }
 
         Vector3 newMovement = Vector3.Lerp(rb.velocity, targetMovement, damp);
 
         rb.velocity = new Vector3(newMovement.x, rb.velocity.y, newMovement.z);
-
-        // Debug.LogFormat("movementInput {0}, curMovement {1}, newMovement {2}, rb.velocity {3}", movementInput, curMovement, newMovement, rb.velocity);
-        // 
-
     }
 
     private void UpdateAnimationParams()
@@ -190,7 +179,7 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
             slopeNormal = hit.normal;
-            Debug.DrawRay(transform.position, slopeNormal, Color.white, rayLength);
+            //Debug.DrawRay(transform.position, slopeNormal, Color.white, rayLength);
             if (slopeNormal != Vector3.up) isOnSlope = true;
             else isOnSlope = false;
         }
