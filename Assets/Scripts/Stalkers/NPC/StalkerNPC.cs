@@ -22,7 +22,9 @@ public enum StalkerState
 
 public class StalkerNPC : CStalker
 {
-    public NPCData StalkerData { get; set; }
+    public NPCData StalkerData;
+    public static int GroundLayerMask = 1 << 6;
+
     public StalkerState State { get; private set; }
     public Vector3 GoalPosition { get; private set; }
 
@@ -32,6 +34,7 @@ public class StalkerNPC : CStalker
     private Rigidbody rb;
     private Animator animator;
 
+    private bool isOnSlope;
     private Vector3 slopeNormal;
 
     void Awake()
@@ -43,10 +46,27 @@ public class StalkerNPC : CStalker
         State = StalkerState.Idle;
         GoalPosition = campfire.transform.position;
         InvokeRepeating("TrySetGoal", 5, 5);
+
+        isOnSlope = false;
+        slopeNormal = Vector3.up;
+    }
+
+
+    private void UpdateState()
+    {
+
     }
 
     void FixedUpdate()
     {
+        CheckGround();
+
+        if (isOnSlope)
+        {
+            Vector3 slidingForce = Vector3.ProjectOnPlane(rb.mass * Physics.gravity, slopeNormal);
+            rb.AddForce(-slidingForce);
+        }
+
         Vector3 movement = GoalPosition - transform.position;
         Vector3 forward = new Vector3(movement.x, 0, movement.z);
 
@@ -114,15 +134,10 @@ public class StalkerNPC : CStalker
     }
 
     private void MoveStalker(Vector3 targetMovement)
-    {
-        // check slope angle only when moving
-        CheckGround();
-        if (slopeNormal != Vector3.up)
+    { 
+        if (isOnSlope)
         {
-            targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
-
-            Vector3 slidingForce = Vector3.ProjectOnPlane(rb.mass * Physics.gravity, slopeNormal);
-            rb.AddForce(-slidingForce);
+            targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);           
         }
 
         Vector3 movement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
@@ -135,10 +150,12 @@ public class StalkerNPC : CStalker
     {
         RaycastHit hit;
         float rayLength = 2f;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, 1 << 6))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, GroundLayerMask))
         {
             slopeNormal = hit.normal;
-            Debug.DrawRay(transform.position, slopeNormal, Color.white, 0.5f);
+            //Debug.DrawRay(transform.position, slopeNormal, Color.white, 0.5f);
+            if (slopeNormal != Vector3.up) isOnSlope = true;
+            else isOnSlope = false;
         }
     }
 

@@ -9,7 +9,6 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
     //public DetectorType DetectorType;
     //public bool IsDetected { get; set; }
     public int ArtifactCount { get; private set; }
-    public bool IsOnSlope { get; set; }
     public CStalker() : this("Marked One")
     {
 
