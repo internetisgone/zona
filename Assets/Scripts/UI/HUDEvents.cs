@@ -13,8 +13,7 @@ public class HUDEvents : MonoBehaviour
     private VisualElement NotificationContainer;
     public VisualTreeAsset Notification;
 
-    public EventVoid ArtifactIsCollectible;
-    public EventVoid ArtifactNoLongerCollectible;
+    public EventBool ArtifactCollectible;
     public EventFloat ArtifactProximityUpdated;
 
     public EventStalkerInt StalkerStatsUpdated;
@@ -36,8 +35,7 @@ public class HUDEvents : MonoBehaviour
 
     private void OnEnable()
     {
-        ArtifactIsCollectible.OnEventRaised += ShowCollectText;
-        ArtifactNoLongerCollectible.OnEventRaised += HideCollectText;
+        ArtifactCollectible.OnEventRaised += ToggleCollectText;
 
         ArtifactProximityUpdated.OnEventRaised += UpdateProximity;
 
@@ -48,8 +46,7 @@ public class HUDEvents : MonoBehaviour
 
     private void OnDisable()
     {
-        ArtifactIsCollectible.OnEventRaised -= ShowCollectText;
-        ArtifactNoLongerCollectible.OnEventRaised -= HideCollectText;
+        ArtifactCollectible.OnEventRaised -= ToggleCollectText;
 
         ArtifactProximityUpdated.OnEventRaised -= UpdateProximity;
 
@@ -58,14 +55,9 @@ public class HUDEvents : MonoBehaviour
         StalkerStatsUpdated.OnEventRaised -= DisplayPdaNotification;
     }
 
-    private void ShowCollectText()
+    private void ToggleCollectText(bool visible)
     {
-        collectTextTip.visible = true;
-    }
-
-    private void HideCollectText()
-    {
-        collectTextTip.visible = false;
+        collectTextTip.visible = visible;
     }
 
     private void UpdateArtifactCounter(int count) 

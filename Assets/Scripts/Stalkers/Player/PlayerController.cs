@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (playerData.InputEnabled) GetInput();
+        GetInput();
         UpdateRotation();
     }
 
@@ -93,14 +94,6 @@ public class PlayerController : MonoBehaviour
     
     private void GetInput()
     {
-        // movement
-        verticalInput = Input.GetAxisRaw("Vertical");
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-
-        if (Input.GetKeyUp(KeyCode.Space)) isJumping = false;
-        if (Input.GetKeyDown(KeyCode.Space)) isJumping = true;
-        isSprinting = Input.GetKey(KeyCode.LeftShift);
-
         // mouse 
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
@@ -110,6 +103,16 @@ public class PlayerController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         else if (Input.GetMouseButtonDown(0))
             Cursor.lockState = CursorLockMode.Locked;
+
+        if (playerData.MovementEnabled == false) return;
+
+        // movement
+        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetKeyUp(KeyCode.Space)) isJumping = false;
+        if (Input.GetKeyDown(KeyCode.Space)) isJumping = true;
+        isSprinting = Input.GetKey(KeyCode.LeftShift);
 
         // show / hide pda
         if (Input.GetKeyDown(KeyCode.P))
@@ -123,6 +126,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // switch camera
+        // collect artifact
     }
 
     private void UpdateRotation()

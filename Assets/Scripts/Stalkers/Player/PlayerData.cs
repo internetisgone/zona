@@ -12,9 +12,16 @@ public class PlayerData : ScriptableObject
     // controls
     [Range(0.1f, 2f)]
     public float MouseSensitivity = 1f;
-    public bool InputEnabled = true;
+    public bool MovementEnabled = true;
     public bool DetectorEquipped = true;
 
     // artifact 
     public float CollectionRange = 2f;
+
+    private void Reset()
+    {
+        MouseSensitivity = 1f;
+        MovementEnabled = true;
+        DetectorEquipped = true;
+    }
 }

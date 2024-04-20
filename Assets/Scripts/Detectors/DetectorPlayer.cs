@@ -8,9 +8,9 @@ public class DetectorPlayer : Detector
 
     private float collectionRange;
 
-    public EventVoid ArtifactIsCollectible;
-    public EventVoid ArtifactNoLongerCollectible;
-
+    //public EventVoid ArtifactIsCollectible;
+    //public EventVoid ArtifactNoLongerCollectible;
+    public EventBool ArtifactIsCollectible;
     public EventFloat ArtifactProximityUpdated;
   
     GameObject firstPersonCamera;
@@ -83,11 +83,11 @@ public class DetectorPlayer : Detector
         if (Physics.Raycast(origin, direction, out hit, collectionRange, ArtifactLayerMask))
         // todo use non alloc
         {
-            ArtifactIsCollectible.RaiseEvent();
+            ArtifactIsCollectible.RaiseEvent(true);
             GameObject artifact = hit.collider.gameObject;
             //StartCoroutine(artifact.GetComponent<Artifact>().PlayAnimation());
             artifact.GetComponent<Artifact>().PlayAnimation();
-            if (Input.GetKey(KeyCode.F))
+            if (Input.GetKey(KeyCode.F) && Owner.StalkerData.MovementEnabled)
             {
                 Owner.CollectArtifact(artifact);
                 ArtifactProximityUpdated.RaiseEvent(0);
@@ -95,7 +95,7 @@ public class DetectorPlayer : Detector
         }
         else
         {
-            ArtifactNoLongerCollectible.RaiseEvent();
+            ArtifactIsCollectible.RaiseEvent(false);
         }
     }
 

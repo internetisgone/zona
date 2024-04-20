@@ -15,4 +15,6 @@ MonoBehaviour:
   Speed: 3
   SprintSpeed: 10
   MouseSensitivity: 1
+  MovementEnabled: 1
+  DetectorEquipped: 1
   CollectionRange: 2

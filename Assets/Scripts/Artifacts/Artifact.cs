@@ -44,7 +44,7 @@ public class Artifact : MonoBehaviour
         animator = GetComponent<Animator>();
         renderer = GetComponent<Renderer>();
         // invisible by default
-        renderer.enabled = false;
+        //renderer.enabled = false;
     }
 
     public void ToggleVisibility(bool visible)

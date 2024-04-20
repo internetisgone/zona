@@ -20,7 +20,7 @@ public class GameOver : MonoBehaviour
     private void Purge()
     {
         Debug.Log("gg");
-        PlayerData.InputEnabled = false;
+        PlayerData.MovementEnabled = false;
         // stop stalker movement
         // hide pda and detector
         // play cutscene
