@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7584c3c127dde8f47b7226e56bab735d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOverEvent: {fileID: 11400000, guid: 93fb69f1f836e724da0731102f2cc6fb, type: 2}
 --- !u!95 &7424394176942463684
 Animator:
   serializedVersion: 5

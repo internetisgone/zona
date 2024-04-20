@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Xml.Linq;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,7 +19,8 @@ public class HUDEvents : MonoBehaviour
 
     public EventStalkerInt StalkerStatsUpdated;
 
-    public EventBool DetectorEquipped;
+    public EventVoid DetectorEquipped;
+    public PlayerData PlayerData;
 
     private WaitForSeconds hideNotifDelay = new WaitForSeconds(2);
 
@@ -87,9 +85,10 @@ public class HUDEvents : MonoBehaviour
         }
     }
 
-    private void ToggleDetector(bool toggle)
+    private void ToggleDetector()
     {
-        proximityWrapper.visible = toggle;
+        PlayerData.DetectorEquipped = !PlayerData.DetectorEquipped;
+        proximityWrapper.visible = PlayerData.DetectorEquipped;
     }
 
     private void DisplayPdaNotification(CStalker stalker, int artifactCount)
@@ -99,6 +98,7 @@ public class HUDEvents : MonoBehaviour
             UpdateArtifactCounter(stalker.ArtifactCount);
         }
 
+        // todo recycle notif objects
         VisualElement notif = Notification.Instantiate();
         Label notifText = notif.Q<Label>("Notification");
         notifText.text = stalker.Name + " collected " + artifactCount + " artifact.";

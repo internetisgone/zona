@@ -12,10 +12,7 @@ public class DetectorPlayer : Detector
     public EventVoid ArtifactNoLongerCollectible;
 
     public EventFloat ArtifactProximityUpdated;
-
-    public EventBool DetectorEquipped;
-
-
+  
     GameObject firstPersonCamera;
 
     void Awake()
@@ -32,30 +29,11 @@ public class DetectorPlayer : Detector
 
     void Update()
     {
-        // equip / unequip detector
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            isEquipped = !isEquipped;
-            DetectorEquipped.RaiseEvent(isEquipped);
-        }
-
-        if (isEquipped == false) return;
+        if (Owner.StalkerData.DetectorEquipped == false) return;
 
         if (IsDetected)
         {
             CheckIfCollectible();
-        }
-        else
-        {
-            // clear proximity indicator
-            ArtifactProximityUpdated.RaiseEvent(0);
-
-            //foreach (var artifact in collectible)
-            //{
-            //    if (artifact) artifact.UnsetHighlight();
-            //}
-            //collectible.Clear();
-            //}
         }
     }
 
@@ -89,6 +67,7 @@ public class DetectorPlayer : Detector
         else
         {
             IsDetected = false;
+            ClearProximityDisplay();
         }
     }
 
@@ -118,6 +97,11 @@ public class DetectorPlayer : Detector
         {
             ArtifactNoLongerCollectible.RaiseEvent();
         }
+    }
+
+    private void ClearProximityDisplay()
+    {
+        ArtifactProximityUpdated.RaiseEvent(0);
     }
 
     void OnDrawGizmos()

@@ -39,7 +39,10 @@ public class PlayerController : MonoBehaviour
     private int maxSlopeAngle = 45;
     private int groundLayerMask = 1 << 6;
 
+    // input events
     private PlayerData playerData;
+    public EventVoid ToggleDetectorEvent;
+    public EventVoid TogglePDAEvent;
 
     private Animator animator;
     private GameObject firstPersonCamera; 
@@ -72,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        GetInput();
+        if (playerData.InputEnabled) GetInput();
         UpdateRotation();
     }
 
@@ -90,7 +93,7 @@ public class PlayerController : MonoBehaviour
     
     private void GetInput()
     {
-        // keyboard
+        // movement
         verticalInput = Input.GetAxisRaw("Vertical");
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
@@ -101,6 +104,25 @@ public class PlayerController : MonoBehaviour
         // mouse 
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
+
+        // cursor lock
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Cursor.lockState = CursorLockMode.None;
+        else if (Input.GetMouseButtonDown(0))
+            Cursor.lockState = CursorLockMode.Locked;
+
+        // show / hide pda
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            TogglePDAEvent.OnEventRaised();
+        }
+        // show / hide detector
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            ToggleDetectorEvent.OnEventRaised();
+        }
+
+        // switch camera
     }
 
     private void UpdateRotation()

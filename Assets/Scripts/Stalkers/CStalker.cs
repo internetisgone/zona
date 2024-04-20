@@ -6,8 +6,6 @@ using UnityEngine;
 public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 {
     public string Name { get; set; }
-    //public DetectorType DetectorType;
-    //public bool IsDetected { get; set; }
     public int ArtifactCount { get; private set; }
     [SerializeField]
     public EventStalkerInt StalkerStatsUpdated;

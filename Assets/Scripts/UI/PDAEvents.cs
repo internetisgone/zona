@@ -22,6 +22,8 @@ public class PDAEvents : MonoBehaviour
     private CStalker player;
     private int unknownStalkerCount = 3;
 
+    public EventVoid TogglePDAEvent;
+
     void Awake()
     {
         document = GetComponent<UIDocument>();
@@ -34,7 +36,7 @@ public class PDAEvents : MonoBehaviour
         GameObject playerObj = GameObject.FindWithTag("Player");
         player = playerObj?.GetComponent<CStalker>();
 
-        container.visible = false;
+        container.visible = isVisible;
     }
 
     void Start()
@@ -52,19 +54,19 @@ public class PDAEvents : MonoBehaviour
         SetUnkonwnStalkerRank();
     }
 
-    void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SetVisible(!isVisible);
-        }
+        TogglePDAEvent.OnEventRaised += ToggleVisibility;
     }
 
-    private void SetVisible(bool visible)
+    private void OnDisable()
     {
-        if (isVisible == visible) return;
+        TogglePDAEvent.OnEventRaised -= ToggleVisibility;
+    }
 
-        isVisible = visible;
+    private void ToggleVisibility()
+    {
+        isVisible = !isVisible;
 
         if (isVisible)
         {
@@ -91,7 +93,7 @@ public class PDAEvents : MonoBehaviour
             // unsub
         }
 
-        container.visible = visible;
+        container.visible = isVisible;
     }
 
     private void SetUnkonwnStalkerRank()

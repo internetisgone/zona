@@ -8,24 +8,18 @@ using UnityEngine;
 public class SpawnArtifacts : MonoBehaviour
 {
     public GameObject artifactPrefab;
-    public int TotalCount = 0;
 
-    private SpawnPointArtifact[] clusters;
-
-    // min / max number of artifacts inside a cluster
-    private int minCount = 10;
-    private int maxCount = 15;
+    // number of artifacts in a cluster
+    private int minCount = 1;
+    private int maxCount = 1;
 
     private float spawnRadius = 7f;
     private float minSpacing = 0.7f; // temp. min spacing = artifact diameter with some extra room
 
-    private void Awake()
-    {
-        clusters = GetComponentsInChildren<SpawnPointArtifact>();
-    }
-
     void Start()
     {
+        SpawnPointArtifact[] clusters = GetComponentsInChildren<SpawnPointArtifact>();
+
         // generate random spawn points inside each cluster
         for (int i = 0; i < clusters.Length; i++)
         {
@@ -57,7 +51,7 @@ public class SpawnArtifacts : MonoBehaviour
                 SpawnArtifact(points[j].x, points[j].y);
             }
 
-            TotalCount += count;
+            Artifact.TotalCount += count;
         }
     }
 

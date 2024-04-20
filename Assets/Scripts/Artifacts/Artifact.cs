@@ -16,6 +16,9 @@ public enum ArtifactType
 
 public class Artifact : MonoBehaviour
 {
+    public static int TotalCount = 0;
+    [SerializeField]
+    public EventVoid GameOverEvent;
     public ArtifactType Type { get; }
     private Animator animator;
 
@@ -40,7 +43,7 @@ public class Artifact : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         renderer = GetComponent<Renderer>();
-
+        // invisible by default
         renderer.enabled = false;
     }
 
@@ -54,6 +57,11 @@ public class Artifact : MonoBehaviour
     public void OnCollected()
     {
         Destroy(gameObject);
+        TotalCount--;
+        if (TotalCount == 0)
+        {
+            GameOverEvent.RaiseEvent();
+        }
     }
 
     public void PlayAnimation()

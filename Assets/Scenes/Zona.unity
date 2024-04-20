@@ -408,6 +408,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2525865364205382634, guid: 5c7eb3c728f3b1b44915204337c2f253, type: 3}
   m_PrefabInstance: {fileID: 379108768}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &380663448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 380663450}
+  - component: {fileID: 380663449}
+  m_Layer: 0
+  m_Name: GameOver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &380663449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380663448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dafb16ea68ec8b45998a4d42552573f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameOverEvent: {fileID: 11400000, guid: 93fb69f1f836e724da0731102f2cc6fb, type: 2}
+  PlayerData: {fileID: 0}
+--- !u!4 &380663450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380663448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 101.060005, y: 3.136262, z: -16.679995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &555115896
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +484,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   artifactPrefab: {fileID: 6228099653346918646, guid: 693b7ccc4e6fc21448656f519b4c6be0, type: 3}
-  TotalCount: 0
 --- !u!4 &555115898
 Transform:
   m_ObjectHideFlags: 0
@@ -1092,6 +1137,8 @@ MonoBehaviour:
   damp: 0.2
   jumpForce: 3
   gravityModifier: 3
+  ToggleDetectorEvent: {fileID: 11400000, guid: 258e27cee1ddf2a43a4745d5810a5f8c, type: 2}
+  TogglePDAEvent: {fileID: 11400000, guid: e20eb5dbcc620b74f9b98687fc2fd85d, type: 2}
 --- !u!4 &867723720
 Transform:
   m_ObjectHideFlags: 0
@@ -1746,7 +1793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1324501517
 Transform:
   m_ObjectHideFlags: 0
@@ -3008,6 +3055,7 @@ MonoBehaviour:
   ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
   StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
   DetectorEquipped: {fileID: 11400000, guid: 258e27cee1ddf2a43a4745d5810a5f8c, type: 2}
+  PlayerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
 --- !u!1 &2123764954
 GameObject:
   m_ObjectHideFlags: 0
@@ -3054,6 +3102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listItem: {fileID: 9197481963319205126, guid: aa2bccb5857d7c24b9263ca758bc3056, type: 3}
+  TogglePDAEvent: {fileID: 11400000, guid: e20eb5dbcc620b74f9b98687fc2fd85d, type: 2}
 --- !u!114 &2123764957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3195,6 +3244,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1601807008}
   - {fileID: 566092402}
+  - {fileID: 380663450}
   - {fileID: 1576413987}
   - {fileID: 555115898}
   - {fileID: 1933032926}
