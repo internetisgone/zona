@@ -10,12 +10,12 @@ public class GameOver : MonoBehaviour
 
     private void OnEnable()
     {
-        GameOverEvent.OnEventRaised += Purge;
+        GameOverEvent.OnEventRaised += StartPurge;
     }
 
     private void OnDisable()
     {
-        GameOverEvent.OnEventRaised += Purge;
+        GameOverEvent.OnEventRaised += StartPurge;
     }
 
     private void Purge()
@@ -34,14 +34,14 @@ public class GameOver : MonoBehaviour
         // play cutscene
     }
 
-    //private IEnumerator PurgeAfterDelay()
-    //{
-    //    yield return new WaitForSeconds(1);
-    //    Purge();
-    //}
+    private IEnumerator PurgeAfterDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Purge();
+    }
 
-    //private void StartPurge()
-    //{
-    //    StartCoroutine(PurgeAfterDelay());
-    //}
+    private void StartPurge()
+    {
+        StartCoroutine(PurgeAfterDelay());
+    }
 }

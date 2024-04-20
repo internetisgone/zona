@@ -29,7 +29,7 @@ public class SpawnNPC : MonoBehaviour
 
     void Awake()
     {
-        // get a list of spawn points
+        // get list of spawn points
         spawnPoints = GetComponentsInChildren<SpawnPointNPC>();
 
         SetBounds(stalkerNames.Length, spawnPoints.Length);

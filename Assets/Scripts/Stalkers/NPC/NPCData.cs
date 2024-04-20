@@ -12,4 +12,11 @@ public class NPCData : ScriptableObject
 
     // artifact 
     public float CollectionRange = 2f;
+
+    public void Reset()
+    {
+        Speed = 1.8f;
+        TurnSpeed = 2f;
+        CollectionRange = 2f;
+    }
 }

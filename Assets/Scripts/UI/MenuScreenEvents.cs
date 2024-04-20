@@ -23,10 +23,6 @@ public class MenuScreenEvents : MonoBehaviour
     private Button confirmBtn;
     private Button resetBtn;
 
-    // default values
-    private float defaultMouseSensitivity;
-    private float defaultNPCSpeed;
-
     void Awake()
     {
         document = GetComponent<UIDocument>();
@@ -50,8 +46,6 @@ public class MenuScreenEvents : MonoBehaviour
         mouseSensitivitySlider.highValue = 2f;
         npcSpeedSlider.lowValue = 1f;
         npcSpeedSlider.highValue = 10f;
-        defaultMouseSensitivity = playerData.MouseSensitivity;
-        defaultNPCSpeed = npcData.Speed;
         SetToDefault();
 
         // register callback
@@ -87,8 +81,8 @@ public class MenuScreenEvents : MonoBehaviour
 
     private void SetToDefault()
     {
-        mouseSensitivitySlider.value = defaultMouseSensitivity;
-        npcSpeedSlider.value = defaultNPCSpeed;
+        playerData.Reset();
+        npcData.Reset();
     }
 
     private void OnDisable()
@@ -97,6 +91,5 @@ public class MenuScreenEvents : MonoBehaviour
         settingsBtn.UnregisterCallback<PointerUpEvent>(OnSettingsClicked);
         confirmBtn.UnregisterCallback<PointerUpEvent>(OnConfirmSettings);
         resetBtn.UnregisterCallback<PointerUpEvent>(OnResetSettings); ;
-
     }
 }

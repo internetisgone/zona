@@ -3,21 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[Flags]
-//public enum StalkerState
-//{
-//    Idle = 0,
-//    Turning = 1 << 0,
-//    Wandering = 1 << 1,
-//    DetectedArtifact = 1 << 2,
-//}
-
+[Flags]
 public enum StalkerState
 {
     Idle = 0,
-    Turning = 1,
-    Wandering = 2,
-    DetectedArtifact = 3,
+    Turning = 1 << 0,
+    Moving = 1 << 1,
+    DetectedArtifact = 1 << 2,
 }
 
 public class StalkerNPC : CStalker
@@ -51,7 +43,6 @@ public class StalkerNPC : CStalker
         slopeNormal = Vector3.up;
     }
 
-
     private void UpdateState()
     {
 
@@ -73,8 +64,7 @@ public class StalkerNPC : CStalker
         if (forward.magnitude < 1)
         {
             // already at goal
-
-            if (State == StalkerState.DetectedArtifact)
+            if (State.HasFlag(StalkerState.DetectedArtifact))
                 CollectArtifact(goalArtifact);
 
             State = StalkerState.Idle;
@@ -89,8 +79,7 @@ public class StalkerNPC : CStalker
         if (shouldTurn)
         {
             // turn towards the goal
-            //State |= StalkerState.Turning;
-            State = StalkerState.Turning;
+            State |= StalkerState.Turning;
             rb.velocity = Vector3.zero;
             TurnTowards(forward);
         }
@@ -99,10 +88,8 @@ public class StalkerNPC : CStalker
             // move to goal
             MoveStalker(movement.normalized * StalkerData.Speed);
             animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
-            State = StalkerState.Wandering;
-
-            if (State == StalkerState.DetectedArtifact && movement.magnitude < StalkerData.CollectionRange)
-                CollectArtifact(goalArtifact);
+            State |= StalkerState.Moving;
+            State &= ~StalkerState.Turning;
         }
     }
 
@@ -183,6 +170,7 @@ public class StalkerNPC : CStalker
     {
         base.CollectArtifact(goalArtifact);
         goalArtifact = null;
+        State &= ~StalkerState.DetectedArtifact;
         // State = StalkerState.Idle;
         //State -= StalkerState.DetectedArtifact; 
     }

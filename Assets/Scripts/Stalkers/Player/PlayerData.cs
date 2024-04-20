@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     // movement
-    public float Speed = 10f;
-    public float SprintSpeed = 20f;
+    public float Speed = 3f;
+    public float SprintSpeed = 7f;
 
     // controls
     [Range(0.1f, 2f)]
@@ -18,10 +18,13 @@ public class PlayerData : ScriptableObject
     // artifact 
     public float CollectionRange = 2f;
 
-    private void Reset()
+    public void Reset()
     {
+        Speed = 3f;
+        SprintSpeed = 7f;
         MouseSensitivity = 1f;
         MovementEnabled = true;
         DetectorEquipped = true;
+        CollectionRange = 2f;
     }
 }

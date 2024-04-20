@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     // input
     private float verticalInput;
     private float horizontalInput;
-    private float mouseSensitivity;
     private float mouseX;
     private float mouseY;
     private float rotationX = 0;
@@ -17,8 +16,6 @@ public class PlayerController : MonoBehaviour
 
     // movement
     Rigidbody rb;
-    private float speed;
-    private float sprintSpeed;
     [Range(0,1)]
     public float damp = 0.2f;
     public float jumpForce = 3f;
@@ -40,8 +37,9 @@ public class PlayerController : MonoBehaviour
     private int maxSlopeAngle = 45;
     private int groundLayerMask = 1 << 6;
 
-    // input events
     private PlayerData playerData;
+
+    // input events
     public EventVoid ToggleDetectorEvent;
     public EventVoid TogglePDAEvent;
 
@@ -55,10 +53,7 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetChild(0).GetComponent<Animator>();
 
         // get player data
-        playerData = GetComponent<Player>().StalkerData;
-        speed = playerData.Speed;
-        sprintSpeed = playerData.SprintSpeed;
-        mouseSensitivity = playerData.MouseSensitivity;
+        playerData = GetComponent<Player>().StalkerData; // speed, sprintSpeed, mouseSensitivity
 
         firstPersonCamera = transform.GetChild(1).gameObject; // todo
         thirdPersonCamera = transform.GetChild(2).gameObject; // todo
@@ -137,7 +132,7 @@ public class PlayerController : MonoBehaviour
         else if (rotationY > 180) rotationY = -180f;
 
          // turn 
-        transform.rotation = Quaternion.Euler(0f, -rotationY * mouseSensitivity, 0f);
+        transform.rotation = Quaternion.Euler(0f, -rotationY * playerData.MouseSensitivity, 0f);
     }
 
     private void Move()
@@ -151,7 +146,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 movementInput = transform.right * horizontalInput + transform.forward * verticalInput;
-        Vector3 targetMovement = movementInput * (isSprinting ? sprintSpeed : speed);
+        Vector3 targetMovement = movementInput * (isSprinting ? playerData.SprintSpeed : playerData.Speed);
 
         if (isOnSlope)
         {
@@ -175,18 +170,18 @@ public class PlayerController : MonoBehaviour
     private void UpdateAnimationParams()
     {
         animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
-        animator.SetBool("IsSprinting", isSprinting && rb.velocity.magnitude > speed);
+        animator.SetBool("IsSprinting", isSprinting && rb.velocity.magnitude > playerData.Speed);
     }
 
     private void UpdateCamera()
     {
         // rotation along X axis (pitch)
         rotationX -= mouseY;
-        float rotationX1 = Math.Clamp(rotationX, maxPitch, minPitchFirstPerson);
-        float rotationX2 = Math.Clamp(rotationX, maxPitch, minPitchThirdPerson);
+        float rotationX1 = Math.Clamp(rotationX * playerData.MouseSensitivity, maxPitch, minPitchFirstPerson);
+        float rotationX2 = Math.Clamp(rotationX * playerData.MouseSensitivity, maxPitch, minPitchThirdPerson);
 
-        firstPersonCamera.transform.localRotation = Quaternion.Euler(rotationX1 * mouseSensitivity, 0f, 0f);
-        thirdPersonCamera.transform.localRotation = Quaternion.Euler(rotationX2 * mouseSensitivity, 0f, 0f);
+        firstPersonCamera.transform.localRotation = Quaternion.Euler(rotationX1, 0f, 0f);
+        thirdPersonCamera.transform.localRotation = Quaternion.Euler(rotationX2, 0f, 0f);
     }
 
     private void CheckGround()
