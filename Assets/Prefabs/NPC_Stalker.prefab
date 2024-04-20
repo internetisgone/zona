@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5afe4f205e11e4088042dbc1c83399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
+  StalkerData: {fileID: 11400000, guid: 213cd3c6cc52b954991b6e45ba3d4db5, type: 2}
 --- !u!136 &4750429806808667977
 CapsuleCollider:
   m_ObjectHideFlags: 0

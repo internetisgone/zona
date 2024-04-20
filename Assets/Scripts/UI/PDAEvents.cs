@@ -28,6 +28,7 @@ public class PDAEvents : MonoBehaviour
         container = document.rootVisualElement.Q("Container");
         uiList = document.rootVisualElement.Q("List");
 
+        // todo use runtimedata
         GameObject spawnerObj = GameObject.FindWithTag("SpawnerNPC");
         spawner = spawnerObj?.GetComponent<SpawnNPC>();
         GameObject playerObj = GameObject.FindWithTag("Player");
@@ -48,6 +49,7 @@ public class PDAEvents : MonoBehaviour
             VisualElement listItemContainer = listItem.Instantiate();
             uiList.Add(listItemContainer);
         }
+        SetUnkonwnStalkerRank();
     }
 
     void Update()
@@ -68,26 +70,18 @@ public class PDAEvents : MonoBehaviour
         {
             stalkersList.Sort();
 
-            for (int i = 0; i < stalkersList.Count + unknownStalkerCount; i++)
+            for (int i = 0; i < stalkersList.Count; i++)
             {
-                VisualElement curItem = uiList.ElementAt(i);
+                VisualElement curItem = uiList.ElementAt(i + unknownStalkerCount);
                 Label rank = curItem.Q<Label>("Rank");
                 Label name = curItem.Q<Label>("Name");
                 Label artifactCount = curItem.Q<Label>("Artifacts");
 
-                if (i < unknownStalkerCount)
-                {
-                    rank.text = (i + 1).ToString();
-                    name.text = "???";
-                    artifactCount.text = "???";
-                }
-                else
-                {
-                    CStalker curStalker = stalkersList[i - unknownStalkerCount];
-                    rank.text = (i + 1).ToString();
-                    name.text = curStalker.Name;
-                    artifactCount.text = curStalker.ArtifactCount.ToString();
-                }
+                CStalker curStalker = stalkersList[i];
+                rank.text = (i + 1 + unknownStalkerCount).ToString();
+                name.text = curStalker.Name;
+                artifactCount.text = curStalker.ArtifactCount.ToString();
+                //Debug.LogFormat("stalker guid {0}, name {1}", curStalker.Guid, curStalker.Name);
             }
 
             // todo subscribe to events and update stats in real time?
@@ -98,5 +92,15 @@ public class PDAEvents : MonoBehaviour
         }
 
         container.visible = visible;
+    }
+
+    private void SetUnkonwnStalkerRank()
+    {
+        for (int i = 0; i < unknownStalkerCount; i++)
+        {
+            VisualElement curItem = uiList.ElementAt(i);
+            Label rank = curItem.Q<Label>("Rank");
+            rank.text = (i + 1).ToString();
+        }
     }
 }

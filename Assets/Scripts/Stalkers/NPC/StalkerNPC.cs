@@ -140,7 +140,7 @@ public class StalkerNPC : CStalker
             targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);           
         }
 
-        Vector3 movement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
+        Vector3 movement = Vector3.Lerp(rb.velocity, targetMovement, 0.15f);
 
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
     }

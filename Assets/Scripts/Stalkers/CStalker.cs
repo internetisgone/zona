@@ -9,6 +9,10 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
     //public DetectorType DetectorType;
     //public bool IsDetected { get; set; }
     public int ArtifactCount { get; private set; }
+    [SerializeField]
+    public EventStalkerInt StalkerStatsUpdated;
+
+    //public Guid Guid;
     public CStalker() : this("Marked One")
     {
 
@@ -16,6 +20,7 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 
     public CStalker(string name)
     {
+        //Guid = Guid.NewGuid();
         Name = name;
         ArtifactCount = 0;
     }
@@ -39,7 +44,7 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 
         artifact.OnCollected();
         ArtifactCount += 1;
-        Debug.LogFormat("{0} added 1 artifact to inventory", Name);
+        StalkerStatsUpdated.RaiseEvent(this, 1);
     }
 
     //public void CheckIsOnSlope(Collision collision)

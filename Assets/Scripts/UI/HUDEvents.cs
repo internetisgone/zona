@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Xml.Linq;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,14 +13,18 @@ public class HUDEvents : MonoBehaviour
     private Label counter;
     private VisualElement proximityWrapper;
     private Label proximityIndicator;
+    private VisualElement NotificationContainer;
+    public VisualTreeAsset Notification;
 
     public EventVoid ArtifactIsCollectible;
     public EventVoid ArtifactNoLongerCollectible;
-
-    public EventInt ArtifactCountUpdated;
     public EventFloat ArtifactProximityUpdated;
 
+    public EventStalkerInt StalkerStatsUpdated;
+
     public EventBool DetectorEquipped;
+
+    private WaitForSeconds hideNotifDelay = new WaitForSeconds(2);
 
     void Awake()
     {
@@ -27,6 +33,7 @@ public class HUDEvents : MonoBehaviour
         counter = document.rootVisualElement.Q("Quantity") as Label;
         proximityWrapper = document.rootVisualElement.Q("ProximityWrapper");
         proximityIndicator = document.rootVisualElement.Q("ProximityValue") as Label;
+        NotificationContainer = document.rootVisualElement.Q("PDANotifContainer");
     }
 
     private void OnEnable()
@@ -34,10 +41,11 @@ public class HUDEvents : MonoBehaviour
         ArtifactIsCollectible.OnEventRaised += ShowCollectText;
         ArtifactNoLongerCollectible.OnEventRaised += HideCollectText;
 
-        ArtifactCountUpdated.OnEventRaised += UpdateArtifactCounter;
         ArtifactProximityUpdated.OnEventRaised += UpdateProximity;
 
         DetectorEquipped.OnEventRaised += ToggleDetector;
+
+        StalkerStatsUpdated.OnEventRaised += DisplayPdaNotification;
     }
 
     private void OnDisable()
@@ -45,10 +53,11 @@ public class HUDEvents : MonoBehaviour
         ArtifactIsCollectible.OnEventRaised -= ShowCollectText;
         ArtifactNoLongerCollectible.OnEventRaised -= HideCollectText;
 
-        ArtifactCountUpdated.OnEventRaised -= UpdateArtifactCounter;
         ArtifactProximityUpdated.OnEventRaised -= UpdateProximity;
 
         DetectorEquipped.OnEventRaised -= ToggleDetector;
+
+        StalkerStatsUpdated.OnEventRaised -= DisplayPdaNotification;
     }
 
     private void ShowCollectText()
@@ -74,12 +83,34 @@ public class HUDEvents : MonoBehaviour
         }
         else
         {
-            proximityIndicator.text = p.ToString();
+            proximityIndicator.text = p.ToString("0.00");
         }
     }
 
     private void ToggleDetector(bool toggle)
     {
         proximityWrapper.visible = toggle;
+    }
+
+    private void DisplayPdaNotification(CStalker stalker, int artifactCount)
+    {
+        if (stalker is Player)
+        {
+            UpdateArtifactCounter(stalker.ArtifactCount);
+        }
+
+        VisualElement notif = Notification.Instantiate();
+        Label notifText = notif.Q<Label>("Notification");
+        notifText.text = stalker.Name + " collected " + artifactCount + " artifact.";
+
+        NotificationContainer.Add(notif);
+        IEnumerator coroutine = HideNotifAfterDelay(notif);
+        StartCoroutine(coroutine);
+    }
+
+    private IEnumerator HideNotifAfterDelay(VisualElement notif)
+    {
+        yield return hideNotifDelay;
+        NotificationContainer.Remove(notif);
     }
 }

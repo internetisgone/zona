@@ -30,7 +30,7 @@ public class SpawnNPC : MonoBehaviour
     void Awake()
     {
         // get a list of spawn points
-        spawnPoints = GetSpawnPoints();
+        spawnPoints = GetComponentsInChildren<SpawnPointNPC>();
 
         SetBounds(stalkerNames.Length, spawnPoints.Length);
 
@@ -55,11 +55,6 @@ public class SpawnNPC : MonoBehaviour
             stalkersList.Add(stalker);
             Debug.Log("Spawned new stalker " + stalker.Name);
         }
-    }
-
-    private SpawnPointNPC[] GetSpawnPoints()
-    { 
-        return GetComponentsInChildren<SpawnPointNPC>(); ;
     }
 
     private void SetBounds(int namesLength, int spawnPointsLength)

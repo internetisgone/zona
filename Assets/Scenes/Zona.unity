@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.031671856, g: 0.03380049, b: 0.03930222, a: 1}
+  m_IndirectSpecularColor: {r: 0.008550849, g: 0.009778912, b: 0.015922029, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1149,8 +1149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac84c6d7ffc84a44a52d5a929c2c796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
   StalkerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
-  ArtifactCountUpdated: {fileID: 11400000, guid: 42eebd0f5d98d4044937a9d44994409a, type: 2}
 --- !u!114 &867723724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,7 +1389,7 @@ Transform:
   m_GameObject: {fileID: 919836576}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 2.196, z: 2.58}
+  m_LocalPosition: {x: 0.3, y: 2.077, z: 2.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2481,7 +2481,7 @@ Transform:
   m_GameObject: {fileID: 1675421713}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 2.146, z: 5.22}
+  m_LocalPosition: {x: 1.3, y: 2.048, z: 4.624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3002,10 +3002,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e9d155929e454047bfccc86978469d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Notification: {fileID: 9197481963319205126, guid: fd5b34dac0f76574695a54ede47c449c, type: 3}
   ArtifactIsCollectible: {fileID: 11400000, guid: d9c14ea9559a8634c93068cfa360fa83, type: 2}
   ArtifactNoLongerCollectible: {fileID: 11400000, guid: fea6335aae1afb249bb60565ff750644, type: 2}
-  ArtifactCountUpdated: {fileID: 11400000, guid: 42eebd0f5d98d4044937a9d44994409a, type: 2}
   ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
+  StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
   DetectorEquipped: {fileID: 11400000, guid: 258e27cee1ddf2a43a4745d5810a5f8c, type: 2}
 --- !u!1 &2123764954
 GameObject:

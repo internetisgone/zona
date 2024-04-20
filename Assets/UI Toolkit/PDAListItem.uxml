@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheet.uss?fileID=7433441132597879392&amp;guid=cd7eb0adfbcb8f146842bc515163489e&amp;type=3#Stylesheet" />
     <ui:VisualElement name="StalkerContainer" class="list-item text" style="flex-grow: 1; align-items: center; justify-content: space-around; font-size: 18px;">
         <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Rank" text="0" />
-        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" text="name" />
-        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Artifacts" text="0" />
+        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" text="???" />
+        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Artifacts" text="???" />
     </ui:VisualElement>
 </ui:UXML>

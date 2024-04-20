@@ -8,7 +8,7 @@ public abstract class Detector : MonoBehaviour
     public DetectorType DetectorType { get; private set; }
     public bool isEquipped {  get; set; }
     public bool IsDetected { get; set; }
-    public int ArtifactLayerMask { get; }
+    public static int ArtifactLayerMask = 1 << 7;
 
     public Detector()
     {
@@ -18,7 +18,6 @@ public abstract class Detector : MonoBehaviour
 
         //int artifactLayer = LayerMask.NameToLayer("Artifact");
         //ArtifactLayerMask = 1 << artifactLayer;
-        ArtifactLayerMask = 1 << 7;
     }
 
     public abstract void Detect();
