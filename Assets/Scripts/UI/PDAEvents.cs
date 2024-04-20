@@ -20,6 +20,7 @@ public class PDAEvents : MonoBehaviour
     private SpawnNPC spawner;
     private List<CStalker> stalkersList;
     private CStalker player;
+    private int unknownStalkerCount = 3;
 
     void Awake()
     {
@@ -42,7 +43,7 @@ public class PDAEvents : MonoBehaviour
         stalkersList = spawner.stalkersList;
         stalkersList.Add(player);
 
-        for (int i = 0; i < stalkersList.Count; i++)
+        for (int i = 0; i < stalkersList.Count + unknownStalkerCount; i++)
         {
             VisualElement listItemContainer = listItem.Instantiate();
             uiList.Add(listItemContainer);
@@ -67,18 +68,26 @@ public class PDAEvents : MonoBehaviour
         {
             stalkersList.Sort();
 
-            for (int i = 0; i < stalkersList.Count; i++)
+            for (int i = 0; i < stalkersList.Count + unknownStalkerCount; i++)
             {
                 VisualElement curItem = uiList.ElementAt(i);
-                CStalker curStalker = stalkersList[i];
-                // Debug.LogFormat("stalker {0} has {1} artifacts, curItem {2}", curStalker.Name, curStalker.ArtifactCount, curItem);
                 Label rank = curItem.Q<Label>("Rank");
                 Label name = curItem.Q<Label>("Name");
                 Label artifactCount = curItem.Q<Label>("Artifacts");
 
-                rank.text = (i + 1).ToString();
-                name.text = curStalker.Name;
-                artifactCount.text = curStalker.ArtifactCount.ToString();
+                if (i < unknownStalkerCount)
+                {
+                    rank.text = (i + 1).ToString();
+                    name.text = "???";
+                    artifactCount.text = "???";
+                }
+                else
+                {
+                    CStalker curStalker = stalkersList[i - unknownStalkerCount];
+                    rank.text = (i + 1).ToString();
+                    name.text = curStalker.Name;
+                    artifactCount.text = curStalker.ArtifactCount.ToString();
+                }
             }
 
             // todo subscribe to events and update stats in real time?
