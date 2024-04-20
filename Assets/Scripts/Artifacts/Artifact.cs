@@ -44,7 +44,7 @@ public class Artifact : MonoBehaviour
         animator = GetComponent<Animator>();
         renderer = GetComponent<Renderer>();
         // invisible by default
-        //renderer.enabled = false;
+        renderer.enabled = false;
     }
 
     public void ToggleVisibility(bool visible)
@@ -60,6 +60,7 @@ public class Artifact : MonoBehaviour
         TotalCount--;
         if (TotalCount == 0)
         {
+            // game over when all artifacts have been collected 
             GameOverEvent.RaiseEvent();
         }
     }

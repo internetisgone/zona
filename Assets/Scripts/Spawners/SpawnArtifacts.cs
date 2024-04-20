@@ -10,8 +10,8 @@ public class SpawnArtifacts : MonoBehaviour
     public GameObject artifactPrefab;
 
     // number of artifacts in a cluster
-    private int minCount = 1;
-    private int maxCount = 1;
+    private int minCount = 2;
+    private int maxCount = 7;
 
     private float spawnRadius = 7f;
     private float minSpacing = 0.7f; // temp. min spacing = artifact diameter with some extra room

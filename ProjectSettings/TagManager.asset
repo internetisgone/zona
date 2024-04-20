@@ -9,6 +9,7 @@ TagManager:
   - Artifact
   - Campfire
   - SpawnerNPC
+  - UI
   layers:
   - Default
   - TransparentFX
