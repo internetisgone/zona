@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+# if UNITY_EDITOR
+
 [CustomEditor(typeof(EventStalkerInt))]
 
 public class EventStalkerIntTest : Editor
@@ -18,5 +20,6 @@ public class EventStalkerIntTest : Editor
             targetEvent.RaiseEvent(new StalkerNPC(), 420);
         }
     }
-
 }
+
+# endif

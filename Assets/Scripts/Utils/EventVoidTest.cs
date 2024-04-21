@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+# if UNITY_EDITOR
+
 [CustomEditor(typeof(EventVoid))]
 public class EventVoidTest : Editor
 {
@@ -18,3 +20,5 @@ public class EventVoidTest : Editor
         }
     }
 }
+
+# endif

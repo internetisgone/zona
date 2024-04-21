@@ -1157,6 +1157,7 @@ GameObject:
   - component: {fileID: 867723716}
   - component: {fileID: 867723721}
   - component: {fileID: 867723724}
+  - component: {fileID: 867723725}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1278,6 +1279,14 @@ MonoBehaviour:
   DetectorData: {fileID: 11400000, guid: 81feb7fd8cdce274eae87648014f07a5, type: 2}
   ArtifactIsCollectible: {fileID: 11400000, guid: 0fa03d66e723d9e48844fa396f87eb3e, type: 2}
   ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
+--- !u!81 &867723725
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867723715}
+  m_Enabled: 1
 --- !u!1 &918297541
 GameObject:
   m_ObjectHideFlags: 0
@@ -2726,7 +2735,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1995402588}
   - component: {fileID: 1995402587}
-  - component: {fileID: 1995402586}
   - component: {fileID: 1995402589}
   m_Layer: 0
   m_Name: Camera_Top_Down
@@ -2735,14 +2743,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1995402586
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1995402585}
-  m_Enabled: 1
 --- !u!20 &1995402587
 Camera:
   m_ObjectHideFlags: 0

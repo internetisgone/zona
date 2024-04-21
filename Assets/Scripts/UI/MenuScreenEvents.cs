@@ -83,6 +83,8 @@ public class MenuScreenEvents : MonoBehaviour
     {
         playerData.Reset();
         npcData.Reset();
+        mouseSensitivitySlider.value = playerData.MouseSensitivity;
+        npcSpeedSlider.value = npcData.Speed;
     }
 
     private void OnDisable()
