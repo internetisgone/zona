@@ -11,7 +11,6 @@ public class HUDEvents : MonoBehaviour
     private VisualElement proximityWrapper;
     private Label proximityIndicator;
     private VisualElement NotificationContainer;
-    public VisualTreeAsset Notification;
 
     public EventBool ArtifactCollectible;
     public EventFloat ArtifactProximityUpdated;
@@ -30,7 +29,12 @@ public class HUDEvents : MonoBehaviour
         counter = document.rootVisualElement.Q("Quantity") as Label;
         proximityWrapper = document.rootVisualElement.Q("ProximityWrapper");
         proximityIndicator = document.rootVisualElement.Q("ProximityValue") as Label;
-        NotificationContainer = document.rootVisualElement.Q("PDANotifContainer");
+        NotificationContainer = document.rootVisualElement.Q("NotifContainer");
+
+        for (int i = 0; i < NotificationContainer.childCount; i++)
+        {
+            NotificationContainer.ElementAt(i).visible = false;
+        }
     }
 
     private void OnEnable()
@@ -90,19 +94,27 @@ public class HUDEvents : MonoBehaviour
             UpdateArtifactCounter(stalker.ArtifactCount);
         }
 
-        // todo recycle notif objects
-        VisualElement notif = Notification.Instantiate();
-        Label notifText = notif.Q<Label>("Notification");
-        notifText.text = stalker.Name + " collected " + artifactCount + " artifact.";
+        for (int i = 0; i < NotificationContainer.childCount; i++)
+        {
+            VisualElement notifWrapper = NotificationContainer.ElementAt(i);
 
-        NotificationContainer.Add(notif);
-        IEnumerator coroutine = HideNotifAfterDelay(notif);
-        StartCoroutine(coroutine);
+            // activate the first hidden element
+            if (notifWrapper.visible == false)
+            {
+                Label notifText = notifWrapper.Q<Label>("Text");
+                notifText.text = stalker.Name + " collected " + artifactCount + " artifact.";
+
+                notifWrapper.visible = true;
+                IEnumerator coroutine = HideNotifAfterDelay(notifWrapper);
+                StartCoroutine(coroutine);
+                return;
+            }
+        }        
     }
 
     private IEnumerator HideNotifAfterDelay(VisualElement notif)
     {
         yield return hideNotifDelay;
-        NotificationContainer.Remove(notif);
+        notif.visible = false;
     }
 }

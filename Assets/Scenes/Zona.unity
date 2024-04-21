@@ -1213,7 +1213,7 @@ Transform:
   m_GameObject: {fileID: 867723715}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 96.9, y: 2.8, z: -27.382332}
+  m_LocalPosition: {x: 96.9, y: 2.8, z: -17.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3039,7 +3039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e9d155929e454047bfccc86978469d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notification: {fileID: 9197481963319205126, guid: fd5b34dac0f76574695a54ede47c449c, type: 3}
   ArtifactCollectible: {fileID: 11400000, guid: 0fa03d66e723d9e48844fa396f87eb3e, type: 2}
   ArtifactProximityUpdated: {fileID: 11400000, guid: 4eb6c801d16750a45a26feedbd8339ad, type: 2}
   StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}

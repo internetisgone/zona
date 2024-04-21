@@ -17,9 +17,7 @@ public class PDAEvents : MonoBehaviour
     private bool isVisible = false;
 
     // data
-    private SpawnNPC spawner;
     private List<CStalker> stalkersList;
-    private CStalker player;
     private int unknownStalkerCount = 3;
 
     public EventVoid TogglePDAEvent;
@@ -30,17 +28,14 @@ public class PDAEvents : MonoBehaviour
         container = document.rootVisualElement.Q("Container");
         uiList = document.rootVisualElement.Q("List");
 
-        // todo use runtimedata
-        GameObject spawnerObj = GameObject.FindWithTag("SpawnerNPC");
-        spawner = spawnerObj?.GetComponent<SpawnNPC>();
-        GameObject playerObj = GameObject.FindWithTag("Player");
-        player = playerObj?.GetComponent<CStalker>();
-
         container.visible = isVisible;
-    }
 
-    void Start()
-    {
+        // get list of stalkers including player 
+        GameObject spawnerObj = GameObject.FindWithTag("SpawnerNPC");
+        SpawnNPC spawner = spawnerObj?.GetComponent<SpawnNPC>();
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        CStalker player = playerObj?.GetComponent<CStalker>();
+
         if (spawner == null || player == null) return;
 
         stalkersList = spawner.stalkersList;

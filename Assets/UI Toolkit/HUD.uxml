@@ -14,6 +14,19 @@
                 <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Quantity" class="text" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="PDANotifContainer" style="flex-grow: 1; position: absolute; left: 0; right: 0; bottom: 0; top: 60%; align-items: flex-start;" />
+        <ui:VisualElement name="NotifContainer" style="flex-grow: 1; position: absolute; left: 0; right: 0; bottom: 10%; top: 50%; align-items: flex-start;">
+            <ui:VisualElement name="NotifWrapper" class="notif-wrapper" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Text" class="text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="NotifWrapper" class="notif-wrapper" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Text" class="text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="NotifWrapper" class="notif-wrapper" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Text" class="text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="NotifWrapper" class="notif-wrapper" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Text" class="text" />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
