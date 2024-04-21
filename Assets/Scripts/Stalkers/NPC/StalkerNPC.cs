@@ -3,13 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Flags]
+//[Flags]
+//public enum StalkerState
+//{
+//    Idle = 0,
+//    Turning = 1 << 0,
+//    Moving = 1 << 1,
+//    DetectedArtifact = 1 << 2,
+//}
+
 public enum StalkerState
 {
-    Idle = 0,
-    Turning = 1 << 0,
-    Moving = 1 << 1,
-    DetectedArtifact = 1 << 2,
+    Bored, DetectedArtifact
+}
+
+public enum MovementState
+{
+    Idle, Turning, Moving
 }
 
 public class StalkerNPC : CStalker
@@ -17,10 +27,13 @@ public class StalkerNPC : CStalker
     public NPCData StalkerData;
     public static int GroundLayerMask = 1 << 6;
 
-    public StalkerState State { get; private set; }
-    public Vector3 GoalPosition { get; private set; }
+    public StalkerState State;
+    public MovementState movementState;
+    public Vector3 GoalPosition;
+    private Vector3 movement;
+    private Vector3 forward;
 
-    private GameObject campfire; // initial goal
+    private static GameObject campfire; // initial goal
     private GameObject goalArtifact;
 
     private Rigidbody rb;
@@ -35,7 +48,9 @@ public class StalkerNPC : CStalker
         rb = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
 
-        State = StalkerState.Idle;
+        State = StalkerState.Bored;
+        movementState = MovementState.Idle;
+
         GoalPosition = campfire.transform.position;
         InvokeRepeating("TrySetGoal", 5, 5);
 
@@ -43,9 +58,9 @@ public class StalkerNPC : CStalker
         slopeNormal = Vector3.up;
     }
 
-    private void UpdateState()
+    private void Update()
     {
-
+        UpdateStates();
     }
 
     void FixedUpdate()
@@ -58,44 +73,59 @@ public class StalkerNPC : CStalker
             rb.AddForce(-slidingForce);
         }
 
-        Vector3 movement = GoalPosition - transform.position;
-        Vector3 forward = new Vector3(movement.x, 0, movement.z);
+        if (movementState == MovementState.Idle)
+        {
+            rb.velocity = Vector3.zero;
+            animator.SetFloat("Speed", 0);
+        }
+        else if (movementState == MovementState.Turning)
+        {
+            TurnTowards(forward);
+            rb.velocity = Vector3.zero;
+        }
+        else if (movementState == MovementState.Moving)
+        {
+            MoveStalker(movement.normalized * StalkerData.Speed);
+            animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
+        }
+    }
+
+    private void UpdateStates()
+    {
+        movement = GoalPosition - transform.position;
+        forward = new Vector3(movement.x, 0, movement.z);
 
         if (forward.magnitude < 1)
         {
             // already at goal
-            if (State.HasFlag(StalkerState.DetectedArtifact))
+            if (State == StalkerState.DetectedArtifact)
+            {
                 CollectArtifact(goalArtifact);
-
-            State = StalkerState.Idle;
-            rb.velocity = Vector3.zero;
-            animator.SetFloat("Speed", 0);
-            return;
-        }
-
-        // check if stalker is facing the goal
-        bool shouldTurn = !IsParallel(forward.normalized, transform.forward);
-
-        if (shouldTurn)
-        {
-            // turn towards the goal
-            State |= StalkerState.Turning;
-            rb.velocity = Vector3.zero;
-            TurnTowards(forward);
+            }
+            movementState = MovementState.Idle;
         }
         else
         {
-            // move to goal
-            MoveStalker(movement.normalized * StalkerData.Speed);
-            animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
-            State |= StalkerState.Moving;
-            State &= ~StalkerState.Turning;
+            // check if stalker is facing the goal
+            bool shouldTurn = !IsParallel(forward.normalized, transform.forward);
+
+            if (shouldTurn)
+            {
+                // turn to goal
+                movementState = MovementState.Turning;
+            }
+            else
+            {
+                // move to goal
+                movementState = MovementState.Moving;
+            }
         }
+        //Debug.LogFormat("{0} is {1}", Name, State);
     }
 
     private void TrySetGoal()
     {
-        if (State != StalkerState.Idle) return;
+        if (State != StalkerState.Bored) return;
 
         // 20% chance of having a new goal
         bool hasNewGoal = UnityEngine.Random.value < 0.2f;
@@ -127,9 +157,9 @@ public class StalkerNPC : CStalker
             targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);           
         }
 
-        Vector3 movement = Vector3.Lerp(rb.velocity, targetMovement, 0.15f);
+        targetMovement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
 
-        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+        rb.velocity = new Vector3(targetMovement.x, rb.velocity.y, targetMovement.z);
     }
 
     // temp
@@ -170,9 +200,8 @@ public class StalkerNPC : CStalker
     {
         base.CollectArtifact(goalArtifact);
         goalArtifact = null;
-        State &= ~StalkerState.DetectedArtifact;
-        // State = StalkerState.Idle;
-        //State -= StalkerState.DetectedArtifact; 
+        State = StalkerState.Bored;
+        //State &= ~StalkerState.DetectedArtifact;
     }
 
     private void OnCollisionEnter(Collision collision)

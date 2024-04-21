@@ -13,7 +13,7 @@ public class SpawnNPC : MonoBehaviour
     public List<CStalker> stalkersList;
 
     private int count;
-    private int minCount = 5;
+    private int minCount = 4;
     private int maxCount = 7;
 
     private string[] stalkerNames = {
