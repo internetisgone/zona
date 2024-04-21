@@ -18,7 +18,12 @@ public class HUDEvents : MonoBehaviour
     public EventStalkerInt StalkerStatsUpdated;
 
     public EventVoid DetectorEquipped;
+
     public PlayerData PlayerData;
+
+    // audio
+    private AudioSource audioSource;
+    public AudioClip notificationSound;
 
     private WaitForSeconds hideNotifDelay = new WaitForSeconds(2);
 
@@ -30,6 +35,8 @@ public class HUDEvents : MonoBehaviour
         proximityWrapper = document.rootVisualElement.Q("ProximityWrapper");
         proximityIndicator = document.rootVisualElement.Q("ProximityValue") as Label;
         NotificationContainer = document.rootVisualElement.Q("NotifContainer");
+
+        audioSource = GetComponent<AudioSource>();
 
         for (int i = 0; i < NotificationContainer.childCount; i++)
         {
@@ -89,6 +96,8 @@ public class HUDEvents : MonoBehaviour
 
     private void DisplayPdaNotification(CStalker stalker, int artifactCount)
     {
+        audioSource.PlayOneShot(notificationSound);
+
         if (stalker is Player)
         {
             UpdateArtifactCounter(stalker.ArtifactCount);

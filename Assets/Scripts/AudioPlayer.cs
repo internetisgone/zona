@@ -7,8 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class AudioPlayer : MonoBehaviour
 {
-    public AudioClip[] clips;
-    private AudioSource audioSource;
+    private AudioSource[] audioSources;
+    private AudioSource bgSource;
+    private AudioSource sfxSource;
+
+    public AudioClip menuScreenBg;
+    public AudioClip zonaBg;
+
     //public AudioMixer mixer;
 
     //private static float crossfadeDuration = 1f;
@@ -16,20 +21,20 @@ public class AudioPlayer : MonoBehaviour
 
     private void Awake()
     {
-        if (clips.Length == 0)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        audioSources = GetComponents<AudioSource>();
+        if (audioSources.Length < 2) return;
 
-        audioSource = GetComponent<AudioSource>();
+        bgSource = audioSources[0];
+        sfxSource = audioSources[1];
+
+        bgSource.clip = menuScreenBg;
+        bgSource.Play();
+        bgSource.loop = true;
         DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
     {
-        audioSource.Play();
-        audioSource.loop = true;
         SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
@@ -42,7 +47,7 @@ public class AudioPlayer : MonoBehaviour
     {
         if (next.name == "Zona")
         {
-            audioSource.Stop();
+            bgSource.Stop();
             ChangeAudio();
             //StartCoroutine("CrossfadeBgAudio");
         }
@@ -50,8 +55,13 @@ public class AudioPlayer : MonoBehaviour
 
     private void ChangeAudio()
     {
-        audioSource.clip = clips[1];
-        audioSource.Play();
-        audioSource.loop = true;
+        bgSource.clip = zonaBg;
+        bgSource.Play();
+        bgSource.loop = true;
+    }
+
+    private void PlayAudioEffect()
+    {
+
     }
 }

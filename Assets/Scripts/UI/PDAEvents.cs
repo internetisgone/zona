@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,6 +20,10 @@ public class PDAEvents : MonoBehaviour
     // data
     private List<CStalker> stalkersList;
     private int unknownStalkerCount = 3;
+
+    private AudioSource audioSource;
+    public AudioClip PDAOn;
+    public AudioClip PDAOff;
 
     public EventVoid TogglePDAEvent;
 
@@ -47,6 +52,8 @@ public class PDAEvents : MonoBehaviour
             uiList.Add(listItemContainer);
         }
         SetUnkonwnStalkerRank();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -65,6 +72,8 @@ public class PDAEvents : MonoBehaviour
 
         if (isVisible)
         {
+            audioSource.PlayOneShot(PDAOn);
+
             stalkersList.Sort();
 
             for (int i = 0; i < stalkersList.Count; i++)
@@ -85,6 +94,8 @@ public class PDAEvents : MonoBehaviour
         }
         else
         {
+            audioSource.PlayOneShot(PDAOff);
+
             // unsub
         }
 
