@@ -26,6 +26,7 @@ public class PDAEvents : MonoBehaviour
     public AudioClip PDAOff;
 
     public EventVoid TogglePDAEvent;
+    public EventStalkerInt StalkerStatsUpdated;
 
     void Awake()
     {
@@ -59,11 +60,13 @@ public class PDAEvents : MonoBehaviour
     private void OnEnable()
     {
         TogglePDAEvent.OnEventRaised += ToggleVisibility;
+        StalkerStatsUpdated.OnEventRaised += OnStalkerDataUpdated;
     }
 
     private void OnDisable()
     {
         TogglePDAEvent.OnEventRaised -= ToggleVisibility;
+        StalkerStatsUpdated.OnEventRaised += OnStalkerDataUpdated;
     }
 
     private void ToggleVisibility()
@@ -73,33 +76,38 @@ public class PDAEvents : MonoBehaviour
         if (isVisible)
         {
             audioSource.PlayOneShot(PDAOn);
-
-            stalkersList.Sort();
-
-            for (int i = 0; i < stalkersList.Count; i++)
-            {
-                VisualElement curItem = uiList.ElementAt(i + unknownStalkerCount);
-                Label rank = curItem.Q<Label>("Rank");
-                Label name = curItem.Q<Label>("Name");
-                Label artifactCount = curItem.Q<Label>("Artifacts");
-
-                CStalker curStalker = stalkersList[i];
-                rank.text = (i + 1 + unknownStalkerCount).ToString();
-                name.text = curStalker.Name;
-                artifactCount.text = curStalker.ArtifactCount.ToString();
-                //Debug.LogFormat("stalker guid {0}, name {1}", curStalker.Guid, curStalker.Name);
-            }
-
-            // todo subscribe to events and update stats in real time?
+            UpdateStalkerData();        
         }
         else
         {
             audioSource.PlayOneShot(PDAOff);
-
-            // unsub
         }
 
         container.visible = isVisible;
+    }
+
+    private void OnStalkerDataUpdated(CStalker stalker, int num)
+    {
+        UpdateStalkerData();
+    }
+
+    private void UpdateStalkerData()
+    {
+        stalkersList.Sort();
+
+        for (int i = 0; i < stalkersList.Count; i++)
+        {
+            VisualElement curItem = uiList.ElementAt(i + unknownStalkerCount);
+            Label rank = curItem.Q<Label>("Rank");
+            Label name = curItem.Q<Label>("Name");
+            Label artifactCount = curItem.Q<Label>("Artifacts");
+
+            CStalker curStalker = stalkersList[i];
+            rank.text = (i + 1 + unknownStalkerCount).ToString();
+            name.text = curStalker.Name;
+            artifactCount.text = curStalker.ArtifactCount.ToString();
+            //Debug.LogFormat("stalker guid {0}, name {1}", curStalker.Guid, curStalker.Name);
+        }
     }
 
     private void SetUnkonwnStalkerRank()

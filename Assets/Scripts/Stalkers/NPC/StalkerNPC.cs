@@ -39,10 +39,6 @@ public class StalkerNPC : CStalker
     private Rigidbody rb;
     private Animator animator;
 
-    private AudioSource audioSource;
-    [SerializeField]
-    public AudioClip[] voicelines;
-
     private bool isOnSlope;
     private Vector3 slopeNormal;
 
@@ -51,7 +47,6 @@ public class StalkerNPC : CStalker
         campfire = GameObject.FindWithTag("Campfire");
         rb = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
 
         State = StalkerState.Bored;
         movementState = MovementState.Idle;
@@ -207,23 +202,6 @@ public class StalkerNPC : CStalker
         goalArtifact = null;
         State = StalkerState.Bored;
         //State &= ~StalkerState.DetectedArtifact;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (voicelines.Length > 0)
-            {
-                int rand = UnityEngine.Random.Range(0, voicelines.Length);
-                audioSource.PlayOneShot(voicelines[rand]);
-            }
-        }
-        //else if (collision.gameObject.CompareTag("Ground"))
-        //{
-        //    slopeNormal = collision.contacts[0].normal;
-        //    Debug.DrawRay(transform.position, slopeNormal, Color.white, 1f);
-        //}
     }
 
     // static util functions

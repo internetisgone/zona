@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9043829894659263917}
   - component: {fileID: 7167260700310277401}
+  - component: {fileID: -7578768731147561641}
   - component: {fileID: 4750429806808667977}
   - component: {fileID: -4594695867262497481}
-  - component: {fileID: -7578768731147561641}
+  - component: {fileID: 1205752445369831496}
   - component: {fileID: 734423219343922224}
   m_Layer: 0
   m_Name: NPC_Stalker
@@ -54,9 +55,19 @@ MonoBehaviour:
   State: 0
   movementState: 0
   GoalPosition: {x: 0, y: 0, z: 0}
-  voicelines:
-  - {fileID: 8300000, guid: 49a33ea7a22e3e849aae6469ca3c90ff, type: 3}
-  - {fileID: 8300000, guid: 138ddc8c416a5064cad009573c676907, type: 3}
+--- !u!114 &-7578768731147561641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2361777987260465710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6637a5560c2914486cf8a10e2b0b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DetectorData: {fileID: 11400000, guid: 81feb7fd8cdce274eae87648014f07a5, type: 2}
 --- !u!136 &4750429806808667977
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -107,7 +118,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &-7578768731147561641
+--- !u!114 &1205752445369831496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,10 +127,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2361777987260465710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a6637a5560c2914486cf8a10e2b0b46, type: 3}
+  m_Script: {fileID: 11500000, guid: 0241d823c1bd36d4b847ed8e3bdf87a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectorData: {fileID: 11400000, guid: 81feb7fd8cdce274eae87648014f07a5, type: 2}
+  voicelines:
+  - {fileID: 8300000, guid: 49a33ea7a22e3e849aae6469ca3c90ff, type: 3}
+  - {fileID: 8300000, guid: 138ddc8c416a5064cad009573c676907, type: 3}
 --- !u!82 &734423219343922224
 AudioSource:
   m_ObjectHideFlags: 0
@@ -176,7 +189,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -31,6 +31,7 @@ public class GameOver : MonoBehaviour
 
         // stop stalker movement / update state
 
+
         // play cutscene
     }
 

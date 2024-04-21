@@ -24,7 +24,9 @@ public class HUDEvents : MonoBehaviour
     // audio
     private AudioSource audioSource;
     public AudioClip notificationSound;
+    public AudioClip newObjectiveSound;
 
+    private WaitForSeconds startupNotifDelay = new WaitForSeconds(1);
     private WaitForSeconds hideNotifDelay = new WaitForSeconds(2);
 
     void Awake()
@@ -42,6 +44,8 @@ public class HUDEvents : MonoBehaviour
         {
             NotificationContainer.ElementAt(i).visible = false;
         }
+
+        StartCoroutine("ShowStartupNotifAfterDelay");        
     }
 
     private void OnEnable()
@@ -52,7 +56,7 @@ public class HUDEvents : MonoBehaviour
 
         DetectorEquipped.OnEventRaised += ToggleDetector;
 
-        StalkerStatsUpdated.OnEventRaised += DisplayPdaNotification;
+        StalkerStatsUpdated.OnEventRaised += ShowStalkerStatsNotif;
     }
 
     private void OnDisable()
@@ -63,7 +67,7 @@ public class HUDEvents : MonoBehaviour
 
         DetectorEquipped.OnEventRaised -= ToggleDetector;
 
-        StalkerStatsUpdated.OnEventRaised -= DisplayPdaNotification;
+        StalkerStatsUpdated.OnEventRaised -= ShowStalkerStatsNotif;
     }
 
     private void ToggleCollectText(bool visible)
@@ -94,15 +98,26 @@ public class HUDEvents : MonoBehaviour
         proximityWrapper.visible = PlayerData.DetectorEquipped;
     }
 
-    private void DisplayPdaNotification(CStalker stalker, int artifactCount)
+    private void ShowStalkerStatsNotif(CStalker stalker, int artifactCount)
     {
-        audioSource.PlayOneShot(notificationSound);
-
         if (stalker is Player)
         {
             UpdateArtifactCounter(stalker.ArtifactCount);
         }
 
+        string content = stalker.Name + " collected " + artifactCount + " artifact";
+        ShowNotification(content);
+    }
+
+    private IEnumerator ShowStartupNotifAfterDelay()
+    {
+        yield return startupNotifDelay;
+
+        ShowNotification("New task: collect artifacts");
+    }
+
+    private void ShowNotification(string content)
+    {
         for (int i = 0; i < NotificationContainer.childCount; i++)
         {
             VisualElement notifWrapper = NotificationContainer.ElementAt(i);
@@ -111,14 +126,16 @@ public class HUDEvents : MonoBehaviour
             if (notifWrapper.visible == false)
             {
                 Label notifText = notifWrapper.Q<Label>("Text");
-                notifText.text = stalker.Name + " collected " + artifactCount + " artifact.";
+                notifText.text = content;
 
                 notifWrapper.visible = true;
+                audioSource.PlayOneShot(notificationSound);
+
                 IEnumerator coroutine = HideNotifAfterDelay(notifWrapper);
                 StartCoroutine(coroutine);
                 return;
             }
-        }        
+        }
     }
 
     private IEnumerator HideNotifAfterDelay(VisualElement notif)
