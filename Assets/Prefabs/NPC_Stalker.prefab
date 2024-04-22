@@ -52,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
   StalkerData: {fileID: 11400000, guid: 213cd3c6cc52b954991b6e45ba3d4db5, type: 2}
-  State: 0
   movementState: 0
   GoalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &-7578768731147561641

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 //[Flags]
@@ -33,6 +32,7 @@ public class StalkerNPC : CStalker
     public Vector3 GoalPosition;
     private Vector3 movement;
     private Vector3 forward;
+    private bool isSettingGoal;
 
     private static GameObject campfire; // initial goal
     private GameObject goalArtifact;
@@ -63,13 +63,10 @@ public class StalkerNPC : CStalker
         //InvokeRepeating("Look", 2, 2);
     }
 
-    private void Update()
-    {
-        UpdateStates();
-    }
-
     void FixedUpdate()
     {
+        UpdateStates();
+
         CheckGround();
 
         if (isOnSlope)
@@ -126,11 +123,13 @@ public class StalkerNPC : CStalker
             {
                 // turn to goal
                 movementState = MovementState.Turning;
+                Debug.DrawRay(transform.position, transform.forward * 2, Color.white, 1f);
             }
             else
             {
                 // move to goal
                 movementState = MovementState.Moving;
+                Debug.DrawRay(transform.position, transform.forward * 2, Color.blue, 1f);
             }
         }
         //Debug.LogFormat("{0} is {1}", Name, State);
@@ -138,13 +137,14 @@ public class StalkerNPC : CStalker
 
     private void TrySetGoal()
     {
-        if (State != StalkerState.Bored) return;
+        if (State != StalkerState.Bored || isSettingGoal) return;
 
         // 20% chance of having a new goal
         bool hasNewGoal = UnityEngine.Random.value < 0.2f;
         if (!hasNewGoal) return;
 
         // new goal will be set after a random delay
+        isSettingGoal = true;
         float delay = UnityEngine.Random.Range(1, 5);
         IEnumerator coroutine = SetRandomGoalWithDelay(delay);
         StartCoroutine(coroutine);
@@ -161,6 +161,7 @@ public class StalkerNPC : CStalker
         float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - zRange / 2, campfire.transform.position.z + zRange / 2);
 
         SetGoal(new Vector3(xCoord, transform.position.y, zCoord));
+        isSettingGoal = false;
     }
 
     private void MoveStalker(Vector3 targetMovement)
@@ -197,8 +198,8 @@ public class StalkerNPC : CStalker
 
     public void TurnTowards(Vector3 forward)
     {
-        Quaternion lookRotation = Quaternion.LookRotation(forward, Vector3.up);
-        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * StalkerData.TurnSpeed));
+        Quaternion lookRotation = Quaternion.LookRotation(forward.normalized, Vector3.up);
+        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.fixedDeltaTime * StalkerData.TurnSpeed));
     }
 
     // artifact spotted, try move to it
@@ -238,11 +239,27 @@ public class StalkerNPC : CStalker
         }
     }
 
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        isGrounded = true;
+    //    }
+    //}
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        isGrounded = false;
+    //    }
+    //}
+
     // static util functions
-    public static bool IsParallel(Vector2 xzMovement, Vector2 xzFacing)
+    public static bool IsParallel(Vector3 a, Vector3 b)
     {
         float tolerance = 0.01f;
-        return CloseEnough(xzMovement.x, xzFacing.x, tolerance) && CloseEnough(xzMovement.y, xzFacing.y, tolerance);
+        return CloseEnough(a.x, b.x, tolerance) && CloseEnough(a.z, b.z, tolerance);
     }
     public static bool CloseEnough(float x, float y, float tolerance)
     {
