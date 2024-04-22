@@ -13,6 +13,8 @@ public class CameraManager : MonoBehaviour
         EnableFirstPersonCam();
     }
 
+# if UNITY_EDITOR
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) 
@@ -28,14 +30,6 @@ public class CameraManager : MonoBehaviour
             EnableTopDownCam();
         }
     }
-
-    private void EnableFirstPersonCam()
-    {
-        ThirdPerson.enabled = false;
-        TopDown.enabled = false;
-        FirstPerson.enabled = true;
-    }
-
     private void EnableThirdPersonCam()
     {
         FirstPerson.enabled = false;
@@ -48,5 +42,14 @@ public class CameraManager : MonoBehaviour
         ThirdPerson.enabled = false;
         FirstPerson.enabled = false;
         TopDown.enabled = true;
+    }
+
+# endif
+
+    private void EnableFirstPersonCam()
+    {
+        ThirdPerson.enabled = false;
+        TopDown.enabled = false;
+        FirstPerson.enabled = true;
     }
 }

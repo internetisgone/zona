@@ -20,6 +20,7 @@ public class Artifact : MonoBehaviour
     [SerializeField]
     public EventVoid GameOverEvent;
     public ArtifactType Type { get; }
+    public bool IsVisible {  get; private set; }
     private Animator animator;
 
     private new Renderer renderer;
@@ -37,21 +38,23 @@ public class Artifact : MonoBehaviour
     public Artifact(ArtifactType type)
     {
         Type = type;
+        IsVisible = true; // temp. invisible by default
     }
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         renderer = GetComponent<Renderer>();
-        // invisible by default
-        renderer.enabled = false;
+        renderer.enabled = IsVisible;
     }
 
     public void ToggleVisibility(bool visible)
     {
-        if (renderer.enabled == visible) return;
-        renderer.enabled = visible;
-        if (visible == true) PlayAnimation();
+        if (IsVisible == visible) return;
+
+        IsVisible = visible;
+        renderer.enabled = IsVisible;
+        if (IsVisible == true) PlayAnimation();
     }
 
     public void OnCollected()

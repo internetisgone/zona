@@ -15,4 +15,5 @@ MonoBehaviour:
   Speed: 1
   TurnSpeed: 2
   VisionRange: 5
+  LookInterval: 2
   CollectionRange: 2

@@ -26,8 +26,10 @@ public class StalkerNPC : CStalker
 {
     public NPCData StalkerData;
     public static int GroundLayerMask = 1 << 6;
+    public static int ArtifactLayerMask = 1 << 7;
+    private static int ObstacleLayerMask = 1 << 8;
 
-    public StalkerState State {  get; set; }
+    public StalkerState State { get; set; }
     public MovementState movementState;
     public Vector3 GoalPosition;
     private Vector3 movement;
@@ -43,7 +45,6 @@ public class StalkerNPC : CStalker
     private bool isOnSlope;
     private Vector3 slopeNormal;
 
-    private static int ObstacleLayerMask = 1 << 8;
 
     void Awake()
     {
@@ -57,10 +58,11 @@ public class StalkerNPC : CStalker
         GoalPosition = campfire.transform.position;
         InvokeRepeating("TrySetGoal", 5, 5);
 
+        // check vision frustum
+        InvokeRepeating("LookForArtifacts", 1, StalkerData.LookInterval);
+
         isOnSlope = false;
         slopeNormal = Vector3.up;
-
-        //InvokeRepeating("Look", 2, 2);
     }
 
     void FixedUpdate()
@@ -117,7 +119,7 @@ public class StalkerNPC : CStalker
         else
         {
             // check if stalker is facing the goal
-            bool shouldTurn = !IsParallel(forward.normalized, transform.forward);
+            bool shouldTurn = !IsParallelxz(forward.normalized, transform.forward);
 
             if (shouldTurn)
             {
@@ -218,23 +220,50 @@ public class StalkerNPC : CStalker
         //State &= ~StalkerState.DetectedArtifact;
     }
 
-    private void Look()
+    private void LookForArtifacts()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, StalkerData.VisionRange, ObstacleLayerMask);
+        if (State == StalkerState.DetectedArtifact) return;
+        Look(ArtifactLayerMask);
+    }
+
+    private void LookForObstacles()
+    {
+        Look(ObstacleLayerMask);
+    }
+
+    // check vision frustum
+    private void Look(int layermask)
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, StalkerData.VisionRange, layermask);
         if (colliders.Length > 0)
         {
+            // get nearest artifact and set as goal
+            float minDistance = StalkerData.VisionRange;
+            GameObject nearestArtifact = null;
+
             foreach (Collider collider in colliders)
             {
                 Vector3 direction = collider.transform.position - transform.position;
                 Vector3 xzDirection = new Vector2(direction.x, direction.z);
+                float distance = xzDirection.magnitude;
 
                 float dotProduct = Vector2.Dot(xzDirection.normalized, new Vector2(transform.forward.x, transform.forward.z));
-                if (dotProduct > 0.6)
+                Artifact artifact = collider.gameObject?.GetComponent<Artifact>();
+                if (dotProduct > 0.6 && artifact.IsVisible)
                 {
-                    // obstacle is in front of the stalker 
-                    float distance = xzDirection.magnitude;
-                    Debug.LogFormat("{0} sees an obstacle {1} distance {2}, direction.normalized {3}, transform.forward {4}, dotProduct {5}, angle {6} ", Name, collider.gameObject.name, distance, xzDirection.normalized, transform.forward, dotProduct, Vector2.Angle(xzDirection, new Vector2(transform.forward.x, transform.forward.z))); 
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nearestArtifact = collider.gameObject;
+                        Debug.DrawRay(transform.position, direction, Color.red, 1f);
+                    }
+                    //Debug.LogFormat("{0} sees {1}, distance {2}, direction.normalized {3}, transform.forward {4}, dotProduct {5}, angle {6} ", Name, collider.gameObject.name, distance, xzDirection.normalized, transform.forward, dotProduct, Vector2.Angle(xzDirection, new Vector2(transform.forward.x, transform.forward.z)));
                 }
+            }
+
+            if (nearestArtifact != null) 
+            {
+                TryCollectArtifact(nearestArtifact);
             }
         }
     }
@@ -256,9 +285,9 @@ public class StalkerNPC : CStalker
     //}
 
     // static util functions
-    public static bool IsParallel(Vector3 a, Vector3 b)
+    public static bool IsParallelxz(Vector3 a, Vector3 b)
     {
-        float tolerance = 0.01f;
+        float tolerance = 0.02f;
         return CloseEnough(a.x, b.x, tolerance) && CloseEnough(a.z, b.z, tolerance);
     }
     public static bool CloseEnough(float x, float y, float tolerance)

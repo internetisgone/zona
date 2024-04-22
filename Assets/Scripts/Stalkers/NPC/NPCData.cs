@@ -7,7 +7,10 @@ public class NPCData : ScriptableObject
 {
     private static float DefaultSpeed = 1.8f;
     private static float DefaultTurnSpeed = 2f;
-    private static float DefaultVisionRange = 3f;
+
+    private static float DefaultVisionRange = 5f;
+    private static int DefaultLookInterval = 2;
+
     private static float DefaultCollectionRange = 2f;
 
     // movement
@@ -17,6 +20,7 @@ public class NPCData : ScriptableObject
 
     // vision
     public float VisionRange = DefaultVisionRange;
+    public int LookInterval = DefaultLookInterval;
 
     // artifact 
     public float CollectionRange = DefaultCollectionRange;
