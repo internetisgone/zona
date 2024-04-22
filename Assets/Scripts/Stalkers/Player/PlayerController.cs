@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private bool isSprinting;
 
     //camera constraints
+    public bool camControlEnabled;
     private int maxPitch = -70;
     private int minPitchFirstPerson = 60;
     private int minPitchThirdPerson = 10;
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
         firstPersonCamera = transform.GetChild(1).gameObject; // todo
         thirdPersonCamera = transform.GetChild(2).gameObject; // todo
+        camControlEnabled = false;
 
         Physics.gravity *= gravityModifier;
 
@@ -72,7 +74,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetInput();
-        UpdateRotation();
     }
 
     void FixedUpdate()
@@ -84,7 +85,11 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        UpdateCamera();
+        if (camControlEnabled)
+        {
+            UpdateRotation();
+            UpdateCamera();
+        }
     }
     
     private void GetInput()

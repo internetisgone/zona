@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraManager : MonoBehaviour
 {
@@ -8,10 +9,42 @@ public class CameraManager : MonoBehaviour
     public Camera ThirdPerson;
     public Camera TopDown;
 
+    public bool PlayStartupAnimation = true;
+
+    private Animator animator;
+    private PlayerController playerController;
+
     void Awake()
     {
-        EnableFirstPersonCam();
+        animator = FirstPerson.GetComponent<Animator>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player?.GetComponent<PlayerController>();
     }
+
+    void Start()
+    {
+        EnableFirstPersonCam();
+
+        if (PlayStartupAnimation)
+        {
+            animator.SetTrigger("Shake");
+            StartCoroutine("WaitForAnim");
+        }
+        else
+        {
+            animator.enabled = false;
+            playerController.camControlEnabled = true;
+        }
+
+    }
+
+    // temp ugly solution
+    private IEnumerator WaitForAnim()
+    {
+        yield return new WaitForSeconds(3f);
+        playerController.camControlEnabled = true;
+    }
+
 
 # if UNITY_EDITOR
 
