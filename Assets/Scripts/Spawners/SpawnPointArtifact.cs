@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SpawnPointArtifact : SpawnPoint
 {
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.cyan;
-    //    Gizmos.DrawWireSphere(transform.position, 7);
-    //}
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, 7);
+    }
 }

@@ -16,9 +16,9 @@ public class Voicelines : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (voicelines.Length > 0)
+            if (voicelines.Length > 0 && audioSource.isPlaying == false)
             {
-                int rand = UnityEngine.Random.Range(0, voicelines.Length);
+                int rand = Random.Range(0, voicelines.Length);
                 audioSource.PlayOneShot(voicelines[rand]);
             }
         }

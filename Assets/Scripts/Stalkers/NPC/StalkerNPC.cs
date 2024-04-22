@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 //[Flags]
@@ -14,7 +15,7 @@ using UnityEngine;
 
 public enum StalkerState
 {
-    Bored, DetectedArtifact
+    Bored, DetectedArtifact, Chilling, Panic
 }
 
 public enum MovementState
@@ -27,7 +28,7 @@ public class StalkerNPC : CStalker
     public NPCData StalkerData;
     public static int GroundLayerMask = 1 << 6;
 
-    public StalkerState State;
+    public StalkerState State {  get; set; }
     public MovementState movementState;
     public Vector3 GoalPosition;
     private Vector3 movement;
@@ -41,6 +42,8 @@ public class StalkerNPC : CStalker
 
     private bool isOnSlope;
     private Vector3 slopeNormal;
+
+    private static int ObstacleLayerMask = 1 << 8;
 
     void Awake()
     {
@@ -56,6 +59,8 @@ public class StalkerNPC : CStalker
 
         isOnSlope = false;
         slopeNormal = Vector3.up;
+
+        //InvokeRepeating("Look", 2, 2);
     }
 
     private void Update()
@@ -92,6 +97,14 @@ public class StalkerNPC : CStalker
 
     private void UpdateStates()
     {
+        // temp. panic has the highest priority
+        if (State == StalkerState.Panic)
+        {
+            movementState = MovementState.Idle;
+            animator.SetTrigger("Panic");
+            return;
+        }
+
         movement = GoalPosition - transform.position;
         forward = new Vector3(movement.x, 0, movement.z);
 
@@ -179,7 +192,7 @@ public class StalkerNPC : CStalker
     public void SetGoal(Vector3 newGoal)
     {
         GoalPosition = new Vector3(newGoal.x, transform.position.y, newGoal.z);
-        Debug.LogFormat("New goal for {0}: {1}", Name, GoalPosition);
+        //Debug.LogFormat("New goal for {0}: {1}", Name, GoalPosition);
     }
 
     public void TurnTowards(Vector3 forward)
@@ -202,6 +215,27 @@ public class StalkerNPC : CStalker
         goalArtifact = null;
         State = StalkerState.Bored;
         //State &= ~StalkerState.DetectedArtifact;
+    }
+
+    private void Look()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, StalkerData.VisionRange, ObstacleLayerMask);
+        if (colliders.Length > 0)
+        {
+            foreach (Collider collider in colliders)
+            {
+                Vector3 direction = collider.transform.position - transform.position;
+                Vector3 xzDirection = new Vector2(direction.x, direction.z);
+
+                float dotProduct = Vector2.Dot(xzDirection.normalized, new Vector2(transform.forward.x, transform.forward.z));
+                if (dotProduct > 0.6)
+                {
+                    // obstacle is in front of the stalker 
+                    float distance = xzDirection.magnitude;
+                    Debug.LogFormat("{0} sees an obstacle {1} distance {2}, direction.normalized {3}, transform.forward {4}, dotProduct {5}, angle {6} ", Name, collider.gameObject.name, distance, xzDirection.normalized, transform.forward, dotProduct, Vector2.Angle(xzDirection, new Vector2(transform.forward.x, transform.forward.z))); 
+                }
+            }
+        }
     }
 
     // static util functions

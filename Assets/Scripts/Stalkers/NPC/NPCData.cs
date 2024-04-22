@@ -5,18 +5,27 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "StalkerData / NPC")]
 public class NPCData : ScriptableObject
 {
+    private static float DefaultSpeed = 1.8f;
+    private static float DefaultTurnSpeed = 2f;
+    private static float DefaultVisionRange = 3f;
+    private static float DefaultCollectionRange = 2f;
+
     // movement
     [Range(1, 10f)]
-    public float Speed = 10f;
-    public float TurnSpeed = 5f;
+    public float Speed = DefaultSpeed;
+    public float TurnSpeed = DefaultTurnSpeed;
+
+    // vision
+    public float VisionRange = DefaultVisionRange;
 
     // artifact 
-    public float CollectionRange = 2f;
+    public float CollectionRange = DefaultCollectionRange;
 
     public void Reset()
     {
-        Speed = 1.8f;
-        TurnSpeed = 2f;
-        CollectionRange = 2f;
+        Speed = DefaultSpeed;
+        TurnSpeed = DefaultTurnSpeed;
+        VisionRange = DefaultVisionRange;
+        CollectionRange = DefaultCollectionRange;
     }
 }

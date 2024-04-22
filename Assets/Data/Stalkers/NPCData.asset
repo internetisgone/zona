@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0ae4a132c848a47bd03b62591362a9, type: 3}
   m_Name: NPCData
   m_EditorClassIdentifier: 
-  Speed: 10
+  Speed: 1
   TurnSpeed: 2
+  VisionRange: 5
   CollectionRange: 2
