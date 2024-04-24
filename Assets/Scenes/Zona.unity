@@ -1871,7 +1871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5398683786099776275, guid: 03a812feb1dd29f47b33d443481f8154, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19
+      value: 18.04
       objectReference: {fileID: 0}
     - target: {fileID: 5398683786099776275, guid: 03a812feb1dd29f47b33d443481f8154, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3672,7 +3672,6 @@ MonoBehaviour:
   FirstPerson: {fileID: 1290405615}
   ThirdPerson: {fileID: 1645953874}
   TopDown: {fileID: 1995402587}
-  PlayStartupAnimation: 1
 --- !u!4 &1933032926
 Transform:
   m_ObjectHideFlags: 0

@@ -14,7 +14,13 @@ public class PDAEvents : MonoBehaviour
     public VisualTreeAsset listItem;
     private UIDocument document;
     private VisualElement container;
-    private VisualElement uiList;
+
+    private VisualElement rankView;
+    private VisualElement messageView;
+    private Button rankTabBtn;
+    private Button messageTabBtn;
+
+    private VisualElement rankList;
     private bool isVisible = false;
 
     // data
@@ -32,9 +38,16 @@ public class PDAEvents : MonoBehaviour
     {
         document = GetComponent<UIDocument>();
         container = document.rootVisualElement.Q("Container");
-        uiList = document.rootVisualElement.Q("List");
+
+        rankView = document.rootVisualElement.Q("RankView");
+        messageView = document.rootVisualElement.Q("MessageView");
+        rankTabBtn = document.rootVisualElement.Q<Button>("RankTabBtn");
+        messageTabBtn = document.rootVisualElement.Q<Button>("MessageTabBtn");
+        rankList = document.rootVisualElement.Q("List");
 
         container.visible = isVisible;
+        rankView.SetEnabled(true);
+        messageView.SetEnabled(false);
 
         // get list of stalkers including player 
         GameObject spawnerObj = GameObject.FindWithTag("SpawnerNPC");
@@ -50,11 +63,14 @@ public class PDAEvents : MonoBehaviour
         for (int i = 0; i < stalkersList.Count + unknownStalkerCount; i++)
         {
             VisualElement listItemContainer = listItem.Instantiate();
-            uiList.Add(listItemContainer);
+            rankList.Add(listItemContainer);
         }
         SetUnkonwnStalkerRank();
 
         audioSource = GetComponent<AudioSource>();
+
+        //rankTabBtn.RegisterCallback<ClickEvent>(ShowRankTab);
+        //messageTabBtn.RegisterCallback<ClickEvent>(ShowMessageTab);
     }
 
     private void OnEnable()
@@ -97,7 +113,7 @@ public class PDAEvents : MonoBehaviour
 
         for (int i = 0; i < stalkersList.Count; i++)
         {
-            VisualElement curItem = uiList.ElementAt(i + unknownStalkerCount);
+            VisualElement curItem = rankList.ElementAt(i + unknownStalkerCount);
             Label rank = curItem.Q<Label>("Rank");
             Label name = curItem.Q<Label>("Name");
             Label artifactCount = curItem.Q<Label>("Artifacts");
@@ -110,11 +126,23 @@ public class PDAEvents : MonoBehaviour
         }
     }
 
+    //private void ShowRankTab(ClickEvent e)
+    //{
+    //    messageView.SetEnabled(false);
+    //    rankView.SetEnabled(true);
+    //}
+
+    //private void ShowMessageTab(ClickEvent e)
+    //{
+    //    rankView.SetEnabled(false);
+    //    messageView.SetEnabled(true);
+    //}
+
     private void SetUnkonwnStalkerRank()
     {
         for (int i = 0; i < unknownStalkerCount; i++)
         {
-            VisualElement curItem = uiList.ElementAt(i);
+            VisualElement curItem = rankList.ElementAt(i);
             Label rank = curItem.Q<Label>("Rank");
             rank.text = (i + 1).ToString();
         }

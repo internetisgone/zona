@@ -65,3 +65,10 @@
     min-width: 200px;
     background-color: rgba(0, 0, 0, 0.34);
 }
+
+.pda-tab-btn {
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+}

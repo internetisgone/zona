@@ -106,17 +106,19 @@ public class HUDEvents : MonoBehaviour
         }
 
         string content = stalker.Name + " collected " + artifactCount + " artifact";
-        ShowNotification(content);
+        if (ShowNotification(content))
+            audioSource.PlayOneShot(notificationSound);
     }
 
     private IEnumerator ShowStartupNotifAfterDelay()
     {
         yield return startupNotifDelay;
 
-        ShowNotification("New task: collect artifacts");
+        if (ShowNotification("New task: Gather Stone Blood artifacts"))
+            audioSource.PlayOneShot(newObjectiveSound);
     }
 
-    private void ShowNotification(string content)
+    private bool ShowNotification(string content)
     {
         for (int i = 0; i < NotificationContainer.childCount; i++)
         {
@@ -127,15 +129,14 @@ public class HUDEvents : MonoBehaviour
             {
                 Label notifText = notifWrapper.Q<Label>("Text");
                 notifText.text = content;
-
                 notifWrapper.visible = true;
-                audioSource.PlayOneShot(notificationSound);
 
                 IEnumerator coroutine = HideNotifAfterDelay(notifWrapper);
                 StartCoroutine(coroutine);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     private IEnumerator HideNotifAfterDelay(VisualElement notif)

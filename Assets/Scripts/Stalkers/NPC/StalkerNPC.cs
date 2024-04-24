@@ -30,6 +30,13 @@ public class StalkerNPC : CStalker
     private static int ObstacleLayerMask = 1 << 8;
 
     public StalkerState State { get; set; }
+
+    //public static BoredState BoredState;
+    //public static ArtifactState ArtifactState;
+    //public static PanicState PanicState;
+
+    //public StalkerState currentState = BoredState;
+
     public MovementState movementState;
     public Vector3 GoalPosition;
     private Vector3 movement;
@@ -137,6 +144,42 @@ public class StalkerNPC : CStalker
         //Debug.LogFormat("{0} is {1}", Name, State);
     }
 
+
+    // --****========== movement ==========***-- //
+
+    private void MoveStalker(Vector3 targetMovement)
+    {
+        if (isOnSlope)
+        {
+            targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
+        }
+
+        targetMovement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
+
+        rb.velocity = new Vector3(targetMovement.x, rb.velocity.y, targetMovement.z);
+    }
+
+    public void TurnTowards(Vector3 forward)
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(forward.normalized, Vector3.up);
+        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.fixedDeltaTime * StalkerData.TurnSpeed));
+    }
+
+    private void CheckGround()
+    {
+        RaycastHit hit;
+        float rayLength = 2f;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, GroundLayerMask))
+        {
+            slopeNormal = hit.normal;
+            //Debug.DrawRay(transform.position, slopeNormal, Color.white, 0.5f);
+            if (slopeNormal != Vector3.up) isOnSlope = true;
+            else isOnSlope = false;
+        }
+    }
+
+    // --****========== random goal ==========***-- //
+
     private void TrySetGoal()
     {
         if (State != StalkerState.Bored || isSettingGoal) return;
@@ -156,39 +199,21 @@ public class StalkerNPC : CStalker
     {
         yield return new WaitForSeconds(delay);
 
-        int xRange = 70;
-        int zRange = 40;
-
-        float xCoord = UnityEngine.Random.Range(campfire.transform.position.x - xRange / 2, campfire.transform.position.x + xRange / 2);
-        float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - zRange / 2, campfire.transform.position.z + zRange / 2);
-
-        SetGoal(new Vector3(xCoord, transform.position.y, zCoord));
-        isSettingGoal = false;
-    }
-
-    private void MoveStalker(Vector3 targetMovement)
-    { 
-        if (isOnSlope)
+        if (State != StalkerState.Bored)
         {
-            targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);           
+            isSettingGoal = false;
+            yield return null;
         }
-
-        targetMovement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
-
-        rb.velocity = new Vector3(targetMovement.x, rb.velocity.y, targetMovement.z);
-    }
-
-    // temp
-    private void CheckGround()
-    {
-        RaycastHit hit;
-        float rayLength = 2f;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, GroundLayerMask))
+        else
         {
-            slopeNormal = hit.normal;
-            //Debug.DrawRay(transform.position, slopeNormal, Color.white, 0.5f);
-            if (slopeNormal != Vector3.up) isOnSlope = true;
-            else isOnSlope = false;
+            int xRange = 70;
+            int zRange = 40;
+
+            float xCoord = UnityEngine.Random.Range(campfire.transform.position.x - xRange / 2, campfire.transform.position.x + xRange / 2);
+            float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - zRange / 2, campfire.transform.position.z + zRange / 2);
+
+            SetGoal(new Vector3(xCoord, transform.position.y, zCoord));
+            isSettingGoal = false;
         }
     }
 
@@ -198,11 +223,7 @@ public class StalkerNPC : CStalker
         //Debug.LogFormat("New goal for {0}: {1}", Name, GoalPosition);
     }
 
-    public void TurnTowards(Vector3 forward)
-    {
-        Quaternion lookRotation = Quaternion.LookRotation(forward.normalized, Vector3.up);
-        rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookRotation, Time.fixedDeltaTime * StalkerData.TurnSpeed));
-    }
+    // --****========== artifact ==========***-- //
 
     // artifact spotted, try move to it
     public void TryCollectArtifact(GameObject artifactObj)
@@ -220,6 +241,9 @@ public class StalkerNPC : CStalker
         //State &= ~StalkerState.DetectedArtifact;
     }
 
+
+    // --****========== vision frustum checks ==========***-- //
+
     private void LookForArtifacts()
     {
         if (State == StalkerState.DetectedArtifact) return;
@@ -231,7 +255,6 @@ public class StalkerNPC : CStalker
         Look(ObstacleLayerMask);
     }
 
-    // check vision frustum
     private void Look(int layermask)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, StalkerData.VisionRange, layermask);
@@ -284,7 +307,7 @@ public class StalkerNPC : CStalker
     //    }
     //}
 
-    // static util functions
+    // --****========== static util functions ==========***-- //
     public static bool IsParallelxz(Vector3 a, Vector3 b)
     {
         float tolerance = 0.02f;

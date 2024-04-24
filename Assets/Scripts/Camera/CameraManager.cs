@@ -9,7 +9,7 @@ public class CameraManager : MonoBehaviour
     public Camera ThirdPerson;
     public Camera TopDown;
 
-    public bool PlayStartupAnimation = true;
+    private bool PlayStartupAnimation = false;
 
     private Animator animator;
     private PlayerController playerController;
