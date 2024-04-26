@@ -114,7 +114,7 @@ public class StalkerNPC : CStalker
         movement = GoalPosition - transform.position;
         forward = new Vector3(movement.x, 0, movement.z);
 
-        if (forward.magnitude < 1)
+        if (forward.magnitude < 2)
         {
             // already at goal
             if (State == StalkerState.DetectedArtifact)
@@ -154,7 +154,7 @@ public class StalkerNPC : CStalker
             targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
         }
 
-        targetMovement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
+        // targetMovement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
 
         rb.velocity = new Vector3(targetMovement.x, rb.velocity.y, targetMovement.z);
     }

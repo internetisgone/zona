@@ -3,7 +3,27 @@ guid: 4e7c7de2c390cec4ab7cd3632e83d7db
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_bark_a_01_S
+    second: {fileID: 2100000, guid: 1cab524a9fc9a9148afb40d2b5e2c370, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_fake_S
+    second: {fileID: 2100000, guid: ccdee165479e7d047a97260a30b2c786, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_fake_S74
+    second: {fileID: 2100000, guid: ccdee165479e7d047a97260a30b2c786, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_spil_S
+    second: {fileID: 2100000, guid: e2599cab01a32544bbac029b2ce3a1ad, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

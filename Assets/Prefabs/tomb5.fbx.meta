@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 22487fe2f638e454c85ecbb2c4ab6eff
+guid: 4b17c106a604cbd46ac9a042f7f2262b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: veh_vagoni_cpm_S
-    second: {fileID: 2100000, guid: 458785035be054f4786ec08634070c33, type: 2}
+      name: wood_collect_S
+    second: {fileID: 2100000, guid: 61eee8bb052da2e46a8c2fa4040c2d69, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

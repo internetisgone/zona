@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: 4b17c106a604cbd46ac9a042f7f2262b
+guid: c060bd78340ea8c4bbd8d421b1e52e20
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_bark_a_02_S
+    second: {fileID: 2100000, guid: dba227c10d242624d80a97ecc6465f8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_fake_S
+    second: {fileID: 2100000, guid: ccdee165479e7d047a97260a30b2c786, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_spil_S
+    second: {fileID: 2100000, guid: e2599cab01a32544bbac029b2ce3a1ad, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
