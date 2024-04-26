@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 6e1a7012781461348a1801a1499a466c
+guid: 4e7c7de2c390cec4ab7cd3632e83d7db
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: grnd_rocks_01_S
-    second: {fileID: 2100000, guid: bf62fa9531968a14abaf1e77f96639bf, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

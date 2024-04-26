@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6e1a7012781461348a1801a1499a466c
+guid: 2cbb0253370a18e449211c23d8fe0a33
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: grnd_rocks_01_S
-    second: {fileID: 2100000, guid: bf62fa9531968a14abaf1e77f96639bf, type: 2}
+      name: trees_bark_sosna_01_S.001
+    second: {fileID: 2100000, guid: 44eb40af97b72634db59b9636eb78c0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_bark_sosna_02_S.001
+    second: {fileID: 2100000, guid: 2c06ccf89c5e9414faf58236e65c828e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trees_sosna_red_low_S.001
+    second: {fileID: 2100000, guid: 0dadcf65b99b08948afc1feead5a0067, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

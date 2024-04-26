@@ -3,7 +3,12 @@ guid: 81216d14dfd3c93408379d6e5922857f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: vine_dried_up_S
+    second: {fileID: 2100000, guid: d98298948873a96408c5370388014bd3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
