@@ -12,13 +12,12 @@ public class CameraManager : MonoBehaviour
     private bool PlayStartupAnimation = false;
 
     private Animator animator;
-    private PlayerController playerController;
+    public EventBool EnableCamControl;
 
     void Awake()
     {
         animator = FirstPerson.GetComponent<Animator>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        playerController = player?.GetComponent<PlayerController>();
     }
 
     void Start()
@@ -33,7 +32,7 @@ public class CameraManager : MonoBehaviour
         else
         {
             animator.enabled = false;
-            playerController.camControlEnabled = true;
+            EnableCamControl.RaiseEvent(true);
         }
 
     }
@@ -42,7 +41,7 @@ public class CameraManager : MonoBehaviour
     private IEnumerator WaitForAnim()
     {
         yield return new WaitForSeconds(3f);
-        playerController.camControlEnabled = true;
+        EnableCamControl.RaiseEvent(true);
     }
 
 

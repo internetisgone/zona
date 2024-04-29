@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     // input events
     public EventVoid ToggleDetectorEvent;
     public EventVoid TogglePDAEvent;
+    public EventBool EnableCamControlEvent;
 
     private Animator animator;
     private GameObject firstPersonCamera; 
@@ -61,8 +62,6 @@ public class PlayerController : MonoBehaviour
         camControlEnabled = false;
 
         Physics.gravity *= gravityModifier;
-
-        Cursor.lockState = CursorLockMode.Locked;
 
         isJumping = false;
         isGrounded = true;
@@ -97,12 +96,6 @@ public class PlayerController : MonoBehaviour
         // mouse 
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
-
-        // cursor lock
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Cursor.lockState = CursorLockMode.None;
-        else if (Input.GetMouseButtonDown(0))
-            Cursor.lockState = CursorLockMode.Locked;
 
         if (playerData.MovementEnabled == false) return;
 
@@ -205,6 +198,21 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    private void OnEnable()
+    {
+        EnableCamControlEvent.OnEventRaised += EnableCamControl;
+    }
+
+    private void OnDisable()
+    {
+        EnableCamControlEvent.OnEventRaised -= EnableCamControl;
+    }
+
+    private void EnableCamControl(bool enabled)
+    {
+        camControlEnabled = enabled;
     }
 
     //// check for collision with ground and calculate slope angle

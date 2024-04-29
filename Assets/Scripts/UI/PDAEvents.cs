@@ -33,6 +33,8 @@ public class PDAEvents : MonoBehaviour
 
     public EventVoid TogglePDAEvent;
     public EventStalkerInt StalkerStatsUpdated;
+    public EventBool CursorVisible;
+    public EventBool EnableCamControlEvent;
 
     void Awake()
     {
@@ -92,11 +94,15 @@ public class PDAEvents : MonoBehaviour
         if (isVisible)
         {
             audioSource.PlayOneShot(PDAOn);
-            UpdateStalkerData();        
+            UpdateStalkerData();
+            CursorVisible?.RaiseEvent(true);
+            EnableCamControlEvent?.RaiseEvent(false);
         }
         else
         {
             audioSource.PlayOneShot(PDAOff);
+            CursorVisible?.RaiseEvent(false);
+            EnableCamControlEvent?.RaiseEvent(true);
         }
 
         container.visible = isVisible;
