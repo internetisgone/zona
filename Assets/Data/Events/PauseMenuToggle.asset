@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b1d32c6f38afdc40bae6dfb81d4be56, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: 0f689df1a1ea89a40851f505c523db5b, type: 3}
+  m_Name: PauseMenuToggle
   m_EditorClassIdentifier: 
-  Speed: 3
-  SprintSpeed: 7
-  MouseSensitivity: 1
-  MovementEnabled: 0
-  DetectorEquipped: 1
-  CollectionRange: 2

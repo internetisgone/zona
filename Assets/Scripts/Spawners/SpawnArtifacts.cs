@@ -18,6 +18,8 @@ public class SpawnArtifacts : MonoBehaviour
 
     void Start()
     {
+        Artifact.TotalCount = 0;
+
         SpawnPointArtifact[] clusters = GetComponentsInChildren<SpawnPointArtifact>();
 
         // generate random spawn points inside each cluster

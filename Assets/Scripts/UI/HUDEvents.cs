@@ -105,7 +105,7 @@ public class HUDEvents : MonoBehaviour
             UpdateArtifactCounter(stalker.ArtifactCount);
         }
 
-        string content = stalker.Name + " collected " + artifactCount + " artifact";
+        string content = Time.time.ToString() + stalker.Name + " collected " + artifactCount + " artifact";
         if (ShowNotification(content))
             audioSource.PlayOneShot(notificationSound);
     }

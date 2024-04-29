@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
     private GameObject firstPersonCamera; 
     private GameObject thirdPersonCamera;
 
+    private Vector3 gravity;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -61,7 +63,8 @@ public class PlayerController : MonoBehaviour
         thirdPersonCamera = transform.GetChild(2).gameObject; // todo
         camControlEnabled = false;
 
-        Physics.gravity *= gravityModifier;
+        gravity = new Vector3(0, -9.8f, 0);
+        Physics.gravity = gravity * gravityModifier;
 
         isJumping = false;
         isGrounded = true;
@@ -72,7 +75,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        GetInput();
+        if (playerData.MovementEnabled)
+        {
+            GetInput();
+        }
     }
 
     void FixedUpdate()
@@ -96,8 +102,6 @@ public class PlayerController : MonoBehaviour
         // mouse 
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
-
-        if (playerData.MovementEnabled == false) return;
 
         // movement
         verticalInput = Input.GetAxisRaw("Vertical");

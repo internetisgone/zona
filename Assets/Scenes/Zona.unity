@@ -1336,6 +1336,7 @@ Transform:
   m_Children:
   - {fileID: 2121002046}
   - {fileID: 2123764955}
+  - {fileID: 883478041}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &662806424
@@ -2513,6 +2514,71 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867723715}
   m_Enabled: 1
+--- !u!1 &883478040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 883478041}
+  - component: {fileID: 883478043}
+  - component: {fileID: 883478042}
+  m_Layer: 0
+  m_Name: Pause
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &883478041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883478040}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.898225, y: -0.13986993, z: -8.14502}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 632502992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &883478042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883478040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad297ce0551bea4dabc987f6c35b132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PauseMenuToggleEvent: {fileID: 11400000, guid: 5d628c5ef67ce2c4a9e91c7f4ce1ff3b, type: 2}
+  EnableCamControlEvent: {fileID: 11400000, guid: a54fb839083821c45b1b116707887493, type: 2}
+  CursorVisibleEvent: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
+  PlayerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
+--- !u!114 &883478043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883478040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: a29219578dafba14fabaae80ce1b534a, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 9f6fe3591da766640a95d93c9cd6bea2, type: 3}
+  m_SortingOrder: 2
 --- !u!1 &918297541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3332,6 +3398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CursorVisible: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
+  PauseMenuToggleEvent: {fileID: 11400000, guid: 5d628c5ef67ce2c4a9e91c7f4ce1ff3b, type: 2}
 --- !u!4 &1173936022
 Transform:
   m_ObjectHideFlags: 0
@@ -5955,7 +6022,7 @@ MonoBehaviour:
   PDAOff: {fileID: 8300000, guid: e4b996b2853f4fa4ba621926daf75848, type: 3}
   TogglePDAEvent: {fileID: 11400000, guid: e20eb5dbcc620b74f9b98687fc2fd85d, type: 2}
   StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
-  CursorVisible: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
+  CursorVisibleEvent: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
   EnableCamControlEvent: {fileID: 11400000, guid: a54fb839083821c45b1b116707887493, type: 2}
 --- !u!114 &2123764957
 MonoBehaviour:
@@ -5972,7 +6039,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: a29219578dafba14fabaae80ce1b534a, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 4f4c92c66571de94e9636090d0af29cd, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!82 &2123764958
 AudioSource:
   m_ObjectHideFlags: 0

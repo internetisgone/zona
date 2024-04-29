@@ -6,25 +6,34 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     // movement
-    public float Speed = 3f;
-    public float SprintSpeed = 7f;
+    private static float DefaultSpeed = 3f;
+    private static float DefaultSprintSpeed = 7f;
 
     // controls
-    [Range(0.1f, 2f)]
-    public float MouseSensitivity = 1f;
-    public bool MovementEnabled = true;
-    public bool DetectorEquipped = true;
+    private static float DefaultMouseSensitivity = 1f;
+    private static bool DefaultMovementEnabled = true;
 
     // artifact 
-    public float CollectionRange = 2f;
+    private static bool DefaultDetectorEquipped = true;
+    private static float DefaultCollectionRange = 2f;
+
+    public float Speed = DefaultSpeed;
+    public float SprintSpeed = DefaultSprintSpeed;
+
+    [Range(0.1f, 2f)]
+    public float MouseSensitivity = DefaultMouseSensitivity;
+    public bool MovementEnabled = DefaultMovementEnabled;
+
+    public bool DetectorEquipped = DefaultDetectorEquipped;
+    public float CollectionRange = DefaultCollectionRange;
 
     public void Reset()
     {
-        Speed = 3f;
-        SprintSpeed = 7f;
-        MouseSensitivity = 1f;
-        MovementEnabled = true;
-        DetectorEquipped = true;
-        CollectionRange = 2f;
+        Speed = DefaultSpeed;
+        SprintSpeed = DefaultSprintSpeed;
+        MouseSensitivity = DefaultMouseSensitivity;
+        MovementEnabled = DefaultMovementEnabled;
+        DetectorEquipped = DefaultDetectorEquipped;
+        CollectionRange = DefaultCollectionRange;
     }
 }

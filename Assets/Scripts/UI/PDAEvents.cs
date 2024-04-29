@@ -33,7 +33,7 @@ public class PDAEvents : MonoBehaviour
 
     public EventVoid TogglePDAEvent;
     public EventStalkerInt StalkerStatsUpdated;
-    public EventBool CursorVisible;
+    public EventBool CursorVisibleEvent;
     public EventBool EnableCamControlEvent;
 
     void Awake()
@@ -71,8 +71,8 @@ public class PDAEvents : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
-        //rankTabBtn.RegisterCallback<ClickEvent>(ShowRankTab);
-        //messageTabBtn.RegisterCallback<ClickEvent>(ShowMessageTab);
+        rankTabBtn.RegisterCallback<ClickEvent>(ShowRankTab);
+        messageTabBtn.RegisterCallback<ClickEvent>(ShowMessageTab);
     }
 
     private void OnEnable()
@@ -95,13 +95,13 @@ public class PDAEvents : MonoBehaviour
         {
             audioSource.PlayOneShot(PDAOn);
             UpdateStalkerData();
-            CursorVisible?.RaiseEvent(true);
+            CursorVisibleEvent?.RaiseEvent(true);
             EnableCamControlEvent?.RaiseEvent(false);
         }
         else
         {
             audioSource.PlayOneShot(PDAOff);
-            CursorVisible?.RaiseEvent(false);
+            CursorVisibleEvent?.RaiseEvent(false);
             EnableCamControlEvent?.RaiseEvent(true);
         }
 
@@ -132,17 +132,19 @@ public class PDAEvents : MonoBehaviour
         }
     }
 
-    //private void ShowRankTab(ClickEvent e)
-    //{
-    //    messageView.SetEnabled(false);
-    //    rankView.SetEnabled(true);
-    //}
+    private void ShowRankTab(ClickEvent e)
+    {
+        Debug.Log("rank tab");
+        messageView.SetEnabled(false);
+        rankView.SetEnabled(true);
+    }
 
-    //private void ShowMessageTab(ClickEvent e)
-    //{
-    //    rankView.SetEnabled(false);
-    //    messageView.SetEnabled(true);
-    //}
+    private void ShowMessageTab(ClickEvent e)
+    {
+        Debug.Log("message tab");
+        rankView.SetEnabled(false);
+        messageView.SetEnabled(true);
+    }
 
     private void SetUnkonwnStalkerRank()
     {

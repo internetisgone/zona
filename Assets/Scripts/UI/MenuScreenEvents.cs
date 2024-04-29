@@ -53,6 +53,8 @@ public class MenuScreenEvents : MonoBehaviour
         settingsBtn.RegisterCallback<PointerUpEvent>(OnSettingsClicked);
         confirmBtn.RegisterCallback<PointerUpEvent>(OnConfirmSettings);
         resetBtn.RegisterCallback<PointerUpEvent>(OnResetSettings);
+
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void OnStartClicked(PointerUpEvent e)

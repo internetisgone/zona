@@ -19,18 +19,29 @@ public class AudioPlayer : MonoBehaviour
     //private static float crossfadeDuration = 1f;
     //private static WaitForSeconds crossfadeDelay = new WaitForSeconds(crossfadeDuration);
 
+    public static AudioPlayer instance = null;
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         audioSources = GetComponents<AudioSource>();
         if (audioSources.Length < 2) return;
 
         bgSource = audioSources[0];
         sfxSource = audioSources[1];
 
-        bgSource.clip = menuScreenBg;
-        bgSource.Play();
-        bgSource.loop = true;
-        DontDestroyOnLoad(gameObject);
+        //bgSource.clip = menuScreenBg;
+        //bgSource.Play();
+        //bgSource.loop = true;
     }
 
     private void OnEnable()
@@ -45,17 +56,21 @@ public class AudioPlayer : MonoBehaviour
 
     private void OnSceneChanged(Scene current, Scene next)
     {
+        bgSource?.Stop();
         if (next.name == "Zona")
-        {
-            bgSource.Stop();
-            ChangeAudio();
+        {         
+            ChangeAudio(zonaBg);
             //StartCoroutine("CrossfadeBgAudio");
+        }
+        else if (next.name == "MenuScreen")
+        {
+            ChangeAudio(menuScreenBg);
         }
     }
 
-    private void ChangeAudio()
+    private void ChangeAudio(AudioClip bg)
     {
-        bgSource.clip = zonaBg;
+        bgSource.clip = bg;
         bgSource.Play();
         bgSource.loop = true;
     }

@@ -5,21 +5,26 @@ using UnityEngine;
 public class CustomCursor : MonoBehaviour
 {
     public EventBool CursorVisible;
+    public EventBool PauseMenuToggleEvent;
 
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
-
+        SetVisible(false);
         //DontDestroyOnLoad(gameObject);
     }
+
     void Update()
     {
         // cursor lock
+        // todo
         if (Input.GetKeyDown(KeyCode.Escape))
-            Cursor.lockState = CursorLockMode.None;
+        {
+            PauseMenuToggleEvent.RaiseEvent(true);
+        }
         else if (Input.GetMouseButtonDown(0))
+        {
             Cursor.lockState = CursorLockMode.Confined;
+        }
     }
 
     private void OnEnable()
@@ -34,7 +39,13 @@ public class CustomCursor : MonoBehaviour
     public void SetVisible(bool visible)
     {
         Cursor.lockState = CursorLockMode.Confined;
-        if (Cursor.visible == visible) return;
-        Cursor.visible = visible;
+        if (visible == true)
+        {
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.visible = false;
+        }
     }
 }
