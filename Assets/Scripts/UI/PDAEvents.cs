@@ -132,18 +132,21 @@ public class PDAEvents : MonoBehaviour
         }
     }
 
+    // todo 
     private void ShowRankTab(ClickEvent e)
     {
-        Debug.Log("rank tab");
-        messageView.SetEnabled(false);
-        rankView.SetEnabled(true);
+        //messageView.SetEnabled(false);
+        //messageView.visible = false;
+        //rankView.SetEnabled(true);
+        //rankView.visible = true;
     }
 
     private void ShowMessageTab(ClickEvent e)
     {
-        Debug.Log("message tab");
-        rankView.SetEnabled(false);
-        messageView.SetEnabled(true);
+        //rankView.SetEnabled(false);
+        //rankView.visible = false;
+        //messageView.SetEnabled(true);
+        //messageView.visible = true;
     }
 
     private void SetUnkonwnStalkerRank()

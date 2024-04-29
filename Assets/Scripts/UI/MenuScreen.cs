@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
-public class MenuScreenEvents : MonoBehaviour
+public class MenuScreen : MonoBehaviour
 {
     public PlayerData playerData;
     public NPCData npcData;
