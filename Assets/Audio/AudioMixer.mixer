@@ -59,10 +59,18 @@ AudioMixerController:
   m_Snapshots:
   - {fileID: 24500006}
   m_StartSnapshot: {fileID: 24500006}
-  m_SuspendThreshold: -80
+  m_SuspendThreshold: 0
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 43a452dcf553c0a419c65400763daf12
+    name: BGVolume
+  - guid: d46e3df34ea79e14f94195afd4c7bc27
+    name: MasterVolume
+  - guid: dd3ccf6d6acbe7248aebf20b03328cce
+    name: SFXVolume
+  - guid: 2f8fb7040b7ca57438b6bc26cefad046
+    name: VoiceVolume
   m_AudioMixerGroupViews:
   - guids:
     - 3744cec71ab56754a91cae74a1d84385

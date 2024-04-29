@@ -26,6 +26,7 @@ public class CameraManager : MonoBehaviour
 
         if (PlayStartupAnimation)
         {
+            EnableCamControl.RaiseEvent(false);
             animator.SetTrigger("Shake");
             StartCoroutine("WaitForAnim");
         }

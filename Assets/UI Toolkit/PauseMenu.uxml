@@ -2,7 +2,10 @@
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheet.uss?fileID=7433441132597879392&amp;guid=cd7eb0adfbcb8f146842bc515163489e&amp;type=3#Stylesheet" />
     <ui:VisualElement name="Wrapper" class="button-wrapper" style="flex-grow: 1;">
         <ui:Slider label="Master Volume" high-value="100" name="MasterVolumeSlider" class="slider" />
-        <ui:Button text="Restart" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RestartBtn" class="button" />
+        <ui:Slider label="BG Volume" high-value="100" name="BgVolumeSlider" class="slider" />
+        <ui:Slider label="SFX Volume" high-value="100" name="SFXVolumeSlider" class="slider" />
+        <ui:Slider label="Voice Volume" high-value="100" name="VoiceVolumeSlider" class="slider" />
+        <ui:Button text="Restart" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RestartBtn" class="button" style="color: rgb(255, 0, 0);" />
         <ui:Button text="Back" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BackBtn" class="button" />
     </ui:VisualElement>
 </ui:UXML>

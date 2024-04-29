@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3
   SprintSpeed: 7
-  MouseSensitivity: 1
+  MouseSensitivity: 2
   MovementEnabled: 0
   DetectorEquipped: 1
   CollectionRange: 2

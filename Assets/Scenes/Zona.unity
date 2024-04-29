@@ -2559,6 +2559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad297ce0551bea4dabc987f6c35b132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 7f79676bb41cfd94f9250549cf1f6a7b, type: 2}
   PauseMenuToggleEvent: {fileID: 11400000, guid: 5d628c5ef67ce2c4a9e91c7f4ce1ff3b, type: 2}
   EnableCamControlEvent: {fileID: 11400000, guid: a54fb839083821c45b1b116707887493, type: 2}
   CursorVisibleEvent: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
@@ -3379,7 +3380,7 @@ GameObject:
   - component: {fileID: 1173936022}
   - component: {fileID: 1173936021}
   m_Layer: 0
-  m_Name: TempCursor
+  m_Name: Cursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6261,6 +6262,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 566092402}
   - {fileID: 380663450}
+  - {fileID: 1173936022}
   - {fileID: 1576413987}
   - {fileID: 555115898}
   - {fileID: 1933032926}
@@ -6274,4 +6276,3 @@ SceneRoots:
   - {fileID: 326216012}
   - {fileID: 1262361419}
   - {fileID: 1297450318}
-  - {fileID: 1173936022}

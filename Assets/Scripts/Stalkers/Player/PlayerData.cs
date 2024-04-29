@@ -13,6 +13,9 @@ public class PlayerData : ScriptableObject
     private static float DefaultMouseSensitivity = 1f;
     private static bool DefaultMovementEnabled = true;
 
+    // audio
+    private static float DefaultMasterVolume = 0f;
+
     // artifact 
     private static bool DefaultDetectorEquipped = true;
     private static float DefaultCollectionRange = 2f;
