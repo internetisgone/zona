@@ -4,8 +4,6 @@ S.T.A.L.K.E.R. fan game with a focus on arfifact hunting and NPC autonomy. WIP.<
 **credits**<br>
 tools:<br>
 [Blender XRay addon](https://github.com/PavelBlend/blender-xray)<br>
-<br>
-
 art assets and additional tools:
 [Call of Pripyat SDK](https://www.moddb.com/games/stalker-call-of-pripyat/downloads/x-ray-16-engine-sdk-v07)<br>
 [Anomaly mod](https://www.moddb.com/mods/stalker-anomaly)<br>
