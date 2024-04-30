@@ -3,46 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[Flags]
-//public enum StalkerState
-//{
-//    Idle = 0,
-//    Turning = 1 << 0,
-//    Moving = 1 << 1,
-//    DetectedArtifact = 1 << 2,
-//}
-
-public enum StalkerState
-{
-    Bored, DetectedArtifact, Chilling, Panic
-}
-
-public enum MovementState
-{
-    Idle, Turning, Moving
-}
-
 public class StalkerNPC : CStalker
 {
-    public NPCData StalkerData;
     public static int GroundLayerMask = 1 << 6;
     public static int ArtifactLayerMask = 1 << 7;
     private static int ObstacleLayerMask = 1 << 8;
 
-    public StalkerState State { get; set; }
+    public static BoredState BoredState = new BoredState();
+    public static ArtifactState ArtifactState = new ArtifactState();
+    public static ChillingState ChillingState = new ChillingState();
+    public static PanicState PanicState = new PanicState();
 
-    //public static BoredState BoredState;
-    //public static ArtifactState ArtifactState;
-    //public static PanicState PanicState;
+    public NPCData StalkerData;
+    private StalkerState currentState;
 
-    //public StalkerState currentState = BoredState;
-
-    public MovementState movementState;
-    public Vector3 GoalPosition;
+    private Vector3 GoalPosition;
     private Vector3 movement;
     private Vector3 forward;
+
     private bool isSettingGoal;
 
+    private DetectorNPC Detector;
     private static GameObject campfire; // initial goal
     private GameObject goalArtifact;
 
@@ -59,14 +40,10 @@ public class StalkerNPC : CStalker
         rb = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
 
-        State = StalkerState.Bored;
-        movementState = MovementState.Idle;
+        ChangeState(BoredState);
 
+        Detector = GetComponent<DetectorNPC>();
         GoalPosition = campfire.transform.position;
-        InvokeRepeating("TrySetGoal", 5, 5);
-
-        // check vision frustum
-        InvokeRepeating("LookForArtifacts", 1, StalkerData.LookInterval);
 
         isOnSlope = false;
         slopeNormal = Vector3.up;
@@ -74,7 +51,8 @@ public class StalkerNPC : CStalker
 
     void FixedUpdate()
     {
-        UpdateStates();
+        movement = GoalPosition - transform.position;
+        forward = new Vector3(movement.x, 0, movement.z);
 
         CheckGround();
 
@@ -84,68 +62,44 @@ public class StalkerNPC : CStalker
             rb.AddForce(-slidingForce);
         }
 
-        if (movementState == MovementState.Idle)
-        {
-            rb.velocity = Vector3.zero;
-            animator.SetFloat("Speed", 0);
-        }
-        else if (movementState == MovementState.Turning)
-        {
-            TurnTowards(forward);
-            rb.velocity = Vector3.zero;
-        }
-        else if (movementState == MovementState.Moving)
-        {
-            MoveStalker(movement.normalized * StalkerData.Speed);
-            animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
-        }
+        currentState?.OnUpdate(this);
     }
 
-    private void UpdateStates()
+    // --****========== movement ==========***-- //
+
+    public void MoveToGoal()
     {
-        // temp. panic has the highest priority
-        if (State == StalkerState.Panic)
-        {
-            movementState = MovementState.Idle;
-            animator.SetTrigger("Panic");
-            return;
-        }
+        // check if facing the goal
+        bool shouldTurn = !IsParallelxz(forward.normalized, transform.forward);
 
-        movement = GoalPosition - transform.position;
-        forward = new Vector3(movement.x, 0, movement.z);
-
-        if (forward.magnitude < 2)
+        if (shouldTurn)
         {
-            // already at goal
-            if (State == StalkerState.DetectedArtifact)
-            {
-                CollectArtifact(goalArtifact);
-            }
-            movementState = MovementState.Idle;
+            // turn to goal
+            TurnTowards(forward);
+            rb.velocity = Vector3.zero;
+            animator.SetBool("IsTurning", true); // todo only needs to be set once 
+            Debug.DrawRay(transform.position, transform.forward * 2, Color.white, 1f);
         }
         else
         {
-            // check if stalker is facing the goal
-            bool shouldTurn = !IsParallelxz(forward.normalized, transform.forward);
-
-            if (shouldTurn)
-            {
-                // turn to goal
-                movementState = MovementState.Turning;
-                Debug.DrawRay(transform.position, transform.forward * 2, Color.white, 1f);
-            }
-            else
-            {
-                // move to goal
-                movementState = MovementState.Moving;
-                Debug.DrawRay(transform.position, transform.forward * 2, Color.blue, 1f);
-            }
+            // move to goal
+            MoveStalker(movement.normalized * StalkerData.Speed);
+            animator.SetBool("IsTurning", false);
+            animator.SetFloat("Speed", new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
+            Debug.DrawRay(transform.position, transform.forward * 2, Color.blue, 1f);
         }
-        //Debug.LogFormat("{0} is {1}", Name, State);
     }
 
+    public bool IsAtGoalPosition()
+    {
+        return forward.magnitude < 2;
+    }
 
-    // --****========== movement ==========***-- //
+    public void KeepStill()
+    {
+        rb.velocity = Vector3.zero;
+        animator.SetFloat("Speed", 0); 
+    }
 
     private void MoveStalker(Vector3 targetMovement)
     {
@@ -180,9 +134,18 @@ public class StalkerNPC : CStalker
 
     // --****========== random goal ==========***-- //
 
+    public void StartSettingRandomGoal()
+    {
+        InvokeRepeating("TrySetGoal", 5, 5);
+    }
+
+    public void StopSettingRandomGoal()
+    {
+        CancelInvoke("TrySetGoal");
+    }
     private void TrySetGoal()
     {
-        if (State != StalkerState.Bored || isSettingGoal) return;
+        if (currentState != BoredState || isSettingGoal) return;
 
         // 20% chance of having a new goal
         bool hasNewGoal = UnityEngine.Random.value < 0.2f;
@@ -199,7 +162,7 @@ public class StalkerNPC : CStalker
     {
         yield return new WaitForSeconds(delay);
 
-        if (State != StalkerState.Bored)
+        if (currentState != BoredState)
         {
             isSettingGoal = false;
             yield return null;
@@ -225,28 +188,44 @@ public class StalkerNPC : CStalker
 
     // --****========== artifact ==========***-- //
 
-    // artifact spotted, try move to it
-    public void TryCollectArtifact(GameObject artifactObj)
+    public void SetArtifactAsGoal(GameObject artifact)
     {
-        State = StalkerState.DetectedArtifact;
-        goalArtifact = artifactObj;
-        SetGoal(artifactObj.transform.position);
+        goalArtifact = artifact;
+        SetGoal(goalArtifact.transform.position);
+        ChangeState(ArtifactState);
     }
 
-    public override void CollectArtifact(GameObject artifactObj)
+    public void CollectGoalArtifact()
     {
         base.CollectArtifact(goalArtifact);
         goalArtifact = null;
-        State = StalkerState.Bored;
-        //State &= ~StalkerState.DetectedArtifact;
     }
 
+    public void EquipDetector()
+    {
+        Detector.enabled = true;
+    }
+
+    public void UnequipDetector()
+    {
+        Detector.enabled = false;
+    }
 
     // --****========== vision frustum checks ==========***-- //
 
+    // check vision frustim
+    public void StartLookForArtifacts()
+    {
+        InvokeRepeating("LookForArtifacts", 1, StalkerData.LookInterval);
+    }
+
+    public void StopLookingForArtifacts()
+    {
+        CancelInvoke("LookForArtifacts");
+    }
+
     private void LookForArtifacts()
     {
-        if (State == StalkerState.DetectedArtifact) return;
         Look(ArtifactLayerMask);
     }
 
@@ -286,7 +265,7 @@ public class StalkerNPC : CStalker
 
             if (nearestArtifact != null) 
             {
-                TryCollectArtifact(nearestArtifact);
+                SetArtifactAsGoal(nearestArtifact);
             }
         }
     }
@@ -306,6 +285,20 @@ public class StalkerNPC : CStalker
     //        isGrounded = false;
     //    }
     //}
+
+    // --****========== state transition ==========***-- //
+    public void ChangeState(StalkerState newState)
+    {
+        currentState?.OnExit(this);
+        currentState = newState;
+        currentState.OnEnter(this);
+    }
+
+    public void Panic()
+    {
+        KeepStill();
+        animator.SetTrigger("Panic");
+    }
 
     // --****========== static util functions ==========***-- //
     public static bool IsParallelxz(Vector3 a, Vector3 b)

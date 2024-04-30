@@ -42,7 +42,7 @@ public class GameOver : MonoBehaviour
                 if (spawner.stalkersList[i] is StalkerNPC)
                 {
                     StalkerNPC stalker = spawner.stalkersList[i] as StalkerNPC;
-                    stalker.State = StalkerState.Panic;
+                    stalker.ChangeState(StalkerNPC.PanicState);
                 }
             }
         }

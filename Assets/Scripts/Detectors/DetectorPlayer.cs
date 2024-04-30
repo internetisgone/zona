@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 public class DetectorPlayer : Detector
 {
     private Player Owner;
-    public DetectorData DetectorData; // temp
-
     private float collectionRange;
 
     //public EventVoid ArtifactIsCollectible;
@@ -18,6 +17,7 @@ public class DetectorPlayer : Detector
     void Awake()
     {
         Owner = GetComponent<Player>();
+        SetDetectorType(DetectorType.Echo);
     }
 
     void Start()

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 0-Echo
   m_EditorClassIdentifier: 
   DetectorType: 0
+  sprite: {fileID: 21300000, guid: 96735c6bd3436ad4598a75ecc42e4ecc, type: 3}
   Interval: 1
   DetectionRange: 5
   VisibilityRange: 2

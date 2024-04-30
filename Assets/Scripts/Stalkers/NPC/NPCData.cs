@@ -6,7 +6,7 @@ using UnityEngine;
 public class NPCData : ScriptableObject
 {
     private static float DefaultSpeed = 1.8f;
-    private static float DefaultTurnSpeed = 2f;
+    private static float DefaultTurnSpeed = 1f;
 
     private static float DefaultVisionRange = 5f;
     private static int DefaultLookInterval = 2;

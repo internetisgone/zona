@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheet.uss?fileID=7433441132597879392&amp;guid=cd7eb0adfbcb8f146842bc515163489e&amp;type=3#Stylesheet" />
-    <ui:VisualElement name="Background" class="menubackground" style="flex-grow: 1; opacity: 1; -unity-background-scale-mode: scale-and-crop; background-image: url(&quot;project://database/Assets/UI/room.jpg?fileID=2800000&amp;guid=2fa42c4d8d5015e4e9d303c1c63eaa6d&amp;type=3#room&quot;); background-color: rgba(32, 32, 32, 0);">
+    <ui:VisualElement name="Background" class="menubackground" style="flex-grow: 1; opacity: 1; -unity-background-scale-mode: scale-and-crop; background-image: url(&quot;project://database/Assets/UI/room.png?fileID=2800000&amp;guid=de7a4376a3187c840911deb9815af9a4&amp;type=3#room&quot;); background-color: rgba(32, 32, 32, 0);">
         <ui:VisualElement name="BlackMask" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); opacity: 0.5;" />
     </ui:VisualElement>
     <ui:VisualElement name="MenuWrapper" style="flex-grow: 1; position: absolute; left: 0; display: flex; top: 0; right: 0; bottom: 0;">

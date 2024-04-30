@@ -52,8 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
   StalkerData: {fileID: 11400000, guid: 213cd3c6cc52b954991b6e45ba3d4db5, type: 2}
-  movementState: 0
-  GoalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &-7578768731147561641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +64,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6637a5560c2914486cf8a10e2b0b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectorData: {fileID: 11400000, guid: 81feb7fd8cdce274eae87648014f07a5, type: 2}
+  Echo: {fileID: 11400000, guid: 81feb7fd8cdce274eae87648014f07a5, type: 2}
+  Bear: {fileID: 11400000, guid: 2a9c53318beaede47afc54e14bf787cf, type: 2}
+  Veles: {fileID: 11400000, guid: aab96b6a0d33acb40988f0b2666e365b, type: 2}
+  Svarog: {fileID: 11400000, guid: d56acba2f73e7b543ac164cb1e1f90cd, type: 2}
 --- !u!136 &4750429806808667977
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 9ef4ba32496b12347bad8c45cace6116, type: 2}
     - target: {fileID: 5866666021909216657, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

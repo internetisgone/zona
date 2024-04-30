@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 669693769310713356}
   - component: {fileID: 7292812374392960839}
   m_Layer: 7
-  m_Name: Artifact 1
+  m_Name: TestDetector
   m_TagString: Artifact
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

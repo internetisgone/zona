@@ -5,11 +5,11 @@ using UnityEngine.Events;
 public class DetectorNPC : Detector
 {
     private StalkerNPC Owner;
-    public DetectorData DetectorData; // temp
 
     void Awake()
     {
         Owner = GetComponent<StalkerNPC>();
+        SetDetectorType(DetectorType.Echo);
     }
 
     void Start()
@@ -54,7 +54,7 @@ public class DetectorNPC : Detector
                 if (nearestArtifact != null)
                 {
                     nearestArtifact.GetComponent<Artifact>()?.ToggleVisibility(true);
-                    Owner.TryCollectArtifact(nearestArtifact);
+                    Owner.SetArtifactAsGoal(nearestArtifact);
                 }
             }
         }

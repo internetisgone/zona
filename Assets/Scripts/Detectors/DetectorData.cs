@@ -15,6 +15,7 @@ public enum DetectorType
 public class DetectorData : ScriptableObject
 {
     public DetectorType DetectorType;
+    public Sprite sprite;
     [Range(0.0f, 5.0f)]
     public float Interval;
     [Range(1, 20)]
