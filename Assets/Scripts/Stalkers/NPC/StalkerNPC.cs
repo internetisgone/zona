@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class StalkerNPC : CStalker
@@ -21,10 +22,13 @@ public class StalkerNPC : CStalker
     private Vector3 movement;
     private Vector3 forward;
 
-    private bool isSettingGoal;
+    private bool isSettingGoal = false;
+
+    private static GameObject campfire;
+    private static int RandomGoalRangeX = 70;
+    private static int RandomGoalRangeZ = 40;
 
     private DetectorNPC Detector;
-    private static GameObject campfire; // initial goal
     private GameObject goalArtifact;
 
     private Rigidbody rb;
@@ -39,14 +43,13 @@ public class StalkerNPC : CStalker
         campfire = GameObject.FindWithTag("Campfire");
         rb = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
-
-        ChangeState(BoredState);
-
         Detector = GetComponent<DetectorNPC>();
-        GoalPosition = campfire.transform.position;
 
         isOnSlope = false;
         slopeNormal = Vector3.up;
+
+        SetRandomGoal();
+        ChangeState(BoredState);
     }
 
     void FixedUpdate()
@@ -75,8 +78,8 @@ public class StalkerNPC : CStalker
         if (shouldTurn)
         {
             // turn to goal
+            KeepStill();
             TurnTowards(forward);
-            rb.velocity = Vector3.zero;
             animator.SetBool("IsTurning", true); // todo only needs to be set once 
             Debug.DrawRay(transform.position, transform.forward * 2, Color.white, 1f);
         }
@@ -97,7 +100,8 @@ public class StalkerNPC : CStalker
 
     public void KeepStill()
     {
-        rb.velocity = Vector3.zero;
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        animator.SetBool("IsTurning", false);
         animator.SetFloat("Speed", 0); 
     }
 
@@ -107,8 +111,10 @@ public class StalkerNPC : CStalker
         {
             targetMovement = Vector3.ProjectOnPlane(targetMovement, slopeNormal);
         }
-
-        // targetMovement = Vector3.Lerp(rb.velocity, targetMovement, 0.3f);
+        else
+        {
+            targetMovement = Vector3.Lerp(rb.velocity, targetMovement, 0.2f);
+        }
 
         rb.velocity = new Vector3(targetMovement.x, rb.velocity.y, targetMovement.z);
     }
@@ -136,14 +142,14 @@ public class StalkerNPC : CStalker
 
     public void StartSettingRandomGoal()
     {
-        InvokeRepeating("TrySetGoal", 5, 5);
+        InvokeRepeating("TrySetRandomGoal", 10, 7);
     }
 
     public void StopSettingRandomGoal()
     {
-        CancelInvoke("TrySetGoal");
+        CancelInvoke("TrySetRandomGoal");
     }
-    private void TrySetGoal()
+    public void TrySetRandomGoal()
     {
         if (currentState != BoredState || isSettingGoal) return;
 
@@ -162,25 +168,22 @@ public class StalkerNPC : CStalker
     {
         yield return new WaitForSeconds(delay);
 
-        if (currentState != BoredState)
-        {
-            isSettingGoal = false;
-            yield return null;
+        if (currentState == BoredState)
+        { 
+            SetRandomGoal();
         }
-        else
-        {
-            int xRange = 70;
-            int zRange = 40;
-
-            float xCoord = UnityEngine.Random.Range(campfire.transform.position.x - xRange / 2, campfire.transform.position.x + xRange / 2);
-            float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - zRange / 2, campfire.transform.position.z + zRange / 2);
-
-            SetGoal(new Vector3(xCoord, transform.position.y, zCoord));
-            isSettingGoal = false;
-        }
+        isSettingGoal = false;
     }
 
-    public void SetGoal(Vector3 newGoal)
+    private void SetRandomGoal()
+    {
+        float xCoord = UnityEngine.Random.Range(campfire.transform.position.x - RandomGoalRangeX / 2, campfire.transform.position.x + RandomGoalRangeX / 2);
+        float zCoord = UnityEngine.Random.Range(campfire.transform.position.z - RandomGoalRangeZ / 2, campfire.transform.position.z + RandomGoalRangeZ / 2);
+
+        SetGoal(new Vector3(xCoord, transform.position.y, zCoord));
+    }
+
+    private void SetGoal(Vector3 newGoal)
     {
         GoalPosition = new Vector3(newGoal.x, transform.position.y, newGoal.z);
         //Debug.LogFormat("New goal for {0}: {1}", Name, GoalPosition);
@@ -213,7 +216,6 @@ public class StalkerNPC : CStalker
 
     // --****========== vision frustum checks ==========***-- //
 
-    // check vision frustim
     public void StartLookForArtifacts()
     {
         InvokeRepeating("LookForArtifacts", 1, StalkerData.LookInterval);
@@ -239,7 +241,7 @@ public class StalkerNPC : CStalker
         Collider[] colliders = Physics.OverlapSphere(transform.position, StalkerData.VisionRange, layermask);
         if (colliders.Length > 0)
         {
-            // get nearest artifact and set as goal
+            // get nearest visible artifact and set as goal
             float minDistance = StalkerData.VisionRange;
             GameObject nearestArtifact = null;
 
@@ -269,22 +271,6 @@ public class StalkerNPC : CStalker
             }
         }
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Ground"))
-    //    {
-    //        isGrounded = true;
-    //    }
-    //}
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Ground"))
-    //    {
-    //        isGrounded = false;
-    //    }
-    //}
 
     // --****========== state transition ==========***-- //
     public void ChangeState(StalkerState newState)

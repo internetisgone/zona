@@ -90,7 +90,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: -0.5, z: 0}
+  m_Center: {x: 0, y: -0.48, z: 0}
 --- !u!54 &-4594695867262497481
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 9ef4ba32496b12347bad8c45cace6116, type: 2}
     - target: {fileID: 5866666021909216657, guid: d7a6477a7c9a34e4aa7bf096ee92cbb0, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

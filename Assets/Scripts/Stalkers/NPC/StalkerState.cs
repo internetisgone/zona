@@ -100,6 +100,12 @@ public class PanicState : StalkerState
         base.OnEnter(stalker);
         stalker.Panic();
     }
+
+    public override void OnUpdate(StalkerNPC stalker)
+    {
+        base.OnUpdate(stalker);
+        stalker.KeepStill();
+    }
 }
 
 
