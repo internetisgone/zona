@@ -14,35 +14,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.601
+      value: -0.456
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.84
+      value: -0.842
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99691737
+      value: 0.99505794
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.060860317
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.078459114
+      value: -0.07831269
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.0047898064
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 9
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b17c106a604cbd46ac9a042f7f2262b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -83,7 +83,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7329491136142926010}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c9718dcba66a5ce42bba8ee24bec15d5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -95,8 +95,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0696212, y: 0.51, z: 2.1221807}
-  m_Center: {x: 0.083253086, y: 0.15, z: 0.8265202}
+  m_Size: {x: 1.0696212, y: 0.32, z: 1.85}
+  m_Center: {x: 0.083253086, y: 0.22, z: 0.89}
 --- !u!54 &2405697660001505620
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 0
   m_CollisionDetection: 0

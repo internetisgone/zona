@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private PlayerData playerData;
 
     // input events
-    public EventVoid ToggleDetectorEvent;
+    public EventBool DetectorEquippedEvent;
     public EventVoid TogglePDAEvent;
     public EventBool EnableCamControlEvent;
 
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
         // show / hide detector
         if (Input.GetKeyDown(KeyCode.O))
         {
-            ToggleDetectorEvent.OnEventRaised();
+            DetectorEquippedEvent.OnEventRaised(!playerData.DetectorEquipped);
         }
 
         // switch camera

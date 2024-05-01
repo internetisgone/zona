@@ -17,7 +17,7 @@ public class HUDEvents : MonoBehaviour
 
     public EventStalkerInt StalkerStatsUpdated;
 
-    public EventVoid DetectorEquipped;
+    public EventBool DetectorEquipped;
 
     public PlayerData PlayerData;
 
@@ -92,10 +92,12 @@ public class HUDEvents : MonoBehaviour
         }
     }
 
-    private void ToggleDetector()
+    private void ToggleDetector(bool isEquipped)
     {
-        PlayerData.DetectorEquipped = !PlayerData.DetectorEquipped;
-        proximityWrapper.visible = PlayerData.DetectorEquipped;
+        PlayerData.DetectorEquipped = isEquipped;
+        proximityWrapper.visible = isEquipped;
+
+        if (isEquipped == false) UpdateProximity(0f);
     }
 
     private void ShowStalkerStatsNotif(CStalker stalker, int artifactCount)
