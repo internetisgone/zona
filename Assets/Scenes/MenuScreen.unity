@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 792124126}
   - component: {fileID: 792124125}
   - component: {fileID: 792124124}
+  - component: {fileID: 792124127}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -155,6 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
   npcData: {fileID: 11400000, guid: 213cd3c6cc52b954991b6e45ba3d4db5, type: 2}
+  volumeControlsAsset: {fileID: 0}
 --- !u!114 &792124125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +188,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &792124127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792124123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ea4572872ec8442b8f8dcca99f3842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeControlsAsset: {fileID: 9197481963319205126, guid: 4b1472605cbafc043977389813253569, type: 3}
+  mixer: {fileID: 24100000, guid: 7f79676bb41cfd94f9250549cf1f6a7b, type: 2}
 --- !u!1 &1022514980
 GameObject:
   m_ObjectHideFlags: 0

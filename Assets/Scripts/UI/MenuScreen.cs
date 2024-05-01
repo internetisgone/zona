@@ -18,6 +18,7 @@ public class MenuScreen : MonoBehaviour
 
     // settings view
     private VisualElement settingsView;
+    private VisualElement volumeControls;
     private Slider mouseSensitivitySlider;
     private Slider npcSpeedSlider;
     private Button confirmBtn;
@@ -28,14 +29,14 @@ public class MenuScreen : MonoBehaviour
         document = GetComponent<UIDocument>();
 
         menuView = document.rootVisualElement.Q("MenuWrapper");
-        startBtn = document.rootVisualElement.Q("StartBtn") as Button;
-        settingsBtn = document.rootVisualElement.Q("SettingsBtn") as Button;
+        startBtn = document.rootVisualElement.Q<Button>("StartBtn");
+        settingsBtn = document.rootVisualElement.Q<Button>("SettingsBtn");
 
         settingsView = document.rootVisualElement.Q("SettingsWrapper");
-        mouseSensitivitySlider = document.rootVisualElement.Q("MouseSensitivitySlider") as Slider;
-        npcSpeedSlider = document.rootVisualElement.Q("NPCSpeedSlider") as Slider;
-        confirmBtn = document.rootVisualElement.Q("ConfirmBtn") as Button;
-        resetBtn = document.rootVisualElement.Q("ResetBtn") as Button;
+        mouseSensitivitySlider = document.rootVisualElement.Q<Slider>("MouseSensitivitySlider");
+        npcSpeedSlider = document.rootVisualElement.Q<Slider>("NPCSpeedSlider");
+        confirmBtn = document.rootVisualElement.Q<Button>("ConfirmBtn");
+        resetBtn = document.rootVisualElement.Q<Button>("ResetBtn");
 
         // show menu view by default
         settingsView.visible = false;
@@ -57,6 +58,11 @@ public class MenuScreen : MonoBehaviour
         UnityEngine.Cursor.lockState = CursorLockMode.Confined;
     }
 
+    private void Start()
+    {
+        volumeControls = gameObject.GetComponent<VolumeControls>()?.GetVolumeControlElement();
+        settingsView.Insert(1, volumeControls);
+    }
     private void OnStartClicked(PointerUpEvent e)
     {
         SceneManager.LoadScene("Zona");

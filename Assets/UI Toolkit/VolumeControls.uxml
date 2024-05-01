@@ -1,7 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheet.uss?fileID=7433441132597879392&amp;guid=cd7eb0adfbcb8f146842bc515163489e&amp;type=3#Stylesheet" />
-    <ui:VisualElement name="Wrapper" class="button-wrapper" style="flex-grow: 1;">
-        <ui:Button text="Restart" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RestartBtn" class="button" style="color: rgb(255, 0, 0);" />
-        <ui:Button text="Back" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BackBtn" class="button" />
+    <ui:VisualElement name="VolumeControls" style="flex-grow: 1;">
+        <ui:Slider label="Master Volume" high-value="100" name="MasterVolumeSlider" class="slider text" />
+        <ui:Slider label="BG Volume" high-value="100" name="BgVolumeSlider" class="slider text" />
+        <ui:Slider label="SFX Volume" high-value="100" name="SFXVolumeSlider" class="slider text" />
+        <ui:Slider label="Voice Volume" high-value="100" name="VoiceVolumeSlider" class="slider text" />
     </ui:VisualElement>
 </ui:UXML>

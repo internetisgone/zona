@@ -2472,6 +2472,7 @@ GameObject:
   - component: {fileID: 883478041}
   - component: {fileID: 883478043}
   - component: {fileID: 883478042}
+  - component: {fileID: 883478044}
   m_Layer: 0
   m_Name: Pause
   m_TagString: Untagged
@@ -2506,7 +2507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad297ce0551bea4dabc987f6c35b132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 7f79676bb41cfd94f9250549cf1f6a7b, type: 2}
   PauseMenuToggleEvent: {fileID: 11400000, guid: 5d628c5ef67ce2c4a9e91c7f4ce1ff3b, type: 2}
   EnableCamControlEvent: {fileID: 11400000, guid: a54fb839083821c45b1b116707887493, type: 2}
   CursorVisibleEvent: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
@@ -2527,6 +2527,20 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 9f6fe3591da766640a95d93c9cd6bea2, type: 3}
   m_SortingOrder: 2
+--- !u!114 &883478044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883478040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ea4572872ec8442b8f8dcca99f3842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeControlsAsset: {fileID: 9197481963319205126, guid: 4b1472605cbafc043977389813253569, type: 3}
+  mixer: {fileID: 24100000, guid: 7f79676bb41cfd94f9250549cf1f6a7b, type: 2}
 --- !u!1 &918297541
 GameObject:
   m_ObjectHideFlags: 0

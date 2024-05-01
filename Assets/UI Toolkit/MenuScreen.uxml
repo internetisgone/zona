@@ -10,14 +10,16 @@
             <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsBtn" class="button" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="SettingsWrapper" style="flex-grow: 1; position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex;">
-        <ui:VisualElement name="MouseSensitivity" class="text list-item" style="flex-grow: 1; justify-content: center;">
-            <ui:Slider label="Mouse Sensitivity" high-value="100" name="MouseSensitivitySlider" class="slider" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
+    <ui:VisualElement name="SettingsWrapper" style="flex-grow: 1; position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex; align-items: center;">
+        <ui:VisualElement name="Wrapper" style="flex-grow: 1;">
+            <ui:VisualElement name="MouseSensitivity" class="text list-item" style="flex-grow: 1; justify-content: center;">
+                <ui:Slider label="Mouse Sensitivity" high-value="100" name="MouseSensitivitySlider" class="slider" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="NPCSpeed" class="text list-item" style="flex-grow: 1;">
+                <ui:Slider label="NPC Speed" high-value="100" name="NPCSpeedSlider" class="slider" />
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="NPCSpeed" class="text list-item" style="flex-grow: 1;">
-            <ui:Slider label="NPC Speed" high-value="100" name="NPCSpeedSlider" class="slider" />
-        </ui:VisualElement>
-        <ui:VisualElement name="SettingsBtnWrapper" class="button-wrapper" style="flex-grow: 1;">
+        <ui:VisualElement name="BtnWrapper" class="button-wrapper" style="flex-grow: 1;">
             <ui:Button text="Confirm" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfirmBtn" class="button" />
             <ui:Button text="Reset" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ResetBtn" class="button" />
         </ui:VisualElement>
