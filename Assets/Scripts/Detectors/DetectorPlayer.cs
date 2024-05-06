@@ -1,7 +1,6 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 public class DetectorPlayer : Detector
 {
     public AudioClip beep;
@@ -10,6 +9,7 @@ public class DetectorPlayer : Detector
     private float collectionRange;
     private AudioSource audioSource;
     private GameObject detectorObj;
+    private float cachedProximity;
 
     private static float maxPitch = 1.5f;
     private static float minPitch = 1f;
@@ -49,13 +49,13 @@ public class DetectorPlayer : Detector
 
     private void OnEnable()
     {
-        ArtifactProximityUpdated.OnEventRaised += PlayBeep;
+        ArtifactProximityUpdated.OnEventRaised += StartBeep;
         DetectorEquipped.OnEventRaised += ActivateDetector;
     }
 
     private void OnDisable()
     {
-        ArtifactProximityUpdated.OnEventRaised -= PlayBeep;
+        ArtifactProximityUpdated.OnEventRaised -= StartBeep;
         DetectorEquipped.OnEventRaised += ActivateDetector;
     }
 
@@ -85,11 +85,13 @@ public class DetectorPlayer : Detector
                 // Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
             }
             ArtifactProximityUpdated.RaiseEvent(minDistance);
+            cachedProximity = minDistance;
         }
         else
         {
             IsDetected = false;
             ClearProximityDisplay();
+            cachedProximity = 0;
         }
     }
 
@@ -136,19 +138,28 @@ public class DetectorPlayer : Detector
         }
     }
 
-    private void PlayBeep(float proximity)
+    private void StartBeep(float proximity)
     {
         if (proximity == 0f)
         {
-            audioSource.loop = false;
+            CancelInvoke("PlayBeep");
             audioSource.Stop();
         }
         else
         {
-            audioSource.loop = true;
+            if (CloseEnough(cachedProximity, proximity, 0.01f)) return;
+
+            CancelInvoke("PlayBeep");
             audioSource.pitch = CalcBeepPitch(proximity);
-            if (!audioSource.isPlaying) audioSource.PlayOneShot(beep);
+            float interval = 10 * beep.length * proximity / DetectorData.DetectionRange;
+            InvokeRepeating("PlayBeep", 0, interval);
+            Debug.LogFormat("samples {0}, length {1}, pitch {2}, interval {3}", beep.samples, beep.length, audioSource.pitch, interval);
         }
+    }
+
+    private void PlayBeep()
+    {
+        audioSource.PlayOneShot(beep);
     }
 
     private float CalcBeepPitch(float proximity)
@@ -156,13 +167,18 @@ public class DetectorPlayer : Detector
         // linear relationship between proximity and pitch, with a negative coef
         float proximityNormalized = proximity / DetectorData.DetectionRange;
         float pitch = maxPitch + proximityNormalized * (minPitch - maxPitch);
-        //Debug.LogFormat("proximityNormalized {0}, pitch {1}", proximityNormalized, pitch);
         return pitch;
     }
 
     private void ClearProximityDisplay()
     {
         ArtifactProximityUpdated.RaiseEvent(0);
+    }
+
+    // todo put in utils
+    private bool CloseEnough(float x, float y, float tolerance)
+    {
+        return Math.Abs(x - y) <= tolerance;
     }
 
     void OnDrawGizmos()
