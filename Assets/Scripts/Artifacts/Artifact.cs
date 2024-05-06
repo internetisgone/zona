@@ -38,7 +38,7 @@ public class Artifact : MonoBehaviour
     public Artifact(ArtifactType type)
     {
         Type = type;
-        IsVisible = false; // temp. invisible by default
+        IsVisible = true; // temp. invisible by default
     }
 
     private void Awake()
@@ -64,7 +64,7 @@ public class Artifact : MonoBehaviour
 
     public void OnCollected()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         TotalCount--;
         if (TotalCount == 0)
         {

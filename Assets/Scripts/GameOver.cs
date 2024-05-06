@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameOver : MonoBehaviour
 {
     public EventVoid GameOverEvent;
+    public EventBool DetectorEquipped;
     public PlayerData PlayerData;
 
     private float purgeDelay = 1f;
@@ -27,6 +28,8 @@ public class GameOver : MonoBehaviour
 
         // disable player movement
         // PlayerData.MovementEnabled = false;
+
+        DetectorEquipped.RaiseEvent(false);
 
         // hide UI
         GameObject UI = GameObject.FindGameObjectWithTag("UI");

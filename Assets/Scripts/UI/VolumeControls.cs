@@ -10,6 +10,8 @@ public class VolumeControls : MonoBehaviour
     [SerializeField] private AudioMixer mixer;
 
     private VisualElement volumeControls;
+    private Slider[] sliders;
+    private string[] volumeParams;
     private Slider masterVolumeSlider, bgVolumeSlider, sfxVolumeSlider, voiceVolumeSlider;
     private static int minVolume = -80;
     private static int maxVolume = 0;
@@ -17,22 +19,35 @@ public class VolumeControls : MonoBehaviour
 
     private void Awake()
     {
-        // volume controls
         volumeControls = volumeControlsAsset.Instantiate();
+
         masterVolumeSlider = volumeControls.Q<Slider>("MasterVolumeSlider");
         bgVolumeSlider = volumeControls.Q<Slider>("BgVolumeSlider");
         sfxVolumeSlider = volumeControls.Q<Slider>("SFXVolumeSlider");
         voiceVolumeSlider = volumeControls.Q<Slider>("VoiceVolumeSlider");
-        List<Slider> sliders = new List<Slider>()
+
+        sliders = new Slider[]
         {
             masterVolumeSlider, bgVolumeSlider, sfxVolumeSlider, voiceVolumeSlider
         };
-
-        foreach (Slider slider in sliders)
+        volumeParams = new string[]
         {
-            slider.lowValue = minVolume;
-            slider.highValue = maxVolume;
-            slider.value = defaultVolume;
+            "MasterVolume", "BGVolume", "SFXVolume", "VoiceVolume"
+        };
+
+        for (int i = 0; i < 4; i++)
+        {
+            sliders[i].lowValue = minVolume;
+            sliders[i].highValue = maxVolume;
+            float vol;
+            if (mixer.GetFloat(volumeParams[i], out vol))
+            {
+                sliders[i].value = vol;
+            }
+            else
+            {
+                sliders[i].value = defaultVolume;
+            }
         }
 
         masterVolumeSlider.RegisterCallback<ChangeEvent<float>>(OnMasterVolumeChanged);

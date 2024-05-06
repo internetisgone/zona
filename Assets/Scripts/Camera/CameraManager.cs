@@ -17,7 +17,7 @@ public class CameraManager : MonoBehaviour
     void Awake()
     {
         animator = FirstPerson.GetComponent<Animator>();
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        //GameObject player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Start()

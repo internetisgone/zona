@@ -6,7 +6,6 @@ public class DetectorPlayer : Detector
     public AudioClip beep;
 
     private Player Owner;
-    private float collectionRange;
     private AudioSource audioSource;
     private GameObject detectorObj;
     private GameObject detectorLight;
@@ -34,10 +33,12 @@ public class DetectorPlayer : Detector
 
     void Start()
     {
-        collectionRange = Owner.StalkerData.CollectionRange;
         firstPersonCamera = transform.GetChild(1).gameObject;
-        detectorObj = firstPersonCamera.transform.GetChild(0).gameObject;
-        detectorLight = detectorObj.transform.GetChild(0).gameObject;
+        detectorObj = firstPersonCamera.transform.GetChild(0).GetChild(0).gameObject;
+        if (DetectorType == DetectorType.Echo)
+        {
+            detectorLight = detectorObj.transform.GetChild(0).gameObject;
+        }
 
         DetectorEquipped.RaiseEvent(Owner.StalkerData.DetectorEquipped);
     }
@@ -52,13 +53,13 @@ public class DetectorPlayer : Detector
 
     private void OnEnable()
     {
-        ArtifactProximityUpdated.OnEventRaised += StartBeep;
+        ArtifactProximityUpdated.OnEventRaised += OnProximityUpdated;
         DetectorEquipped.OnEventRaised += ActivateDetector;
     }
 
     private void OnDisable()
     {
-        ArtifactProximityUpdated.OnEventRaised -= StartBeep;
+        ArtifactProximityUpdated.OnEventRaised -= OnProximityUpdated;
         DetectorEquipped.OnEventRaised += ActivateDetector;
     }
 
@@ -101,7 +102,7 @@ public class DetectorPlayer : Detector
     // possible to collect visible artifacts when detector is not equipped 
     private void DetectVisible()
     {
-        Collider[] artifactColliders = Physics.OverlapSphere(transform.position, DetectorData.VisibilityRange, ArtifactLayerMask);
+        Collider[] artifactColliders = Physics.OverlapSphere(transform.position, Owner.StalkerData.CollectionRange, ArtifactLayerMask);
         IsDetected = false;
 
         if (artifactColliders.Length > 0)
@@ -126,12 +127,11 @@ public class DetectorPlayer : Detector
         origin = firstPersonCamera.transform.position;
         direction = firstPersonCamera.transform.forward;
 
-        if (Physics.Raycast(origin, direction, out hit, collectionRange, ArtifactLayerMask))
+        if (Physics.Raycast(origin, direction, out hit, Owner.StalkerData.CollectionRange, ArtifactLayerMask))
         // todo use non alloc
         {
             ArtifactIsCollectible.RaiseEvent(true);
             GameObject artifact = hit.collider.gameObject;
-            //StartCoroutine(artifact.GetComponent<Artifact>().PlayAnimation());
             artifact.GetComponent<Artifact>().PlayAnimation();
             if (Input.GetKey(KeyCode.F) && Owner.StalkerData.MovementEnabled)
             {
@@ -154,6 +154,8 @@ public class DetectorPlayer : Detector
             CancelInvoke("DetectVisible");
             detectorObj.SetActive(true);
             InvokeRepeating("Detect", 1f, DetectorData.Interval);
+            // todo
+            // use shorter interval eg 0.2 once detected for smoother beep frequency transition
         }
         else
         {
@@ -167,7 +169,7 @@ public class DetectorPlayer : Detector
         }
     }
 
-    private void StartBeep(float proximity)
+    private void OnProximityUpdated(float proximity)
     {
         if (proximity == 0f)
         {
@@ -213,7 +215,11 @@ public class DetectorPlayer : Detector
         CancelInvoke("PlayBeep");
         CancelInvoke("BlinkLight");
         audioSource.Stop();
-        detectorLight.SetActive(false);
+        if (DetectorType == DetectorType.Echo)
+        {
+            detectorLight.SetActive(false);
+
+        }
     }
 
     //private void ClearProximityDisplay()
@@ -227,13 +233,15 @@ public class DetectorPlayer : Detector
         return Math.Abs(x - y) <= tolerance;
     }
 
+# if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        //// draw detection radius
-        //if (Application.isPlaying)
-        //{
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawWireSphere(transform.position, Detector.Range);
-        // }
+        // draw detection radius
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, DetectorData.DetectionRange);
+        }
     }
+# endif
 }
