@@ -22,8 +22,8 @@ public class Artifact : MonoBehaviour
     public ArtifactType Type { get; }
     public bool IsVisible {  get; private set; }
     private Animator animator;
-
-    private new Renderer renderer;
+    private new SkinnedMeshRenderer renderer;
+    private Rigidbody rb;
 
     //public GameObject Prefab { get; private set; }
     //public bool isHighlighted = false;
@@ -38,14 +38,16 @@ public class Artifact : MonoBehaviour
     public Artifact(ArtifactType type)
     {
         Type = type;
-        IsVisible = true; // temp. invisible by default
+        IsVisible = false; // temp. invisible by default
     }
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        renderer = GetComponent<Renderer>();
+        renderer = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>(); // temp
         renderer.enabled = IsVisible;
+        //rb = GetComponent<Rigidbody>();
+        //rb.isKinematic = true;
     }
 
     public void ToggleVisibility(bool visible)
@@ -54,7 +56,10 @@ public class Artifact : MonoBehaviour
 
         IsVisible = visible;
         renderer.enabled = IsVisible;
-        if (IsVisible == true) PlayAnimation();
+        if (IsVisible == true)
+        {
+            PlayAnimation();
+        }
     }
 
     public void OnCollected()

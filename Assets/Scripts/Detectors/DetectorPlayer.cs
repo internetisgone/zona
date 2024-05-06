@@ -9,6 +9,8 @@ public class DetectorPlayer : Detector
     private float collectionRange;
     private AudioSource audioSource;
     private GameObject detectorObj;
+    private GameObject detectorLight;
+
     private float cachedProximity;
 
     private static float maxPitch = 1.5f;
@@ -35,6 +37,7 @@ public class DetectorPlayer : Detector
         collectionRange = Owner.StalkerData.CollectionRange;
         firstPersonCamera = transform.GetChild(1).gameObject;
         detectorObj = firstPersonCamera.transform.GetChild(0).gameObject;
+        detectorLight = detectorObj.transform.GetChild(0).gameObject;
 
         DetectorEquipped.RaiseEvent(Owner.StalkerData.DetectorEquipped);
     }
@@ -65,7 +68,7 @@ public class DetectorPlayer : Detector
         Collider[] artifactColliders = Physics.OverlapSphere(transform.position, DetectorData.DetectionRange, ArtifactLayerMask);
         if (artifactColliders.Length > 0)
         {
-            Debug.LogFormat("{0} detected {1} artifacts using {2}", Owner.Name, artifactColliders.Length, DetectorData.DetectorType.ToString());
+            //Debug.LogFormat("{0} detected {1} artifacts using {2}", Owner.Name, artifactColliders.Length, DetectorData.DetectorType.ToString());
             IsDetected = true;
             float minDistance = DetectorData.DetectionRange;
             foreach (Collider collider in artifactColliders)
@@ -82,7 +85,7 @@ public class DetectorPlayer : Detector
                     artifact.ToggleVisibility(true);
                 }
 
-                // Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
+                Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
             }
             ArtifactProximityUpdated.RaiseEvent(minDistance);
             cachedProximity = minDistance;
@@ -90,8 +93,27 @@ public class DetectorPlayer : Detector
         else
         {
             IsDetected = false;
-            ClearProximityDisplay();
+            ArtifactProximityUpdated.RaiseEvent(0);
             cachedProximity = 0;
+        }
+    }
+
+    // possible to collect visible artifacts when detector is not equipped 
+    private void DetectVisible()
+    {
+        Collider[] artifactColliders = Physics.OverlapSphere(transform.position, DetectorData.VisibilityRange, ArtifactLayerMask);
+        IsDetected = false;
+
+        if (artifactColliders.Length > 0)
+        {
+            foreach (Collider collider in artifactColliders)
+            {
+                Artifact artifact = collider.gameObject.GetComponent<Artifact>();
+                if (artifact.IsVisible)
+                {
+                    IsDetected = true;
+                }
+            }
         }
     }
 
@@ -125,16 +147,23 @@ public class DetectorPlayer : Detector
 
     private void ActivateDetector(bool isActive)
     {
+        Owner.StalkerData.DetectorEquipped = isActive;
+
         if (isActive)
         {
+            CancelInvoke("DetectVisible");
             detectorObj.SetActive(true);
             InvokeRepeating("Detect", 1f, DetectorData.Interval);
         }
         else
         {
+            CancelInvoke("Detect");
+            StopBeepAndBlink();
             IsDetected = false;
             detectorObj.SetActive(false);
-            CancelInvoke("Detect");
+            ArtifactIsCollectible.RaiseEvent(false);
+            // ClearProximityDisplay();
+            InvokeRepeating("DetectVisible", 0f, DetectorData.Interval);
         }
     }
 
@@ -142,24 +171,28 @@ public class DetectorPlayer : Detector
     {
         if (proximity == 0f)
         {
-            CancelInvoke("PlayBeep");
-            audioSource.Stop();
+            StopBeepAndBlink();
         }
         else
         {
             if (CloseEnough(cachedProximity, proximity, 0.01f)) return;
 
-            CancelInvoke("PlayBeep");
+            StopBeepAndBlink();
+
             audioSource.pitch = CalcBeepPitch(proximity);
             float interval = 10 * beep.length * proximity / DetectorData.DetectionRange;
+
             InvokeRepeating("PlayBeep", 0, interval);
-            Debug.LogFormat("samples {0}, length {1}, pitch {2}, interval {3}", beep.samples, beep.length, audioSource.pitch, interval);
+            InvokeRepeating("BlinkLight", 0, interval / 2);
         }
     }
 
     private void PlayBeep()
     {
-        audioSource.PlayOneShot(beep);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(beep);
+        }
     }
 
     private float CalcBeepPitch(float proximity)
@@ -170,10 +203,23 @@ public class DetectorPlayer : Detector
         return pitch;
     }
 
-    private void ClearProximityDisplay()
+    private void BlinkLight()
     {
-        ArtifactProximityUpdated.RaiseEvent(0);
+        detectorLight.SetActive(!detectorLight.activeSelf);
     }
+
+    private void StopBeepAndBlink()
+    {
+        CancelInvoke("PlayBeep");
+        CancelInvoke("BlinkLight");
+        audioSource.Stop();
+        detectorLight.SetActive(false);
+    }
+
+    //private void ClearProximityDisplay()
+    //{
+    //    ArtifactProximityUpdated.RaiseEvent(0);
+    //}
 
     // todo put in utils
     private bool CloseEnough(float x, float y, float tolerance)

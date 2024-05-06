@@ -8,16 +8,16 @@ public class HUDEvents : MonoBehaviour
     private UIDocument document;
     private Label collectTextTip;
     private Label counter;
-    private VisualElement proximityWrapper;
-    private Label proximityIndicator;
+    //private VisualElement proximityWrapper;
+    //private Label proximityIndicator;
     private VisualElement NotificationContainer;
 
     public EventBool ArtifactCollectible;
-    public EventFloat ArtifactProximityUpdated;
+    //public EventFloat ArtifactProximityUpdated;
 
     public EventStalkerInt StalkerStatsUpdated;
 
-    public EventBool DetectorEquipped;
+    // public EventBool DetectorEquipped;
 
     public PlayerData PlayerData;
 
@@ -34,8 +34,8 @@ public class HUDEvents : MonoBehaviour
         document = GetComponent<UIDocument>();
         collectTextTip = document.rootVisualElement.Q("CollectText") as Label;
         counter = document.rootVisualElement.Q("Quantity") as Label;
-        proximityWrapper = document.rootVisualElement.Q("ProximityWrapper");
-        proximityIndicator = document.rootVisualElement.Q("ProximityValue") as Label;
+        //proximityWrapper = document.rootVisualElement.Q("ProximityWrapper");
+        //proximityIndicator = document.rootVisualElement.Q("ProximityValue") as Label;
         NotificationContainer = document.rootVisualElement.Q("NotifContainer");
 
         audioSource = GetComponent<AudioSource>();
@@ -52,9 +52,9 @@ public class HUDEvents : MonoBehaviour
     {
         ArtifactCollectible.OnEventRaised += ToggleCollectText;
 
-        ArtifactProximityUpdated.OnEventRaised += UpdateProximity;
+        //ArtifactProximityUpdated.OnEventRaised += UpdateProximity;
 
-        DetectorEquipped.OnEventRaised += ToggleDetector;
+        // DetectorEquipped.OnEventRaised += ToggleDetector;
 
         StalkerStatsUpdated.OnEventRaised += ShowStalkerStatsNotif;
     }
@@ -63,9 +63,9 @@ public class HUDEvents : MonoBehaviour
     {
         ArtifactCollectible.OnEventRaised -= ToggleCollectText;
 
-        ArtifactProximityUpdated.OnEventRaised -= UpdateProximity;
+        //ArtifactProximityUpdated.OnEventRaised -= UpdateProximity;
 
-        DetectorEquipped.OnEventRaised -= ToggleDetector;
+        // DetectorEquipped.OnEventRaised -= ToggleDetector;
 
         StalkerStatsUpdated.OnEventRaised -= ShowStalkerStatsNotif;
     }
@@ -80,25 +80,25 @@ public class HUDEvents : MonoBehaviour
         counter.text = count.ToString();
     }
 
-    private void UpdateProximity(float p)
-    {
-        if (p == 0f)
-        {
-            proximityIndicator.text = "";
-        }
-        else
-        {
-            proximityIndicator.text = p.ToString("0.00");
-        }
-    }
+    //private void UpdateProximity(float p)
+    //{
+    //    if (p == 0f)
+    //    {
+    //        proximityIndicator.text = "";
+    //    }
+    //    else
+    //    {
+    //        proximityIndicator.text = p.ToString("0.00");
+    //    }
+    //}
 
-    private void ToggleDetector(bool isEquipped)
-    {
-        PlayerData.DetectorEquipped = isEquipped;
-        proximityWrapper.visible = isEquipped;
+    //private void ToggleDetector(bool isEquipped)
+    //{
+    //    PlayerData.DetectorEquipped = isEquipped;
+    //    proximityWrapper.visible = isEquipped;
 
-        if (isEquipped == false) UpdateProximity(0f);
-    }
+    //    if (isEquipped == false) UpdateProximity(0f);
+    //}
 
     private void ShowStalkerStatsNotif(CStalker stalker, int artifactCount)
     {

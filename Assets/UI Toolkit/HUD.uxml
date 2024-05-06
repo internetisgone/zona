@@ -5,7 +5,7 @@
             <ui:Label tabindex="-1" text="collect" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CollectText" class="center text" style="-unity-text-align: upper-left; visibility: hidden;" />
         </ui:VisualElement>
         <ui:VisualElement name="BottomWrapper" style="flex-grow: 1; position: absolute; right: 0; left: 0; bottom: 0; flex-direction: row;">
-            <ui:VisualElement name="ProximityWrapper" style="flex-grow: 1; flex-direction: row; -unity-text-align: upper-left; position: relative; right: auto; bottom: auto;">
+            <ui:VisualElement name="ProximityWrapper" style="flex-grow: 1; flex-direction: row; -unity-text-align: upper-left; position: relative; right: auto; bottom: auto; display: flex; visibility: hidden;">
                 <ui:Label tabindex="-1" text="Proximity: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="Proximity" class="text" />
                 <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProximityValue" class="text" style="-unity-text-align: upper-right;" />
             </ui:VisualElement>

@@ -57,22 +57,32 @@ public class PDAEvents : MonoBehaviour
         GameObject playerObj = GameObject.FindWithTag("Player");
         CStalker player = playerObj?.GetComponent<CStalker>();
 
-        if (spawner == null || player == null) return;
-
-        stalkersList = spawner.stalkersList;
-        stalkersList.Add(player);
-
-        for (int i = 0; i < stalkersList.Count + unknownStalkerCount; i++)
-        {
-            VisualElement listItemContainer = listItem.Instantiate();
-            rankList.Add(listItemContainer);
-        }
-        SetUnkonwnStalkerRank();
-
         audioSource = GetComponent<AudioSource>();
 
         rankTabBtn.RegisterCallback<ClickEvent>(ShowRankTab);
         messageTabBtn.RegisterCallback<ClickEvent>(ShowMessageTab);
+
+        if (spawner != null)
+        {
+            stalkersList = spawner.stalkersList;
+            stalkersList.Add(player);
+
+            for (int i = 0; i < stalkersList.Count + unknownStalkerCount; i++)
+            {
+                VisualElement listItemContainer = listItem.Instantiate();
+                rankList.Add(listItemContainer);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < unknownStalkerCount; i++)
+            {
+                VisualElement listItemContainer = listItem.Instantiate();
+                rankList.Add(listItemContainer);
+            }
+        }
+
+        SetUnkonwnStalkerRank();
     }
 
     private void OnEnable()
@@ -84,7 +94,7 @@ public class PDAEvents : MonoBehaviour
     private void OnDisable()
     {
         TogglePDAEvent.OnEventRaised -= ToggleVisibility;
-        StalkerStatsUpdated.OnEventRaised += OnStalkerDataUpdated;
+        StalkerStatsUpdated.OnEventRaised -= OnStalkerDataUpdated;
     }
 
     private void ToggleVisibility()
@@ -115,6 +125,8 @@ public class PDAEvents : MonoBehaviour
 
     private void UpdateStalkerData()
     {
+        if (stalkersList == null) return;
+
         stalkersList.Sort();
 
         for (int i = 0; i < stalkersList.Count; i++)
