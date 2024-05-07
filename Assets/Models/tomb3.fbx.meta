@@ -3,7 +3,22 @@ guid: d17d173aeb9fcf84eb79b4e3dd365985
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: act_corp_stalker_S
+    second: {fileID: 2100000, guid: 75f91de754b42e840a18ac7be6e3f6cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: prop_vishka_01_S
+    second: {fileID: 2100000, guid: 77ece146f91487642be455b16b74ac46, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood_collect_S
+    second: {fileID: 2100000, guid: 61eee8bb052da2e46a8c2fa4040c2d69, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
