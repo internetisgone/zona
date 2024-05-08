@@ -16,7 +16,7 @@ public enum ArtifactType
 
 public class Artifact : MonoBehaviour
 {
-    public static int TotalCount = 0;
+    public static int TotalCount;
     [SerializeField]
     public EventVoid GameOverEvent;
     public ArtifactType Type { get; }

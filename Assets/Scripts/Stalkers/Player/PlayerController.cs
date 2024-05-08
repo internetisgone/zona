@@ -75,10 +75,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (playerData.MovementEnabled)
-        {
-            GetInput();
-        }
+        GetInput();
     }
 
     void FixedUpdate()
@@ -103,6 +100,15 @@ public class PlayerController : MonoBehaviour
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
 
+        if (!playerData.MovementEnabled)
+        {
+            verticalInput = 0;
+            horizontalInput = 0;
+            isJumping = false;
+            isSprinting = false;
+            return;
+        }
+        
         // movement
         verticalInput = Input.GetAxisRaw("Vertical");
         horizontalInput = Input.GetAxisRaw("Horizontal");

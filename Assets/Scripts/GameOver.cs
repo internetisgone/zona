@@ -27,7 +27,7 @@ public class GameOver : MonoBehaviour
         Debug.Log("gg");
 
         // disable player movement
-        // PlayerData.MovementEnabled = false;
+        PlayerData.MovementEnabled = false;
 
         DetectorEquipped.RaiseEvent(false);
 

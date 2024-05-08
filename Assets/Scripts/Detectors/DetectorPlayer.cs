@@ -86,7 +86,7 @@ public class DetectorPlayer : Detector
                     artifact.ToggleVisibility(true);
                 }
 
-                Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
+                // Debug.LogFormat("{0} is within {1} meters", collider.gameObject.name, distance); 
             }
             ArtifactProximityUpdated.RaiseEvent(minDistance);
             cachedProximity = minDistance;
