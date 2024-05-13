@@ -16,6 +16,7 @@ public class HUDEvents : MonoBehaviour
     //public EventFloat ArtifactProximityUpdated;
 
     public EventStalkerInt StalkerStatsUpdated;
+    public EventVoid GameOver;
 
     // public EventBool DetectorEquipped;
 
@@ -57,6 +58,8 @@ public class HUDEvents : MonoBehaviour
         // DetectorEquipped.OnEventRaised += ToggleDetector;
 
         StalkerStatsUpdated.OnEventRaised += ShowStalkerStatsNotif;
+
+        GameOver.OnEventRaised += ShowGameOverNotif;
     }
 
     private void OnDisable()
@@ -68,6 +71,8 @@ public class HUDEvents : MonoBehaviour
         // DetectorEquipped.OnEventRaised -= ToggleDetector;
 
         StalkerStatsUpdated.OnEventRaised -= ShowStalkerStatsNotif;
+
+        GameOver.OnEventRaised -= ShowGameOverNotif;
     }
 
     private void ToggleCollectText(bool visible)
@@ -118,6 +123,11 @@ public class HUDEvents : MonoBehaviour
 
         if (ShowNotification("New task: Gather Stone Blood artifacts"))
             audioSource.PlayOneShot(newObjectiveSound);
+    }
+
+    private void ShowGameOverNotif()
+    {
+        ShowNotification("Preparation Complete");
     }
 
     private bool ShowNotification(string content)

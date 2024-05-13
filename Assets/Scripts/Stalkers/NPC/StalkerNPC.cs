@@ -231,11 +231,6 @@ public class StalkerNPC : CStalker
         Look(ArtifactLayerMask);
     }
 
-    private void LookForObstacles()
-    {
-        Look(ObstacleLayerMask);
-    }
-
     private void Look(int layermask)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, StalkerData.VisionRange, layermask);
@@ -275,14 +270,20 @@ public class StalkerNPC : CStalker
     // --****========== state transition ==========***-- //
     public void ChangeState(StalkerState newState)
     {
+        if (currentState == PanicState) return;
+
         currentState?.OnExit(this);
         currentState = newState;
         currentState.OnEnter(this);
     }
 
-    public void Panic()
+    public override void Panic()
     {
-        KeepStill();
+        ChangeState(PanicState);
+    }
+
+    public void PlayPanicAnim()
+    {
         animator.SetTrigger("Panic");
     }
 

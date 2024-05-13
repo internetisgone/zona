@@ -98,7 +98,7 @@ public class PanicState : StalkerState
     public override void OnEnter(StalkerNPC stalker)
     {
         base.OnEnter(stalker);
-        stalker.Panic();
+        stalker.PlayPanicAnim();
     }
 
     public override void OnUpdate(StalkerNPC stalker)

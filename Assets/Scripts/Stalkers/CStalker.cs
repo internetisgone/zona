@@ -45,6 +45,11 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
         StalkerStatsUpdated.RaiseEvent(this, 1);
     }
 
+    public virtual void Panic()
+    {
+
+    }
+
     //public void CheckIsOnSlope(Collision collision)
     //{
     //    if (collision.gameObject.CompareTag("Ground"))

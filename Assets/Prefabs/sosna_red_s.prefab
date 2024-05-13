@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5082041789133151365}
   - component: {fileID: 1318613475171228398}
   - component: {fileID: 6428505439821512948}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: trees_sosna_1_red_01_low_LOD2(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0dadcf65b99b08948afc1feead5a0067, type: 2}
+  - {fileID: 2100000, guid: e574edce0de86494289e6b87bb66be29, type: 2}
   - {fileID: 2100000, guid: 44eb40af97b72634db59b9636eb78c0b, type: 2}
   - {fileID: 2100000, guid: 2c06ccf89c5e9414faf58236e65c828e, type: 2}
   m_StaticBatchInfo:
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2846093550142855740}
   - component: {fileID: 621618467150076110}
   - component: {fileID: 952360230620764021}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: trees_sosna_1_red_01_low_LOD1(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 7178795263949480386}
   - component: {fileID: 183345559428294640}
   - component: {fileID: 9096789756515749154}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: trees_sosna_1_red_01_low_LOD0(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 6326586980173775152}
   - component: {fileID: 4143815155171331191}
   - component: {fileID: 5799089523432760842}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sosna_red_s
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,8 +283,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7178795263949480386}
   - {fileID: 2846093550142855740}

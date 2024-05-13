@@ -8,7 +8,8 @@ public class DetectorPlayer : Detector
     private Player Owner;
     private AudioSource audioSource;
     private GameObject detectorObj;
-    private GameObject detectorLight;
+
+    private Light detectorLight;
 
     private float cachedProximity;
 
@@ -29,17 +30,18 @@ public class DetectorPlayer : Detector
         Owner = GetComponent<Player>();
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = beep;
-    }
 
-    void Start()
-    {
         firstPersonCamera = transform.GetChild(1).gameObject;
         detectorObj = firstPersonCamera.transform.GetChild(0).GetChild(0).gameObject;
         if (DetectorType == DetectorType.Echo)
         {
-            detectorLight = detectorObj.transform.GetChild(0).gameObject;
+            detectorLight = detectorObj.transform.GetChild(0).gameObject.GetComponent<Light>();
+            detectorLight.enabled = false;
         }
+    }
 
+    private void Start()
+    {
         DetectorEquipped.RaiseEvent(Owner.StalkerData.DetectorEquipped);
     }
 
@@ -207,7 +209,7 @@ public class DetectorPlayer : Detector
 
     private void BlinkLight()
     {
-        detectorLight.SetActive(!detectorLight.activeSelf);
+        detectorLight.enabled = !detectorLight.enabled;
     }
 
     private void StopBeepAndBlink()
@@ -217,8 +219,7 @@ public class DetectorPlayer : Detector
         audioSource.Stop();
         if (DetectorType == DetectorType.Echo)
         {
-            detectorLight.SetActive(false);
-
+            detectorLight.enabled = false;
         }
     }
 

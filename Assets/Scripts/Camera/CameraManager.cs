@@ -63,6 +63,9 @@ public class CameraManager : MonoBehaviour
             EnableTopDownCam();
         }
     }
+
+# endif
+
     private void EnableThirdPersonCam()
     {
         FirstPerson.enabled = false;
@@ -76,8 +79,6 @@ public class CameraManager : MonoBehaviour
         FirstPerson.enabled = false;
         TopDown.enabled = true;
     }
-
-# endif
 
     private void EnableFirstPersonCam()
     {

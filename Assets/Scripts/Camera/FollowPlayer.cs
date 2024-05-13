@@ -6,8 +6,8 @@ public class FollowPlayer : MonoBehaviour
 {
     public GameObject player;
     private Vector3 offsetPos;
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         offsetPos = transform.position - player.transform.position;
     }
