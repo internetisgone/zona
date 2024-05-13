@@ -123,6 +123,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &629798076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 629798078}
+  - component: {fileID: 629798077}
+  m_Layer: 0
+  m_Name: Cursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &629798077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629798076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9eb1ca0210dc9249a7272b82a6d8ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CursorVisible: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
+  PauseMenuToggleEvent: {fileID: 11400000, guid: 5d628c5ef67ce2c4a9e91c7f4ce1ff3b, type: 2}
+  GameOverEvent: {fileID: 11400000, guid: 93fb69f1f836e724da0731102f2cc6fb, type: 2}
+--- !u!4 &629798078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629798076}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.839562, y: 2.5261383, z: -259.9894}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &792124123
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
   npcData: {fileID: 11400000, guid: 213cd3c6cc52b954991b6e45ba3d4db5, type: 2}
-  volumeControlsAsset: {fileID: 0}
 --- !u!114 &792124125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1022514982}
   - component: {fileID: 1022514981}
+  - component: {fileID: 1022514983}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -296,6 +343,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1022514983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022514980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &1271060754
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,3 +706,4 @@ SceneRoots:
   - {fileID: 1022514982}
   - {fileID: 792124126}
   - {fileID: 1928125713}
+  - {fileID: 629798078}

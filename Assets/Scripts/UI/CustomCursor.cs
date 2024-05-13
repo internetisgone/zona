@@ -1,25 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CustomCursor : MonoBehaviour
 {
     public EventBool CursorVisible;
     public EventBool PauseMenuToggleEvent;
+    public EventVoid GameOverEvent;
+
+    private bool canPause;
 
     private void Awake()
     {
-        SetVisible(false);
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
-        // cursor lock
-        // todo
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseMenuToggleEvent.RaiseEvent(true);
+            if (canPause)
+            {
+                if (Time.timeScale == 0) // paused
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else
+                {
+                    PauseMenuToggleEvent.RaiseEvent(true);
+                }
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
         else if (Input.GetMouseButtonDown(0))
         {
@@ -30,22 +45,39 @@ public class CustomCursor : MonoBehaviour
     private void OnEnable()
     {
         CursorVisible.OnEventRaised += SetVisible;
+        GameOverEvent.OnEventRaised += OnGameOver;
+        SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
     private void OnDisable()
     {
         CursorVisible.OnEventRaised -= SetVisible;
+        GameOverEvent.OnEventRaised -= OnGameOver;
+        SceneManager.activeSceneChanged -= OnSceneChanged;
     }
     public void SetVisible(bool visible)
     {
         Cursor.lockState = CursorLockMode.Confined;
-        if (visible == true)
+        Cursor.visible = visible;
+    }
+
+    private void OnGameOver()
+    {
+        SetVisible(true);
+        canPause = false;
+    }
+
+    private void OnSceneChanged(Scene current, Scene next)
+    {
+        if (next.name == "Zona")
         {
-            Cursor.visible = true;
+            SetVisible(false);
+            canPause = true;
         }
-        else
+        else if (next.name == "MenuScreen")
         {
-            Cursor.visible = false;
+            SetVisible(true);
+            canPause = false;
         }
     }
 }
