@@ -35,7 +35,7 @@ public class DetectorPlayer : Detector
         detectorObj = firstPersonCamera.transform.GetChild(0).GetChild(0).gameObject;
         if (DetectorType == DetectorType.Echo)
         {
-            detectorLight = detectorObj.transform.GetChild(0).gameObject.GetComponent<Light>();
+            detectorLight = detectorObj.transform.GetChild(0).GetComponent<Light>();
             detectorLight.enabled = false;
         }
     }
@@ -62,7 +62,7 @@ public class DetectorPlayer : Detector
     private void OnDisable()
     {
         ArtifactProximityUpdated.OnEventRaised -= OnProximityUpdated;
-        DetectorEquipped.OnEventRaised += ActivateDetector;
+        DetectorEquipped.OnEventRaised -= ActivateDetector;
     }
 
     // search for artifacts within the detector's range

@@ -1041,6 +1041,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   artifactPrefab: {fileID: 1915404256651560245, guid: e53838542c49f834eb4517b36ed9be20, type: 3}
+  ArtifactCollectedEvent: {fileID: 11400000, guid: bbf40de1dfae5a64180e7ec021e6aa46, type: 2}
+  GameOverEvent: {fileID: 11400000, guid: 93fb69f1f836e724da0731102f2cc6fb, type: 2}
 --- !u!4 &555115898
 Transform:
   m_ObjectHideFlags: 0
@@ -2175,7 +2177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac84c6d7ffc84a44a52d5a929c2c796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
+  StalkerCollectedArtifact: {fileID: 11400000, guid: bbf40de1dfae5a64180e7ec021e6aa46, type: 2}
   StalkerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
 --- !u!114 &867723724
 MonoBehaviour:
@@ -3702,7 +3704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1377142772
 Transform:
   m_ObjectHideFlags: 0
@@ -4935,7 +4937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArtifactCollectible: {fileID: 11400000, guid: 0fa03d66e723d9e48844fa396f87eb3e, type: 2}
-  StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
+  StalkerCollectedArtifact: {fileID: 11400000, guid: bbf40de1dfae5a64180e7ec021e6aa46, type: 2}
   GameOver: {fileID: 11400000, guid: 93fb69f1f836e724da0731102f2cc6fb, type: 2}
   PlayerData: {fileID: 11400000, guid: ef19a8c236252d043a8fb732b4933fe8, type: 2}
   notificationSound: {fileID: 8300000, guid: a50c0601c07a78f43aa520c723d04104, type: 3}
@@ -5091,7 +5093,7 @@ MonoBehaviour:
   PDAOn: {fileID: 8300000, guid: 4d36ff9f725edde49a1e0127c12fae88, type: 3}
   PDAOff: {fileID: 8300000, guid: e4b996b2853f4fa4ba621926daf75848, type: 3}
   TogglePDAEvent: {fileID: 11400000, guid: e20eb5dbcc620b74f9b98687fc2fd85d, type: 2}
-  StalkerStatsUpdated: {fileID: 11400000, guid: 3be8a67c631d67641a7a7e6b66a5d338, type: 2}
+  StalkerCollectedArtifact: {fileID: 11400000, guid: bbf40de1dfae5a64180e7ec021e6aa46, type: 2}
   CursorVisibleEvent: {fileID: 11400000, guid: dbdf5062ab5dff34898b515c105a7c57, type: 2}
   EnableCamControlEvent: {fileID: 11400000, guid: a54fb839083821c45b1b116707887493, type: 2}
 --- !u!114 &2123764957

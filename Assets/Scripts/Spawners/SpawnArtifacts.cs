@@ -16,10 +16,26 @@ public class SpawnArtifacts : MonoBehaviour
     private float spawnRadius = 7f;
     private float minSpacing = 0.7f; // temp. min spacing = artifact diameter with some extra room
 
+    private int TotalArtifactCount;
+    public EventStalker ArtifactCollectedEvent;
+    public EventVoid GameOverEvent;
+
+    private void Awake()
+    {
+        TotalArtifactCount = 0;
+    }
+
+    private void OnEnable()
+    {
+        ArtifactCollectedEvent.OnEventRaised += OnArtifactCollected;
+    }
+
+    private void OnDisable()
+    {
+        ArtifactCollectedEvent.OnEventRaised -= OnArtifactCollected;
+    }
     void Start()
     {
-        Artifact.TotalCount = 0;
-
         SpawnPointArtifact[] clusters = GetComponentsInChildren<SpawnPointArtifact>();
 
         // generate random spawn points inside each cluster
@@ -53,7 +69,7 @@ public class SpawnArtifacts : MonoBehaviour
                 SpawnArtifact(points[j].x, points[j].y);
             }
 
-            Artifact.TotalCount += count;
+            TotalArtifactCount += count;
         }
     }
 
@@ -84,6 +100,16 @@ public class SpawnArtifacts : MonoBehaviour
             if (distance < minSpacing) return false;
         }
         return true;
+    }
+
+    private void OnArtifactCollected(CStalker stalker)
+    {
+        TotalArtifactCount -= 1;
+        if (TotalArtifactCount == 0)
+        {
+            // game over when all artifacts have been collected 
+            GameOverEvent.RaiseEvent();
+        }
     }
 
     private void SpawnArtifact(float x, float z)

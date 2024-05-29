@@ -16,14 +16,10 @@ public enum ArtifactType
 
 public class Artifact : MonoBehaviour
 {
-    public static int TotalCount;
-    [SerializeField]
-    public EventVoid GameOverEvent;
     public ArtifactType Type { get; }
     public bool IsVisible {  get; private set; }
     private Animator animator;
     private new SkinnedMeshRenderer renderer;
-    private Rigidbody rb;
 
     //public GameObject Prefab { get; private set; }
     //public bool isHighlighted = false;
@@ -65,12 +61,6 @@ public class Artifact : MonoBehaviour
     public void OnCollected()
     {
         gameObject.SetActive(false);
-        TotalCount--;
-        if (TotalCount == 0)
-        {
-            // game over when all artifacts have been collected 
-            GameOverEvent.RaiseEvent();
-        }
     }
 
     public void PlayAnimation()

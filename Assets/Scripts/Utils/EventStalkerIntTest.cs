@@ -5,19 +5,19 @@ using UnityEngine;
 
 # if UNITY_EDITOR
 
-[CustomEditor(typeof(EventStalkerInt))]
+[CustomEditor(typeof(EventStalker))]
 
-public class EventStalkerIntTest : Editor
+public class EventStalkerTest : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        EventStalkerInt targetEvent = (EventStalkerInt)target;
+        EventStalker targetEvent = (EventStalker)target;
 
         if (GUILayout.Button("Raise Event"))
         {
-            targetEvent.RaiseEvent(new StalkerNPC(), 420);
+            targetEvent.RaiseEvent(new StalkerNPC());
         }
     }
 }

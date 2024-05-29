@@ -15,7 +15,7 @@ public class HUDEvents : MonoBehaviour
     public EventBool ArtifactCollectible;
     //public EventFloat ArtifactProximityUpdated;
 
-    public EventStalkerInt StalkerStatsUpdated;
+    public EventStalker StalkerCollectedArtifact;
     public EventVoid GameOver;
 
     // public EventBool DetectorEquipped;
@@ -57,7 +57,7 @@ public class HUDEvents : MonoBehaviour
 
         // DetectorEquipped.OnEventRaised += ToggleDetector;
 
-        StalkerStatsUpdated.OnEventRaised += ShowStalkerStatsNotif;
+        StalkerCollectedArtifact.OnEventRaised += ShowStalkerStatsNotif;
 
         GameOver.OnEventRaised += ShowGameOverNotif;
     }
@@ -70,7 +70,7 @@ public class HUDEvents : MonoBehaviour
 
         // DetectorEquipped.OnEventRaised -= ToggleDetector;
 
-        StalkerStatsUpdated.OnEventRaised -= ShowStalkerStatsNotif;
+        StalkerCollectedArtifact.OnEventRaised -= ShowStalkerStatsNotif;
 
         GameOver.OnEventRaised -= ShowGameOverNotif;
     }
@@ -105,14 +105,14 @@ public class HUDEvents : MonoBehaviour
     //    if (isEquipped == false) UpdateProximity(0f);
     //}
 
-    private void ShowStalkerStatsNotif(CStalker stalker, int artifactCount)
+    private void ShowStalkerStatsNotif(CStalker stalker)
     {
         if (stalker is Player)
         {
             UpdateArtifactCounter(stalker.ArtifactCount);
         }
 
-        string content = Time.time.ToString() + stalker.Name + " collected " + artifactCount + " artifact";
+        string content = Time.time.ToString() + stalker.Name + " collected 1 artifact";
         if (ShowNotification(content))
             audioSource.PlayOneShot(notificationSound);
     }

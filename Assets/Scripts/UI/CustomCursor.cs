@@ -13,6 +13,7 @@ public class CustomCursor : MonoBehaviour
 
     private void Awake()
     {
+        // todo singleton
         DontDestroyOnLoad(gameObject);
     }
 

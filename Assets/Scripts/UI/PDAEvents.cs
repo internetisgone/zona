@@ -32,7 +32,7 @@ public class PDAEvents : MonoBehaviour
     public AudioClip PDAOff;
 
     public EventVoid TogglePDAEvent;
-    public EventStalkerInt StalkerStatsUpdated;
+    public EventStalker StalkerCollectedArtifact;
     public EventBool CursorVisibleEvent;
     public EventBool EnableCamControlEvent;
 
@@ -88,13 +88,13 @@ public class PDAEvents : MonoBehaviour
     private void OnEnable()
     {
         TogglePDAEvent.OnEventRaised += ToggleVisibility;
-        StalkerStatsUpdated.OnEventRaised += OnStalkerDataUpdated;
+        StalkerCollectedArtifact.OnEventRaised += OnStalkerDataUpdated;
     }
 
     private void OnDisable()
     {
         TogglePDAEvent.OnEventRaised -= ToggleVisibility;
-        StalkerStatsUpdated.OnEventRaised -= OnStalkerDataUpdated;
+        StalkerCollectedArtifact.OnEventRaised -= OnStalkerDataUpdated;
     }
 
     private void ToggleVisibility()
@@ -118,7 +118,7 @@ public class PDAEvents : MonoBehaviour
         container.visible = isVisible;
     }
 
-    private void OnStalkerDataUpdated(CStalker stalker, int num)
+    private void OnStalkerDataUpdated(CStalker stalker)
     {
         UpdateStalkerData();
     }

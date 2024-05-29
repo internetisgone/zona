@@ -8,7 +8,7 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
     public string Name { get; set; }
     public int ArtifactCount { get; private set; }
     [SerializeField]
-    public EventStalkerInt StalkerStatsUpdated;
+    public EventStalker StalkerCollectedArtifact;
 
     //public Guid Guid;
     public CStalker() : this("Marked One")
@@ -42,7 +42,7 @@ public abstract class CStalker : MonoBehaviour, IComparable<CStalker>
 
         artifact.OnCollected();
         ArtifactCount += 1;
-        StalkerStatsUpdated.RaiseEvent(this, 1);
+        StalkerCollectedArtifact.RaiseEvent(this);
     }
 
     public virtual void Panic()

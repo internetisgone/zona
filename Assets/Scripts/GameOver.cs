@@ -39,8 +39,6 @@ public class GameOver : MonoBehaviour
 
     private void Purge()
     {
-        Debug.Log("gg");
-
         // disable player movement
         PlayerData.MovementEnabled = false;
 
@@ -63,19 +61,19 @@ public class GameOver : MonoBehaviour
 
         // play cutscene
 
-        // show restart btn
-        container.visible = true;
     }
 
-    private IEnumerator PurgeAfterDelay()
+    private IEnumerator PurgeCoroutine()
     {
         yield return new WaitForSeconds(purgeDelay);
         Purge();
+        yield return new WaitForSeconds(2f); // temp
+        container.visible = true;
     }
 
     private void StartPurge()
     {
-        StartCoroutine(PurgeAfterDelay());
+        StartCoroutine(PurgeCoroutine());
     }
 
     private void OnRestart(ClickEvent e)
