@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class HUDEvents : MonoBehaviour
 {
+    // ui
     private UIDocument document;
     private Label collectTextTip;
     private Label counter;
@@ -12,15 +14,16 @@ public class HUDEvents : MonoBehaviour
     //private Label proximityIndicator;
     private VisualElement NotificationContainer;
 
+    // events
     public EventBool ArtifactCollectible;
-    //public EventFloat ArtifactProximityUpdated;
-
     public EventStalker StalkerCollectedArtifact;
     public EventVoid GameOver;
-
+    //public EventFloat ArtifactProximityUpdated;
     // public EventBool DetectorEquipped;
 
+    // data
     public PlayerData PlayerData;
+    private int initialTime = 75600; // pda notification time offset in seconds. equivalent to 9pm
 
     // audio
     private AudioSource audioSource;
@@ -112,7 +115,17 @@ public class HUDEvents : MonoBehaviour
             UpdateArtifactCounter(stalker.ArtifactCount);
         }
 
-        string content = Time.time.ToString() + stalker.Name + " collected 1 artifact";
+        int notifTime = initialTime + (int)Time.time;
+        int hour = notifTime / 3600;
+        int minute = (notifTime - hour * 3600) / 60;
+        int second = notifTime - hour * 3600 - minute * 60;
+
+        string content = 
+            (hour < 10 ? "0" + hour.ToString() : hour.ToString()) + ":" + 
+            (minute < 10 ? "0" + minute.ToString() : minute.ToString()) + ":" + 
+            (second < 10 ? "0" + second.ToString() : second.ToString()) + " " + 
+            stalker.Name + " collected 1 artifact";
+
         if (ShowNotification(content))
             audioSource.PlayOneShot(notificationSound);
     }
